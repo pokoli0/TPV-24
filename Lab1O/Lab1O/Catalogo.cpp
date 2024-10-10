@@ -85,6 +85,12 @@ void Catalogo::mostrarCatalogo() {
 }
 void Catalogo::insertaEjemplar(char tipo, string Nombre)
 {
+	Ejemplar nuevoEjemplar;
+	cout << "Ingrese los datos del libro a insertar: ";
+	cin >> nuevoEjemplar;
+	//ejemplar[NumElems] = nuevoEjemplar;
+	NumElems++;
+	cout << "libro guardado exitosamente." << endl;
 }
 
 void operator<<(ostream&, const Catalogo&)
