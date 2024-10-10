@@ -45,6 +45,23 @@ bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 	return encontrado;
 }
 
+void ListaPrestamos::mostrarPrestamos()
+{
+	// fecha de devolución, título, días hasta la entrega y penalización por retraso
+	// 14/08/24 (en -41 días) Atraco en alta fidelidad (82 días de penalización)
+	cout << "diaPrestamo";
+
+	Date diaPrestamo;
+
+
+	for (int i = 0; i < capacidad; i++) {
+		diaPrestamo = elems[i].getFecha();
+		cout << diaPrestamo;
+
+	}
+
+}
+
 void ListaPrestamos::ordena()
 {
 }

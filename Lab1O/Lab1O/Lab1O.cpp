@@ -41,7 +41,7 @@ int main()
 
     case 'b':
         cout << "Seleccionada: b) Mostrar préstamos" << endl;
-        //listaPrestamos.mostrarPrestamos();
+        listaPrestamos.mostrarPrestamos();
 
         break;
 

@@ -10,12 +10,16 @@ class ListaPrestamos
 private:
 	Prestamo* elems;
 	size_t numElems;
-	size_t Capacidad;
+	size_t capacidad; // igual no hace falta
+
 public:
-	ListaPrestamos(){};
-	ListaPrestamos(istream&, const Catalogo&);
+	ListaPrestamos() {};
+	ListaPrestamos(istream& const e, const Catalogo& c);
 	~ListaPrestamos();
+
 	bool leerPrestamos(string fichero, Catalogo& catalogo);
+	void mostrarPrestamos();
+
 	void ordena();
 	void insertaPrestamo(const Prestamo&);
 	friend void operator<<(ostream&, const ListaPrestamos&);
