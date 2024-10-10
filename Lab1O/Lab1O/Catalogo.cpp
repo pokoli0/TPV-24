@@ -23,19 +23,38 @@ bool Catalogo::LeeCatalogo(string fichero)
 	else {
 		encontrado = true;
 		int n, codigo;
+		char tipo;
+		string titulo;
 		input >> n;
+		NumElems = n;
 		ejemplar = new Ejemplar*[n];
 		for (int i = 0; !input.eof() && i < n; i++)
 		{
 			ejemplar[i] = new Ejemplar;
-			input >> *ejemplar[i];
+			input >> codigo;
+			ejemplar[i]->setCodigo(codigo);
+			input >> tipo;
+			ejemplar[i]->setTipo(tipo);
+			input >> titulo;
+			ejemplar[i]->setNombre(titulo);
 		}
 	}
 
 	return encontrado;
 }
-void Catalogo::buscaEjemplar(int n) const
+int Catalogo::buscaEjemplar(int n) const
 {
+	int left = 0;
+	int right = NumElems - 1;
+	while (left <= right) {
+		int mid = left + (right - left) / 2;
+		if (ejemplar[mid]->getCodigo() == n)
+			return mid;
+		else if (ejemplar[mid]->getCodigo() < n)
+			left = mid + 1;
+		else right = mid - 1;
+	}
+	return -1;
 }
 
 void Catalogo::insertaEjemplar(char tipo, string Nombre)

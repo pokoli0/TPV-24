@@ -9,7 +9,7 @@ public:
 	~Catalogo();
 
 	bool LeeCatalogo(string fichero);
-	void buscaEjemplar(int n) const;
+	int buscaEjemplar(int n) const;
 	void insertaEjemplar(char tipo , string Nombre);
 
 	friend void operator<<(ostream&, const Catalogo&);
