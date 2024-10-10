@@ -25,6 +25,27 @@ public:
 	string getNombre() const {
 		return nombre;
 	};
+	void setCodigo(int cod)  {
+		codigo = cod;
+	}
+	
+	void setTipo( char tip)  {
+		if (tip == 'L')
+		{
+			tipo = libro;
+		}
+		else if (tip == 'J')
+		{
+			tipo = juego;
+		}
+		else {
+			tipo = audiovisual;
+		}
+	}
+
+	void setNombre(string nombre)  {
+		Nombre = nombre;
+	};
 
 	void const presta() { disponible = false; };
 	void devuelve() { disponible = true; };
@@ -35,8 +56,8 @@ public:
 private:
 
 	int codigo;
-	char tipo;
-	string nombre;
+	Tipo tipo;
+	string Nombre;
 	bool disponible;
 
 };

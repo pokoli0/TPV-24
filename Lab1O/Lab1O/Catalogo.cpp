@@ -23,12 +23,19 @@ bool Catalogo::LeeCatalogo(string fichero)
 	else {
 		encontrado = true;
 		int n, codigo;
+		char tipo;
+		string titulo;
 		input >> n;
 		ejemplar = new Ejemplar*[n];
 		for (int i = 0; !input.eof() && i < n; i++)
 		{
 			ejemplar[i] = new Ejemplar;
-			input >> *ejemplar[i];
+			input >> codigo;
+			ejemplar[i]->setCodigo(codigo);
+			input >> tipo;
+			ejemplar[i]->setTipo(tipo);
+			input >> titulo;
+			ejemplar[i]->setNombre(titulo);
 		}
 	}
 }
