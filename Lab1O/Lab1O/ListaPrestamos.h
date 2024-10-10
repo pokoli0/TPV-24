@@ -8,6 +8,7 @@ private:
 	size_t numElems;
 	size_t Capacidad;
 public:
+	ListaPrestamos(){};
 	ListaPrestamos(istream&, const Catalogo&);
 	~ListaPrestamos();
 	void ordena();

@@ -1,5 +1,5 @@
 #pragma once
-#include "Date.h"
+#include "Date.hpp"
 #include <string>
 #include <Windows.h>
 
@@ -11,6 +11,7 @@ public:
 	enum Tipo {
 		libro, audiovisual, juego,
 	};
+	Ejemplar() {};
 	Ejemplar(int cod, Tipo tipo, string nom);
 
 	int getCodigo() const {
