@@ -1,9 +1,9 @@
 #include "Ejemplar.h"
 
-Ejemplar::Ejemplar(int cod, char tip, string nom)
+Ejemplar::Ejemplar(int cod, Tipo tipo, string nom)
 {
 	codigo = cod;
-	tipo = tip;
+	tipo = tipo;
 	nombre = nom;
 }
 
@@ -23,4 +23,3 @@ istream& operator>>(istream& f, Ejemplar& e)
 	f >> e.nombre;
 	return f;
 }
-

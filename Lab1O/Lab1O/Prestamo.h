@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Ejemplar.h"
-#include "Date.hpp"
+#include "Date.h"
+#include <iostream>
 
 class Prestamo
 {
@@ -23,8 +24,10 @@ public:
 
 	void getDevolucion() const;
 
-	bool operator<(const Prestamo&) const;
 
+	bool operator<(const Prestamo&) const;
+	//leePrestamo(istream&, const Catalogo&);
+	//friend Prestamo& operator<<(ostream&, const Prestamo&);
 private:
 	Date fecha;
 	int usuario;

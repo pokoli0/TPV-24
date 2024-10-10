@@ -8,3 +8,7 @@ Prestamo::operator<(const Prestamo& otro) const
 {
 	return fecha < otro.fecha;
 }
+
+ostream& operator<<(ostream& o, const Prestamo& p)
+{
+}

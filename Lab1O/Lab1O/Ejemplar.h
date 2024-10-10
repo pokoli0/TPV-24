@@ -1,5 +1,5 @@
 #pragma once
-#include "Date.hpp"
+#include "Date.h"
 #include <string>
 #include <Windows.h>
 
@@ -8,14 +8,16 @@ using namespace std;
 class Ejemplar
 {
 public:
-	Ejemplar();
-	Ejemplar(int cod, char tip, string nom);
+	enum Tipo {
+		libro, audiovisual, juego,
+	};
+	Ejemplar(int cod, Tipo tipo, string nom);
 
 	int getCodigo() const {
 		return codigo;
 	}
 
-	char getTipo() const {
+	 char getTipo() const {
 		return tipo;
 	}
 
@@ -23,7 +25,7 @@ public:
 		return nombre;
 	};
 
-	void presta() { disponible = false; };
+	void const presta() { disponible = false; };
 	void devuelve() { disponible = true; };
 
 	friend ostream& operator<<(ostream& f, const Ejemplar& c);
