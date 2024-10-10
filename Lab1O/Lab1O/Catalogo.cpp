@@ -72,12 +72,13 @@ void Catalogo::mostrarCatalogo() {
 	}
 
 	cout << "Lista de Libros, juegos y audiolibros:" << endl;
+	cout << "-------------------------------------------------------" << endl;
 	for (int i = 0; i < NumElems; i++) {
 		cout << "Codigo: " << ejemplar[i]->getCodigo() << endl;
 		cout << "Tipo: " << ejemplar[i]->getTipo() << endl;
 		cout << "Nombre: " << ejemplar[i]->getNombre() << endl;
 		//dejar espacio entre libros etc
-		cout << "-------------------------" << endl;
+		cout << "-------------------------------------------------------" << endl;
 	}
 
 
