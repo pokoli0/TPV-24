@@ -15,6 +15,9 @@ public:
 	Ejemplar* getEjemplar() {
 		return ejemplar;
 	}
+	void setEjemplar(Ejemplar* e) {
+		ejemplar = e;
+	}
 
 	Date getFecha() {
 		return fecha;

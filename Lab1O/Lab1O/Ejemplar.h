@@ -43,8 +43,8 @@ public:
 		}
 	}
 
-	void setNombre(string nombre)  {
-		Nombre = nombre;
+	void setNombre(string nom)  {
+		nombre = nom;
 	};
 
 	void const presta() { disponible = false; };
@@ -57,7 +57,7 @@ private:
 
 	int codigo;
 	Tipo tipo;
-	string Nombre;
+	string nombre;
 	bool disponible;
 
 };

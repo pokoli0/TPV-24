@@ -1,6 +1,3 @@
-// Lab1O.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
 #include <Windows.h>
 #include "Catalogo.h"
@@ -26,7 +23,7 @@ int main()
     << "e) Devolver ejemplar" << endl
     << "f) Salir" << std::endl;
 
-    char input = ' ';
+    char input;
     cin >> input;
 
     string nombre;
