@@ -26,6 +26,7 @@ bool Catalogo::LeeCatalogo(string fichero)
 		char tipo;
 		string titulo;
 		input >> n;
+		NumElems = n;
 		ejemplar = new Ejemplar*[n];
 		for (int i = 0; !input.eof() && i < n; i++)
 		{
@@ -39,8 +40,19 @@ bool Catalogo::LeeCatalogo(string fichero)
 		}
 	}
 }
-void Catalogo::buscaEjemplar(int n) const
+int Catalogo::buscaEjemplar(int n) const
 {
+	int left = 0;
+	int right = NumElems - 1;
+	while (left <= right) {
+		int mid = left + (right - left) / 2;
+		if (ejemplar[mid]->getCodigo() == n)
+			return mid;
+		else if (ejemplar[mid]->getCodigo() < n)
+			left = mid + 1;
+		else right = mid - 1;
+	}
+	return -1;
 }
 
 void Catalogo::insertaEjemplar(char tipo, string Nombre)
