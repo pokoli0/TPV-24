@@ -36,7 +36,7 @@ bool Catalogo::LeeCatalogo(string fichero)
 			ejemplar[i]->setCodigo(codigo);
 			input >> tipo;
 			ejemplar[i]->setTipo(tipo);
-			input >> titulo;
+			getline(input, titulo);
 			ejemplar[i]->setNombre(titulo);
 		}
 	}
@@ -66,7 +66,22 @@ Ejemplar* Catalogo::buscaEjemplar(const int cod, int ini, int fin) const
 	cout << "Catalogo::buscaEjemplar(): No se encuentra ejemplar." << endl;
 	return nullptr;
 }
+void Catalogo::mostrarCatalogo() {
+	if (NumElems == 0) {
+		cout << "No hay coches disponibles en la lista." << endl;
+	}
 
+	cout << "Lista de Libros, juegos y audiolibros:" << endl;
+	for (int i = 0; i < NumElems; i++) {
+		cout << "Codigo: " << ejemplar[i]->getCodigo() << endl;
+		cout << "Tipo: " << ejemplar[i]->getTipo() << endl;
+		cout << "Nombre: " << ejemplar[i]->getNombre() << endl;
+		//dejar espacio entre libros etc
+		cout << "-------------------------" << endl;
+	}
+
+
+}
 void Catalogo::insertaEjemplar(char tipo, string Nombre)
 {
 }

@@ -35,7 +35,7 @@ int main()
 
     case 'a':
         cout << "Seleccionada: a) Mostrar catálogo" << endl;
-        //catalogo.mostrarCatalogo();
+        catalogo.mostrarCatalogo();
 
         break;
 

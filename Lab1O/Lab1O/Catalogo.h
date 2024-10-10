@@ -13,7 +13,7 @@ public:
 	// Devuelve ejemplar segun su codigo
 	Ejemplar* buscaEjemplar(const int cod, int ini, int fin) const;
 	void insertaEjemplar(char tipo , string Nombre);
-
+	void mostrarCatalogo();
 	friend void operator<<(ostream&, const Catalogo&);
 
 private:
