@@ -29,7 +29,7 @@ public:
 		codigo = cod;
 	}
 	
-	void setTipo( char tip)  {
+	void setTipo(char tip)  {
 		if (tip == 'L')
 		{
 			tipo = libro;

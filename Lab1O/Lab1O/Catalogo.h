@@ -9,7 +9,9 @@ public:
 	~Catalogo();
 
 	bool LeeCatalogo(string fichero);
-	int buscaEjemplar(int n) const;
+
+	// Devuelve ejemplar segun su codigo
+	Ejemplar* buscaEjemplar(int n) const;
 	void insertaEjemplar(char tipo , string Nombre);
 
 	friend void operator<<(ostream&, const Catalogo&);

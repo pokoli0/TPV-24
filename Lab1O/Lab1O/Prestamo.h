@@ -12,20 +12,15 @@ public:
 	Prestamo() {};
 	Prestamo(Ejemplar* e, Date f, int user);
 
-	Ejemplar* getEjemplar() {
-		return ejemplar;
-	}
-	void setEjemplar(Ejemplar* e) {
-		ejemplar = e;
-	}
+	Ejemplar* getEjemplar() { return ejemplar;}
+	void setEjemplar(Ejemplar* e) {	ejemplar = e;}
 
-	Date getFecha() {
-		return fecha;
-	}
+	Date getFecha() { return fecha;}
+	void setFecha(Date date) { fecha = date; }
 
-	int getUsuario() const {
-		return usuario;
-	}
+	int getUsuario() const {return usuario;}
+	void setUsuario(int user) { usuario = user; }
+
 
 	void getDevolucion() const;
 

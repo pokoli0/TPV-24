@@ -12,7 +12,7 @@ int main()
     ListaPrestamos listaPrestamos;
 
     catalogo.LeeCatalogo("catalogo.txt");
-    listaPrestamos.leerPrestamos("prestamos.txt");
+    listaPrestamos.leerPrestamos("prestamos.txt", catalogo);
 
 
     cout << "Seleccione opción:" << endl 

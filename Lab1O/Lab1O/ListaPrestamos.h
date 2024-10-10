@@ -15,7 +15,7 @@ public:
 	ListaPrestamos(){};
 	ListaPrestamos(istream&, const Catalogo&);
 	~ListaPrestamos();
-	bool leerPrestamos(string fichero);
+	bool leerPrestamos(string fichero, Catalogo& catalogo);
 	void ordena();
 	void insertaPrestamo(const Prestamo&);
 	friend void operator<<(ostream&, const ListaPrestamos&);

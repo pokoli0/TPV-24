@@ -8,11 +8,12 @@ ListaPrestamos::~ListaPrestamos()
 {
 }
 
-bool ListaPrestamos::leerPrestamos(string fichero)
+bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 {
 	bool encontrado;
 	ifstream input;
 	input.open(fichero);
+
 	if (!input.is_open())
 	{
 		encontrado = false;
@@ -33,9 +34,13 @@ bool ListaPrestamos::leerPrestamos(string fichero)
 			input >> fecha;
 			input >> user;
 
-			
+			elems[i].setEjemplar(catalogo.buscaEjemplar(codigo));
+			elems[i].setFecha(fecha);
+			elems[i].setUsuario(user);
 		}
 	}
+
+	input.close();
 
 	return encontrado;
 }
