@@ -27,6 +27,7 @@ bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 
 		input >> n;
 		elems = new Prestamo[n];
+		capacidad = n;
 
 		for (int i = 0; !input.eof() && i < n; i++)
 		{
@@ -34,7 +35,7 @@ bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 			input >> fecha;
 			input >> user;
 
-			elems[i].setEjemplar(catalogo.buscaEjemplar(codigo));
+			elems[i].setEjemplar(catalogo.buscaEjemplar(codigo, 0, numElems));
 			elems[i].setFecha(fecha);
 			elems[i].setUsuario(user);
 		}

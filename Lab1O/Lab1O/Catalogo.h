@@ -11,7 +11,7 @@ public:
 	bool LeeCatalogo(string fichero);
 
 	// Devuelve ejemplar segun su codigo
-	Ejemplar* buscaEjemplar(int n) const;
+	Ejemplar* buscaEjemplar(const int cod, int ini, int fin) const;
 	void insertaEjemplar(char tipo , string Nombre);
 
 	friend void operator<<(ostream&, const Catalogo&);

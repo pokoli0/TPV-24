@@ -45,17 +45,22 @@ bool Catalogo::LeeCatalogo(string fichero)
 
 	return encontrado;
 }
-Ejemplar* Catalogo::buscaEjemplar(int n) const
+Ejemplar* Catalogo::buscaEjemplar(const int cod, int ini, int fin) const
 {
-	int left = 0;
-	int right = NumElems - 1;
-	while (left <= right) {
-		int mid = left + (right - left) / 2;
-		if (ejemplar[mid]->getCodigo() == n)
-			return ejemplar[mid];
-		else if (ejemplar[mid]->getCodigo() < n)
-			left = mid + 1;
-		else right = mid - 1;
+	int elems = fin - ini;
+
+	if (elems == 0) return nullptr;
+	if (elems == 1) return ejemplar[ini];
+
+	int mitad = (ini + fin) / 2;
+
+	if (cod >= ejemplar[mitad]->getCodigo())
+	{
+		return buscaEjemplar(cod, mitad, fin);
+	}
+	if (cod < ejemplar[mitad]->getCodigo())
+	{
+		return buscaEjemplar(cod, ini, mitad);
 	}
 
 	cout << "Catalogo::buscaEjemplar(): No se encuentra ejemplar." << endl;
