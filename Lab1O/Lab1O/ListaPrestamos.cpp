@@ -31,8 +31,13 @@ bool ListaPrestamos::leerPrestamos(string fichero)
 		{
 			input >> codigo;
 			input >> fecha;
+			input >> user;
+
+			
 		}
 	}
+
+	return encontrado;
 }
 
 void ListaPrestamos::ordena()

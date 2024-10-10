@@ -31,6 +31,8 @@ bool Catalogo::LeeCatalogo(string fichero)
 			input >> *ejemplar[i];
 		}
 	}
+
+	return encontrado;
 }
 void Catalogo::buscaEjemplar(int n) const
 {
