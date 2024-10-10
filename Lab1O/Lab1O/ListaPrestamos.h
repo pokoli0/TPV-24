@@ -2,8 +2,11 @@
 #include "Prestamo.h"
 #include "Catalogo.h"
 #include "Date.hpp"
+#include <string>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
+#include <Windows.h>
 
 class ListaPrestamos
 {
@@ -18,6 +21,8 @@ public:
 	~ListaPrestamos();
 
 	bool leerPrestamos(string fichero, Catalogo& catalogo);
+	//ordena lista segun fecha de devolucion
+	void ordenarLista();
 	void mostrarPrestamos();
 
 	void ordena();

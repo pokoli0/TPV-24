@@ -5,14 +5,15 @@
 
 using namespace std;
 
+enum Tipo {
+	libro, audiovisual, juego
+};
+
 class Ejemplar
 {
 public:
-	enum Tipo {
-		libro, audiovisual, juego,
-	};
 	Ejemplar() {};
-	Ejemplar(int cod, Tipo tipo, string nom);
+	Ejemplar(int cod, Tipo tip, string nom);
 
 	int getCodigo() const {
 		return codigo;
@@ -43,14 +44,21 @@ public:
 		if (tip == 'L')
 		{
 			tipo = libro;
+			diasDevolucion = 30;
 		}
 		else if (tip == 'J')
 		{
 			tipo = juego;
+			diasDevolucion = 14;
 		}
 		else {
 			tipo = audiovisual;
+			diasDevolucion = 7;
 		}
+	}
+
+	int getDiasDevolucion() { 
+		return diasDevolucion;
 	}
 
 	void setNombre(string nom)  {
@@ -69,6 +77,7 @@ private:
 	Tipo tipo;
 	string nombre;
 	bool disponible;
+	int diasDevolucion;
 
 };
 

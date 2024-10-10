@@ -1,9 +1,9 @@
 #include "Ejemplar.h"
 
-Ejemplar::Ejemplar(int cod, Tipo tipo, string nom)
+Ejemplar::Ejemplar(int cod, Tipo tip, string nom)
 {
 	codigo = cod;
-	tipo = tipo;
+	tipo = tip;
 	nombre = nom;
 }
 

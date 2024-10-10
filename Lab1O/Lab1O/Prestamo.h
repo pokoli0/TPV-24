@@ -18,6 +18,8 @@ public:
 	Date getFecha() { return fecha;}
 	void setFecha(Date date) { fecha = date; }
 
+	Date getFechaDevolucion() { return fecha + (*this->ejemplar).getDiasDevolucion(); }
+
 	int getUsuario() const {return usuario;}
 	void setUsuario(int user) { usuario = user; }
 
