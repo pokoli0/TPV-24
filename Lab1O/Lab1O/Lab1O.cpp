@@ -5,12 +5,14 @@
 #include <Windows.h>
 #include "Catalogo.h"
 #include "ListaPrestamos.h"
+
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
     Catalogo Catalogo;
     ListaPrestamos Listaprestamos;
-    Catalogo.LeeCatalogo
+    Catalogo.LeeCatalogo("catalogo.txt");
+    Listaprestamos.leerPrestamos("prestamos.txt");
 }
 
 

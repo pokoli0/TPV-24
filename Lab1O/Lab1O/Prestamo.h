@@ -4,6 +4,8 @@
 #include "Date.hpp"
 #include <iostream>
 
+using namespace std;
+
 class Prestamo
 {
 public:
@@ -26,8 +28,11 @@ public:
 
 
 	bool operator<(const Prestamo&) const;
-	//leePrestamo(istream&, const Catalogo&);
-	//friend Prestamo& operator<<(ostream&, const Prestamo&);
+
+	//operadores
+	friend istream& operator>>(istream& in, Prestamo& p);
+	friend ostream& operator<<(ostream& out, const Prestamo& p);
+
 private:
 	Date fecha;
 	int usuario;
