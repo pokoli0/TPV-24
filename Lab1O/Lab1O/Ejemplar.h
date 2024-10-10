@@ -18,8 +18,18 @@ public:
 		return codigo;
 	}
 
-	 char getTipo() const {
-		return tipo;
+	string mostrarTipo() const {
+		if (tipo == libro)
+		{
+			return "Libro";
+		}
+		else if (tipo == juego)
+		{
+			return "Juego";
+		}
+		else if (tipo == audiovisual) {
+			return "Audiovisual";
+		}
 	}
 
 	string getNombre() const {
