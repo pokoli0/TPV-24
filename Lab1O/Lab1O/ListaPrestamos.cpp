@@ -28,17 +28,15 @@ bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 		input >> n; // 7
 		arrayPrestamo = new Prestamo[maxArrayP];
 
-		for (int i = 0; i < n; i++)
+		int i = 0;
+		while (i < n && (input >> codigo >> fecha >> user))
 		{
-			input >> codigo;
-			input >> fecha;
-			input >> user;
-
 			arrayPrestamo[i].setEjemplar(catalogo.buscaEjemplar(codigo, 0, catalogo.getCapacidad()));
 			arrayPrestamo[i].setFecha(fecha);
 			arrayPrestamo[i].setUsuario(user);
 
 			contP++;
+			i++;
 		}
 	}
 
@@ -56,12 +54,12 @@ void ListaPrestamos::ordenarLista()
 void ListaPrestamos::mostrarPrestamos()
 {
 	Date* actual = new Date();
-	for (int i = 0; i < contP; i++) {
+	for (int i = 0; i < contP - 1; i++) {
 		cout << arrayPrestamo[i].getFecha() <<
 			" (en " <<
 			arrayPrestamo[i].getFecha().diff(*actual) <<
-			" dias) ";
-			//arrayPrestamo[i].getEjemplar()->getNombre();
+			" dias) "<<
+			arrayPrestamo[i].getEjemplar()->getNombre();
 
 		if (arrayPrestamo[i].getFecha().diff(*actual) < 0) {
 			cout << " (" <<
