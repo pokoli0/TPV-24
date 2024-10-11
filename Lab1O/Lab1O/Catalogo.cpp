@@ -27,17 +27,18 @@ bool Catalogo::LeeCatalogo(string fichero)
 		char tipo;
 		string titulo;
 		input >> n;
-		NumElems = n;
-		ejemplar = new Ejemplar*[n];
-		for (int i = 0; !input.eof() && i < n; i++)
+		tamArray = n;
+		arrayCatalogo = new Ejemplar[n];
+
+		for (int i = 0; i < n; i++)
 		{
-			ejemplar[i] = new Ejemplar;
+			//arrayCatalogo[i] = new Ejemplar;
 			input >> codigo;
-			ejemplar[i]->setCodigo(codigo);
+			arrayCatalogo[i].setCodigo(codigo);
 			input >> tipo;
-			ejemplar[i]->setTipo(tipo);
+			arrayCatalogo[i].setTipo(tipo);
 			getline(input, titulo);
-			ejemplar[i]->setNombre(titulo);
+			arrayCatalogo[i].setNombre(titulo);
 		}
 	}
 
@@ -50,15 +51,15 @@ Ejemplar* Catalogo::buscaEjemplar(const int cod, int ini, int fin) const
 	int elems = fin - ini;
 
 	if (elems == 0) return nullptr;
-	if (elems == 1) return ejemplar[ini];
+	if (elems == 1) return getEjemplar(ini);
 
 	int mitad = (ini + fin) / 2;
 
-	if (cod >= ejemplar[mitad]->getCodigo())
+	if (cod >= getEjemplar(mitad)->getCodigo())
 	{
 		return buscaEjemplar(cod, mitad, fin);
 	}
-	if (cod < ejemplar[mitad]->getCodigo())
+	if (cod < getEjemplar(mitad)->getCodigo())
 	{
 		return buscaEjemplar(cod, ini, mitad);
 	}
@@ -67,16 +68,16 @@ Ejemplar* Catalogo::buscaEjemplar(const int cod, int ini, int fin) const
 	return nullptr;
 }
 void Catalogo::mostrarCatalogo() {
-	if (NumElems == 0) {
+	if (tamArray == 0) {
 		cout << "No hay coches disponibles en la lista." << endl;
 	}
 
 	cout << "Lista de Libros, juegos y audiolibros:" << endl;
 	cout << "-------------------------------------------------------" << endl;
-	for (int i = 0; i < NumElems; i++) {
-		cout << "Codigo: " << ejemplar[i]->getCodigo() << endl
-			<< "Tipo: " << ejemplar[i]->mostrarTipo() << endl
-			<< "Nombre:" << ejemplar[i]->getNombre() << endl
+	for (int i = 0; i < tamArray; i++) {
+		cout << "Codigo: " << getEjemplar(i)->getCodigo() << endl
+			<< "Tipo: " << getEjemplar(i)->mostrarTipo() << endl
+			<< "Nombre:" << getEjemplar(i)->getNombre() << endl
 		//dejar espacio entre libros etc
 		<< "-------------------------------------------------------" << endl;
 	}
@@ -89,7 +90,7 @@ void Catalogo::insertaEjemplar(char tipo, string Nombre)
 	cout << "Ingrese los datos del libro a insertar: ";
 	cin >> nuevoEjemplar;
 	//ejemplar[NumElems] = nuevoEjemplar;
-	NumElems++;
+	tamArray++;
 	cout << "libro guardado exitosamente." << endl;
 }
 

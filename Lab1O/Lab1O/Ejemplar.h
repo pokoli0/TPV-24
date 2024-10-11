@@ -56,6 +56,10 @@ public:
 			diasDevolucion = 7;
 		}
 	}
+	
+	Tipo getTipo() const {
+		return tipo;
+	}
 
 	int getDiasDevolucion() { 
 		return diasDevolucion;

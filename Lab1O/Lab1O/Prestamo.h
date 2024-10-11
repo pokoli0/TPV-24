@@ -18,14 +18,24 @@ public:
 	Date getFecha() { return fecha;}
 	void setFecha(Date date) { fecha = date; }
 
-	Date getFechaDevolucion() { return fecha + (*this->ejemplar).getDiasDevolucion(); }
+	Date getFechaDevolucion() { return fecha + getDevolucion((*this->ejemplar).getTipo()); }
 
 	int getUsuario() const {return usuario;}
 	void setUsuario(int user) { usuario = user; }
 
 
-	void getDevolucion() const;
-
+	int getDevolucion(Tipo tip) const {
+		if (tip == 0)
+		{
+			return 30;
+		}
+		else if (tip == 1) {
+			return 7;
+		}
+		else if (tip == 2) {
+			return 14;
+		}
+	}
 
 	bool operator<(const Prestamo&) const;
 

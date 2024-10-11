@@ -25,19 +25,20 @@ bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 		int n, codigo, user;
 		Date fecha;
 
-		input >> n;
-		elems = new Prestamo[n];
-		capacidad = n;
+		input >> n; // 7
+		arrayPrestamo = new Prestamo[maxArrayP];
 
-		for (int i = 0; !input.eof() && i < n; i++)
+		for (int i = 0; i < n; i++)
 		{
 			input >> codigo;
 			input >> fecha;
 			input >> user;
 
-			elems[i].setEjemplar(catalogo.buscaEjemplar(codigo, 0, numElems));
-			elems[i].setFecha(fecha);
-			elems[i].setUsuario(user);
+			arrayPrestamo[i].setEjemplar(catalogo.buscaEjemplar(codigo, 0, catalogo.getCapacidad()));
+			arrayPrestamo[i].setFecha(fecha);
+			arrayPrestamo[i].setUsuario(user);
+
+			contP++;
 		}
 	}
 
@@ -48,23 +49,23 @@ bool ListaPrestamos::leerPrestamos(string fichero, Catalogo& catalogo)
 
 void ListaPrestamos::ordenarLista()
 {
-	Prestamo* a = elems + capacidad;
-	sort(elems, a);
+	Prestamo* a = arrayPrestamo + contP;
+	sort(arrayPrestamo, a);
 }
 
 void ListaPrestamos::mostrarPrestamos()
 {
 	Date* actual = new Date();
-	for (int i = 0; i < capacidad; i++) {
-		cout << elems[i].getFecha() <<
+	for (int i = 0; i < contP; i++) {
+		cout << arrayPrestamo[i].getFecha() <<
 			" (en " <<
-			elems[i].getFecha().diff(*actual) <<
+			arrayPrestamo[i].getFecha().diff(*actual) <<
 			" dias) ";
-			//elems[i].getEjemplar()->getNombre() << 
+			//arrayPrestamo[i].getEjemplar()->getNombre();
 
-		if (elems[i].getFecha().diff(*actual) < 0) {
+		if (arrayPrestamo[i].getFecha().diff(*actual) < 0) {
 			cout << " (" <<
-			elems[i].getFecha().diff(elems[i].getFechaDevolucion()) <<
+			arrayPrestamo[i].getFecha().diff(arrayPrestamo[i].getFechaDevolucion()) <<
 			" dias de penalizacion)";
 		}
 

@@ -12,14 +12,19 @@ public:
 
 	// Devuelve ejemplar segun su codigo
 	Ejemplar* buscaEjemplar(const int cod, int ini, int fin) const;
+
 	void insertaEjemplar(char tipo , string Nombre);
+
 	void mostrarCatalogo();
 	friend void operator<<(ostream&, const Catalogo&);
 
+	int getCapacidad() { return maxTam; }
+	Ejemplar* getEjemplar(int n) const { return &arrayCatalogo[n]; }
+
 private:
-	Ejemplar* elems;
-	size_t NumElems;
-	size_t capacidad;
-	Ejemplar** ejemplar;
+	Ejemplar* arrayCatalogo;
+	int tamArray;
+	int maxTam = 20;
+	
 };
 

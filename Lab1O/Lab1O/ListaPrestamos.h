@@ -11,9 +11,10 @@
 class ListaPrestamos
 {
 private:
-	Prestamo* elems;
-	size_t numElems;
-	size_t capacidad; // igual no hace falta
+	Prestamo* arrayPrestamo;
+	int tamArrayPrestamo;
+	int maxArrayP = 20;
+	int contP = 0;
 
 public:
 	ListaPrestamos() {};
@@ -28,5 +29,9 @@ public:
 	void ordena();
 	void insertaPrestamo(const Prestamo&);
 	friend void operator<<(ostream&, const ListaPrestamos&);
+
+	int getTamArrayPrestamo() {
+		return tamArrayPrestamo;
+	}
 };
 
