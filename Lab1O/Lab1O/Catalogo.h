@@ -25,6 +25,6 @@ private:
 	Ejemplar* arrayCatalogo;
 	int tamArray;
 	int maxTam = 20;
-	
+	int contC = 0;
 };
 

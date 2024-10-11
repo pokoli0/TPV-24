@@ -84,14 +84,47 @@ void Catalogo::mostrarCatalogo() {
 
 
 }
-void Catalogo::insertaEjemplar(char tipo, string Nombre)
+void Catalogo::insertaEjemplar(char tipo, string nombre)
 {
-	Ejemplar nuevoEjemplar;
-	cout << "Ingrese los datos del libro a insertar: ";
-	cin >> nuevoEjemplar;
-	//ejemplar[NumElems] = nuevoEjemplar;
-	tamArray++;
-	cout << "libro guardado exitosamente." << endl;
+	if (contC < maxTam)
+	{
+		int codigo = arrayCatalogo[tamArray - 1].getCodigo() + 1;
+
+		int tamAux = tamArray + 1;
+		Ejemplar* aux = new Ejemplar[tamAux];
+
+		copy(arrayCatalogo, arrayCatalogo + 1, aux);
+
+		delete[] arrayCatalogo;
+
+		arrayCatalogo = aux;
+		tamArray = tamAux;
+
+		arrayCatalogo[tamArray - 1].setCodigo(codigo);
+
+		switch (tipo) {
+		case 'L':
+			arrayCatalogo[tamArray - 1].setTipo(0);
+			break;
+
+		case 'A':
+			arrayCatalogo[tamArray - 1].setTipo(1);
+			break;
+
+		default:
+			arrayCatalogo[tamArray - 1].setTipo(2);
+			break;
+		}
+
+		arrayCatalogo[tamArray - 1].setNombre(nombre);
+
+		contC++;
+
+		ofstream catalogoWrite("catalogo.txt", std::ios::app);
+		catalogoWrite << codigo << " " << tipo << " " << arrayCatalogo[tamArray - 1].getNombre() << endl;
+
+		catalogoWrite.close();
+	}
 }
 
 void operator<<(ostream&, const Catalogo&)

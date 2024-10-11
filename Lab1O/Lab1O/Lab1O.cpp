@@ -46,13 +46,12 @@ int main()
         break;
 
     case 'c':
-        cout << "Seleccionada: c) Insertar ejemplar" << endl;        
-
-        cout << "Tipo de ejemplar L) Libros / A) Audiovisual / J) Juegos: " << endl;
+        cout << "Seleccionada: c) Insertar ejemplar" << endl <<
+            "Tipo de ejemplar L) Libros / A) Audiovisual / J) Juegos: " << endl;
         cin >> tipo;
 
         cout << "Inserte el nombre del ejemplar: " << endl;
-        getline(cin, nombre);
+        cin >> nombre;
         cout << "Nombre: " << nombre << endl;
 
         catalogo.insertaEjemplar(tipo, nombre);
