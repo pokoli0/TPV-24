@@ -10,12 +10,14 @@ class Texture
 {
 	SDL_Renderer* renderer = nullptr;
 	SDL_Texture* texture = nullptr;
-	int width;
-	int height;
-	int nrows;
-	int ncolumns;
-	int frameWidth;
-	int frameHeight;
+
+	//texture width and height
+	int width, height;
+	
+	int nrows, ncolumns;
+
+	//frame width and height
+	int frameWidth, frameHeight;
 
 	static SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* filename);
 
