@@ -12,7 +12,7 @@ struct TextureSpec
 	uint numRows;		// Num de frames por columna
 };
 
-// Directorio raíz de los archivos de textura
+// Directorio raiz de los archivos de textura
 const string textureRoot = "../images/";
 
 // Especificacion de las texturas del juego
@@ -70,7 +70,7 @@ Game::run()
 {
 	// Bucle principal del juego
 	while (seguir) {
-		// Marca de tiempo del inicio de la iteración
+		// Marca de tiempo del inicio de la iteracion
 		uint32_t inicio = SDL_GetTicks();
 
 		update();       // Actualiza el estado de los objetos del juego
@@ -95,6 +95,7 @@ Game::render() const
 	//textures[BACKGROUND]->render();
 	//perro->render();
 
+	// escena en pantalla 
 	SDL_RenderPresent(renderer);
 }
 

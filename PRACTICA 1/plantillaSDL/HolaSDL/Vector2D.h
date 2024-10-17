@@ -1,5 +1,6 @@
 #pragma once
 #include "checkML.h"
+
 #include <iostream>
 
 template <class T = int> //double?¿
@@ -61,4 +62,4 @@ public:
 	}
 };
 
-using point2D = Vector2D<int>;
+using Point2D = Vector2D<int>;
