@@ -25,13 +25,13 @@ public:
 	~Texture();
 
 	/// Width of a frame in pixels
-	int getFrameWidth() const;
+	int getFrameWidth() const {	return frameWidth; }
 	/// Height of a frame in pixels
-	int getFrameHeight() const;
+	int getFrameHeight() const { return frameHeight; }
 	/// Number of frames in each row
-	int getNumRows() const;
+	int getNumRows() const { return nrows; }
 	/// Number of frames in each column
-	int getNumColumns() const;
+	int getNumColumns() const { return ncolumns; }
 
 	/// Render the whole picture filling the entire screen
 	void render() const;
@@ -41,9 +41,9 @@ public:
 	void renderRect(const SDL_Rect& source) const;
 	/// Render the whole picture with additional options from SDL_RenderCopyEx
 	void render(const SDL_Rect& target,
-	            double angle,
-	            const SDL_Point* center = nullptr,
-	            SDL_RendererFlip flip = SDL_FLIP_NONE) const;
+		double angle,
+		const SDL_Point* center = nullptr,
+		SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
 	/// Render a frame to the given rectangle
 	void renderFrame(const SDL_Rect& target, int row, int col) const;
@@ -51,38 +51,15 @@ public:
 	void renderFrame(const SDL_Rect& target, int row, int col, SDL_RendererFlip flip) const;
 	/// Render a frame with additional options from SDL_RenderCopyEx
 	void renderFrame(const SDL_Rect& target,
-	                 int row,
-	                 int col,
-	                 double angle,
-	                 const SDL_Point* center = nullptr,
-	                 SDL_RendererFlip flip = SDL_FLIP_NONE) const;
+		int row,
+		int col,
+		double angle,
+		const SDL_Point* center = nullptr,
+		SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
 	/// Render the whole picture to the given rectangle with modified color
 	void render(const SDL_Rect& target, SDL_Color color) const;
 };
 
-inline int
-Texture::getFrameWidth() const
-{
-	return frameWidth;
-}
-
-inline int
-Texture::getFrameHeight() const
-{
-	return frameHeight;
-}
-
-inline int
-Texture::getNumRows() const
-{
-	return nrows;
-}
-
-inline int
-Texture::getNumColumns() const
-{
-	return ncolumns;
-}
 
 #endif // TEXTURE_H

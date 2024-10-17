@@ -61,3 +61,4 @@ Game::getTexture(TextureName name) const
 {
 	return textures[name];
 }
+
