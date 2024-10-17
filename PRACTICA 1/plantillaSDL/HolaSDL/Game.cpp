@@ -1,6 +1,8 @@
 #include <string>
 
 #include "Game.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -65,9 +67,31 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void
-Game::run()
+void Game::loadMap(string fichero)
 {
+	ifstream f; 
+	f.open(fichero);
+	if (!f.is_open()) {
+		throw string("fichero de mapa no encontrado");
+	}
+	else {
+		string linea;
+		getline(f, linea);
+
+		cout << "ver loadMap()" << endl;
+
+		
+
+
+	}
+
+	f.close();
+}
+
+void Game::run()
+{
+	loadMap("../assets/maps/world1.csv");
+
 	// Bucle principal del juego
 	while (seguir) {
 		// Marca de tiempo del inicio de la iteracion

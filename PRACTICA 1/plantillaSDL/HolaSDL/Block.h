@@ -22,8 +22,8 @@ private:
 		MONEDA
 	};
 
-	Texture* texturaBloque;
-	Game* game;
+	//Texture* texturaBloque;
+	//Game* game;
 
 public:
 

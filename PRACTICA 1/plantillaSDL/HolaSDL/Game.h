@@ -9,8 +9,10 @@
 
 // Nuestras clases
 #include "Texture.h"
+#include "Block.h"
 
 using uint = unsigned int;
+using namespace std;
 
 //
 // Clase que representa el juego y controla todos sus aspectos
@@ -69,7 +71,7 @@ public:
 
 	// leera lineas completas con getline para pasarselo al constructor del objeto,
 	// construira un flujo temporal istringstream ?¿?¿
-	void loadMap();
+	void loadMap(string fichero);
 };
 
 inline Texture*
