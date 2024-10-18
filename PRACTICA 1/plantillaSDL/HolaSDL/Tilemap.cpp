@@ -18,7 +18,7 @@ void Tilemap::render()
 	for (int i = 0; i < indices.size(); i++) {
 
 		if (indices[i] == "-1") {
-			//?¿¿?¿?¿? del dog
+			//?¿¿?¿?¿? del dogggg
 			SDL_Rect destino{ x, y, texture->getFrameWidth(), texture->getFrameHeight() };
 			texture->renderFrame(destino, 0, (abs(x) / FRAME_PERIOD) % texture->getNumColumns());
 		}
