@@ -75,8 +75,9 @@ void ListaPrestamos::ordena()
 {
 }
 
-void ListaPrestamos::insertaPrestamo(const Prestamo&)
+void ListaPrestamos::insertaPrestamo(const Prestamo& prest)
 {
+
 }
 
 void operator<<(ostream&, const ListaPrestamos&)

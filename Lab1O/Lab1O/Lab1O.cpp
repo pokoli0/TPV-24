@@ -1,3 +1,6 @@
+// PAULA SIERRA LUQUE
+// MARCOS PANTOJA 
+
 #include <iostream>
 #include <Windows.h>
 #include "Catalogo.h"

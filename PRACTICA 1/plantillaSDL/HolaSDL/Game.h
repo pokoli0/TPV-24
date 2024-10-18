@@ -3,16 +3,21 @@
 
 // Biblioteca estándar de C++
 #include <array>
+#include <vector>
+#include <sstream> 
 
 // Biblioteca SDL
 #include <SDL.h>
 
 // Nuestras clases
 #include "Texture.h"
+#include "Tilemap.h"
 #include "Block.h"
 
 using uint = unsigned int;
 using namespace std;
+
+class Tilemap;
 
 //
 // Clase que representa el juego y controla todos sus aspectos
@@ -23,8 +28,7 @@ public:
 	// Identificadores de las texturas
 	enum TextureName {
 		BACKGROUND,
-		DOG,
-		HELICOPTER,
+		MARIO,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -36,6 +40,7 @@ private:
 
 	// Array con todas las texturas del juego
 	std::array<Texture*, NUM_TEXTURES> textures;
+
 	// Interruptor para terminar el juego
 	bool seguir;
 
@@ -43,6 +48,7 @@ private:
 	int mapOffset;
 
 	// Objetos del juego
+	Tilemap* tilemap;
 	//Dog* perro;
 
 public:
@@ -54,6 +60,7 @@ public:
 	void handleEvents();
 
 	Texture* getTexture(TextureName name) const;
+	array<Texture*, NUM_TEXTURES> getTexturesArray() const { return textures; }
 
 	// Constante globales
 	static constexpr uint WIN_WIDTH = 800;
