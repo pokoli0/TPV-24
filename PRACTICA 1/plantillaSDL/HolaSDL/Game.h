@@ -19,6 +19,10 @@ using namespace std;
 
 class Tilemap;
 
+//constexpr int TILE_SIDE = 32;
+//constexpr int WINDOW_WIDTH = 18;
+//constexpr int WINDOW_HEIGHT = 16;
+
 //
 // Clase que representa el juego y controla todos sus aspectos
 //

@@ -8,23 +8,26 @@ Tilemap::Tilemap(Game* g,  vector<vector<int>> ind)
 {
 	indices = ind;
 	game = g;
-	texture = game->getTexture(Game::BACKGROUND);
+	background = game->getTexture(Game::BACKGROUND);
 
 }
 
 void Tilemap::render()
 {
 
+
+
 	int offset = game->getMapOffset();
 
-	for (int i = 0; i < indices.size(); i++) {
+	for (int i = 0; i < 16; i++) {
 
-		for (int j = 0; j < indices[i].size(); j++)
+		for (int j = 0; j < 18; j++)
 		{
 			if (indices[i][j] == -1) {
+				SDL_Rect 
 				//?¿¿?¿?¿? del dogggg
 				SDL_Rect destino{ x, y, texture->getFrameWidth(), texture->getFrameHeight() };
-				texture->renderFrame(destino, 0, (abs(x) / FRAME_PERIOD) % texture->getNumColumns());
+				background->renderFrame(destino, 0, (abs(x) / FRAME_PERIOD) % background->getNumColumns());
 			}
 		}
 	}

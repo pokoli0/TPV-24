@@ -15,7 +15,7 @@ class Game;
 class Tilemap
 {
 private:
-	Texture* texture;
+	Texture* background;
 	Game* game;
 
 	vector<vector<int>> indices;
