@@ -18,12 +18,12 @@ private:
 	Texture* texture;
 	Game* game;
 
-	vector<string> indices;
+	vector<vector<int>> indices;
 	int x, y;
 
 public:
 	Tilemap();
-	Tilemap(Game* g, vector<string> ind);
+	Tilemap(Game* g, vector<vector<int>> ind);
 	~Tilemap();
 
 	void render();

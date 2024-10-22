@@ -75,14 +75,17 @@ void Game::loadMap(string fichero)
 	}
 	else {
 		string linea;
-		vector<std::string> fila;
+		vector<vector<int>> matriz;
 
+		int i = 0;
 		while(getline(f,linea)){
 			stringstream ss(linea);
-			string valor;
+			int valor;
 
+			
+			
 			while (getline(ss, valor, ',')) {
-				fila.push_back(valor);
+				matriz[i].push_back(valor);
 			}
 
 			// Imprimir los valores de la fila
@@ -91,9 +94,10 @@ void Game::loadMap(string fichero)
 			//}
 			//std::cout << std::endl;
 
+			i++;
 		}
 		
-		tilemap = new Tilemap(this, fila);
+		tilemap = new Tilemap(this, matriz);
 
 	}
 
