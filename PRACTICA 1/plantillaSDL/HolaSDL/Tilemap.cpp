@@ -10,11 +10,13 @@ Tilemap::Tilemap(Game* g,  vector<vector<int>> ind)
 	game = g;
 	texture = game->getTexture(Game::BACKGROUND);
 
-
 }
 
 void Tilemap::render()
 {
+
+	int offset = game->getMapOffset();
+
 	for (int i = 0; i < indices.size(); i++) {
 
 		for (int j = 0; j < indices[i].size(); j++)

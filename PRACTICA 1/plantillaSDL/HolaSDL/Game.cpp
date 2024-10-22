@@ -74,31 +74,27 @@ void Game::loadMap(string fichero)
 		throw string("fichero de mapa no encontrado");
 	}
 	else {
-		string linea;
-		vector<vector<int>> matriz;
+		std::string linea;
+		std::vector<vector<int>> matriz;
 
-		int i = 0;
-		while(getline(f,linea)){
-			stringstream ss(linea);
-			int valor;
+		while (std::getline(f, linea)) {
+			std::istringstream stream(linea);
+			std::string valor;
+			std::vector<int> fila;
 
-			
-			
-			while (getline(ss, valor, ',')) {
-				matriz[i].push_back(valor);
+
+			// Leer cada valor separado por coma
+			while (std::getline(stream, valor, ',')) {
+				std::istringstream convertir(valor); // Crear un istringstream para la conversión
+				int num;
+				convertir >> num; // Convertir el string a int
+				fila.push_back(num); // Agregar el número a la fila
 			}
 
-			// Imprimir los valores de la fila
-			//for (const auto& elemento : fila) {
-			//	std::cout << elemento << " ";
-			//}
-			//std::cout << std::endl;
-
-			i++;
+			matriz.push_back(fila); // Agregar la fila a la matriz
 		}
 		
 		tilemap = new Tilemap(this, matriz);
-
 	}
 
 	f.close();
