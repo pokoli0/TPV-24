@@ -24,7 +24,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 };
 
 Game::Game()
- : seguir(true)
+ : seguir(true), mapOffset(0)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -49,6 +49,7 @@ Game::Game()
 
 	//Crea los objetos del juego
 	//perro = new Dog(this, -textures[DOG]->getFrameWidth(), 390);
+
 }
 
 Game::~Game()

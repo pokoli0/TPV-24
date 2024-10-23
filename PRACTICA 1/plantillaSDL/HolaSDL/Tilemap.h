@@ -26,6 +26,8 @@ public:
 	Tilemap(Game* g, vector<vector<int>> ind);
 	~Tilemap();
 
+	void renderTilemap();
+
 	void render();
 	void update();
 
