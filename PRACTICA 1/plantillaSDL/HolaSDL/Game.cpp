@@ -50,7 +50,7 @@ Game::Game()
 
 	//Crea los objetos del juego
 	tilemap = new Tilemap(this, "../assets/maps/world1.csv");
-	player = new Player(this, 50, 50);
+	player = new Player(this, 32, 32 * 13);
 }
 
 Game::~Game()
@@ -126,9 +126,17 @@ Game::handleEvents()
 			seguir = false;
 		}
 		else if (evento.type == SDL_KEYDOWN) {
-			if (evento.key.keysym.sym == SDLK_RIGHT) {
-				mapOffset++;
+			if (evento.key.keysym.sym == SDLK_RIGHT)
+			{
+				player->handleEvents(1);
 			}
+			else if (evento.key.keysym.sym == SDLK_LEFT)
+			{
+				player->handleEvents(-1);
+			}
+		}
+		else if (evento.type == SDL_KEYUP){
+			player->handleEvents(0);
 		}
 	}
 }

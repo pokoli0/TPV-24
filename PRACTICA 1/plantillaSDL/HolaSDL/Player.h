@@ -42,7 +42,7 @@ public:
 	void update();
 
 	// maneja eventos de teclado y determina el estado del movimiento
-	void handleEvents();
+	void handleEvents(int direction);
 
 	//detecta colisiones y recibe daño
 	//Cuando Mario colisione con un enemigo o caiga en una fosa del mapa se reducirá su número de vidas

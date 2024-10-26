@@ -93,14 +93,14 @@ void Tilemap::renderTilemap()
 			// Si el índice es -1 no se pinta nada
 			if (indice != -1) {
 				// Separa número de fila y de columna
-				int fx = indice / 9;
-				int fy = indice % 9;
+				int fx = indice / 9;								// !!!!! esto estaba al reves (/ por %)
+				int fy = indice % 9;								// !!!!! esto estaba al reves (/ por %)
 
 				rect.x = -d0 + i * TILE_SIDE;
 				rect.y = j * TILE_SIDE;
 
 				// Usa renderFrame para pintar la tesela
-				background->renderFrame(rect, fx, fy);
+				background->renderFrame(rect, fx, fy);				// !!!!! esto estaba al reves (fx por fy)
 			}
 		}
 	}

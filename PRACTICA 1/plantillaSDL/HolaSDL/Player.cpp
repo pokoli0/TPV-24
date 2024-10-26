@@ -9,7 +9,7 @@ Player::Player(Game* g, int posx, int posy)
 	game = g;
 	actualAspect = MARIO;
 	lives = 3;
-	dir = 1;
+	dir = 0;
 
 	x = posx;
 	y = posy;
@@ -41,9 +41,27 @@ void Player::render()
 
 void Player::update()
 {
+	int offset = game->getMapOffset();
+
 	// movimiento
+	if (dir == 1) {
+		if (x >= Game::WIN_WIDTH / 2) {
+			game->setMapOffset(offset + 5);
+		}
+		else {
+			x = x + 5;
+		}
+	}
+	else if (dir == -1) {
+		if (x > TILE_SIDE) {
+			x = x - 5;
+		}
+	}
+}
 
-	//...
-
-	render();
+void Player::handleEvents(int direction)
+{
+	// actualiza direccion de mario
+	dir = direction;
+	cout << "Mario X: " << x << endl;
 }

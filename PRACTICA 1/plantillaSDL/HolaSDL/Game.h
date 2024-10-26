@@ -70,8 +70,8 @@ public:
 	array<Texture*, NUM_TEXTURES> getTexturesArray() const { return textures; }
 
 	// Constante globales
-	static constexpr uint WIN_WIDTH = 800;
-	static constexpr uint WIN_HEIGHT = 600;
+	static constexpr uint WIN_WIDTH = TILE_SIDE * WINDOW_WIDTH;
+	static constexpr uint WIN_HEIGHT = TILE_SIDE * WINDOW_HEIGHT;
 	static constexpr uint FRAME_RATE = 50;
 
 	// aqui se cargan las texturas y se guardan en el array textures
@@ -79,6 +79,7 @@ public:
 	~Game();
 
 	int getMapOffset() { return mapOffset; }
+	void setMapOffset(int m) { mapOffset = m; }
 
 	// se encarga de invertir la direccion de goombas, koopas y champis ?
 	void collides();
