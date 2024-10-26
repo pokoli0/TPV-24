@@ -29,7 +29,7 @@ void Tilemap::loadTilemap(string fichero)
 	ifstream f;
 	f.open(fichero);
 	if (!f.is_open()) {
-		throw string("fichero de mapa no encontrado");
+		throw string("fichero de mapa worldX.csv no encontrado");
 	}
 	else {
 		string linea;

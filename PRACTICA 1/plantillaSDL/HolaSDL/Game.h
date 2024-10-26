@@ -4,7 +4,9 @@
 // Biblioteca estándar de C++
 #include <array>
 #include <vector>
-
+#include <string>
+#include <iostream>
+#include <fstream>
 
 // Biblioteca SDL
 #include <SDL.h>
@@ -77,6 +79,8 @@ public:
 	// aqui se cargan las texturas y se guardan en el array textures
 	Game();
 	~Game();
+
+	void loadObjectMap();
 
 	int getMapOffset() { return mapOffset; }
 	void setMapOffset(int m) { mapOffset = m; }

@@ -1,10 +1,4 @@
-#include <string>
-
 #include "Game.h"
-#include <iostream>
-#include <fstream>
-
-using namespace std;
 
 // Formato de la especificaciÃ³n de una textura
 struct TextureSpec
@@ -67,6 +61,38 @@ Game::~Game()
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+}
+
+void Game::loadObjectMap()
+{
+	const char* DEFAULT_MAP = "../assets/maps/world1.txt";
+
+	// Carga el mapa
+	ifstream file(DEFAULT_MAP);
+
+	if (!file.is_open()) {
+		throw string("fichero de mapa worldX.txt no encontrado");
+	}
+
+	// Leemos el mapa línea a línea para evitar acarreo de errores
+	// y permitir extensiones del formato
+	string line;
+	getline(file, line);
+
+	while (!file) {
+		// Usamos un stringstream para leer la línea como si fuera un flujo
+		stringstream lineStream(line);
+
+		char tipo;
+		lineStream >> tipo;
+
+		switch (tipo) {
+		case 'M':
+			//player = new Player(this, lineStream);
+			break;
+			// uno para cada objeto
+		}
+	}
 }
 
 
