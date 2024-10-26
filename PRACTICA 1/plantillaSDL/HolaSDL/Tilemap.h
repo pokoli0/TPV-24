@@ -3,6 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <sstream> 
+#include <iostream>
+#include <fstream>
+
 #include "Texture.h"
 #include "Game.h"
 
@@ -15,20 +19,24 @@ class Game;
 class Tilemap
 {
 private:
-	Texture* background;
-	Game* game;
+	Texture* texture = nullptr;
+	Texture* background = nullptr;
+	Game* game = nullptr;
 
 	vector<vector<int>> indices;
 	int x, y;
 
 public:
 	Tilemap();
-	Tilemap(Game* g, vector<vector<int>> ind);
+	Tilemap(Game* g, string f);
 	~Tilemap();
-
+	
+	// leera lineas completas con getline para pasarselo al constructor del objeto
+	void loadTilemap(string fichero);
 	void renderTilemap();
 
 	void render();
+	// mueve el fondo
 	void update();
 
 	// detecta colisiones

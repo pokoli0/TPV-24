@@ -49,13 +49,14 @@ Game::Game()
 
 	//Crea los objetos del juego
 	//perro = new Dog(this, -textures[DOG]->getFrameWidth(), 390);
+	tilemap = new Tilemap(this, "../assets/maps/world1.csv");
 
 }
 
 Game::~Game()
 {
 	// Elimina los objetos del juego
-	//delete perro;
+	delete tilemap;
 
 	// Elimina las texturas
 	for (Texture* texture : textures)
@@ -67,44 +68,9 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::loadMap(string fichero)
-{
-	ifstream f; 
-	f.open(fichero);
-	if (!f.is_open()) {
-		throw string("fichero de mapa no encontrado");
-	}
-	else {
-		std::string linea;
-		std::vector<vector<int>> matriz;
-
-		while (std::getline(f, linea)) {
-			std::istringstream stream(linea);
-			std::string valor;
-			std::vector<int> fila;
-
-
-			// Leer cada valor separado por coma
-			while (std::getline(stream, valor, ',')) {
-				std::istringstream convertir(valor); // Crear un istringstream para la conversión
-				int num;
-				convertir >> num; // Convertir el string a int
-				fila.push_back(num); // Agregar el número a la fila
-			}
-
-			matriz.push_back(fila); // Agregar la fila a la matriz
-		}
-		
-		tilemap = new Tilemap(this, matriz);
-	}
-
-	f.close();
-}
 
 void Game::run()
 {
-	loadMap("../assets/maps/world1.csv");
-
 	// Bucle principal del juego
 	while (seguir) {
 		// Marca de tiempo del inicio de la iteracion
@@ -126,12 +92,16 @@ void Game::run()
 void
 Game::render() const
 {
+	// Cambia el color de fondo
+	SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
 	//textures[BACKGROUND]->render();
 	//perro->render();
 	tilemap->render();
+
 	// escena en pantalla 
 	SDL_RenderPresent(renderer);
 }
@@ -140,7 +110,7 @@ void
 Game::update()
 {
 	// Actualiza los objetos del juego
-	//perro->update();
+	tilemap->update();
 }
 
 void
@@ -149,11 +119,15 @@ Game::handleEvents()
 	// Procesamiento de eventos
 	SDL_Event evento;
 
+
 	while (SDL_PollEvent(&evento)) {
-		if (evento.type == SDL_QUIT)
+		if (evento.type == SDL_QUIT) {
 			seguir = false;
+		}
 		else if (evento.type == SDL_KEYDOWN) {
-			//perro->handleEvent(evento);
+			if (evento.key.keysym.sym == SDLK_RIGHT) {
+				mapOffset++;
+			}
 		}
 	}
 }

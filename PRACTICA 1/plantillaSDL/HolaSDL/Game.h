@@ -4,7 +4,7 @@
 // Biblioteca estándar de C++
 #include <array>
 #include <vector>
-#include <sstream> 
+
 
 // Biblioteca SDL
 #include <SDL.h>
@@ -19,9 +19,10 @@ using namespace std;
 
 class Tilemap;
 
-//constexpr int TILE_SIDE = 32;
-//constexpr int WINDOW_WIDTH = 18;
-//constexpr int WINDOW_HEIGHT = 16;
+static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
+static constexpr int WINDOW_WIDTH = 18;
+static constexpr int WINDOW_HEIGHT = 16;
+
 
 //
 // Clase que representa el juego y controla todos sus aspectos
@@ -80,9 +81,8 @@ public:
 	// se encarga de invertir la direccion de goombas, koopas y champis ?
 	void collides();
 
-	// leera lineas completas con getline para pasarselo al constructor del objeto,
-	// construira un flujo temporal istringstream ?¿?¿
-	void loadMap(string fichero);
+
+
 };
 
 inline Texture*
