@@ -18,9 +18,10 @@ struct TextureSpec
 const string textureRoot = "../assets/imgs/";
 
 // Especificacion de las texturas del juego
-const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
-	TextureSpec{"background.png", 9, 7},
-	{"mario.png", 12, 1},
+const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
+{
+	TextureSpec	{"background.png", 9, 7},
+				{"mario.png", 12, 1},
 };
 
 Game::Game()
@@ -49,7 +50,7 @@ Game::Game()
 
 	//Crea los objetos del juego
 	tilemap = new Tilemap(this, "../assets/maps/world1.csv");
-	player = new Player(this);
+	player = new Player(this, 50, 50);
 }
 
 Game::~Game()
@@ -110,7 +111,7 @@ Game::update()
 {
 	// Actualiza los objetos del juego
 	tilemap->update();
-	//mario->update();
+	player->update();
 }
 
 void

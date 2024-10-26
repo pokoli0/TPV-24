@@ -35,11 +35,12 @@ private:
 
 public:
 	Player();
-	Player(Game* g);
+	Player(Game* g, int x, int y);
 	~Player();
 
 	void render();
 	void update();
+
 	// maneja eventos de teclado y determina el estado del movimiento
 	void handleEvents();
 

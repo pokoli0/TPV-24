@@ -14,6 +14,8 @@ Tilemap::Tilemap(Game* g, string f)
 	loadTilemap(f);
 	game = g;
 	background = game->getTexture(Game::BACKGROUND);
+
+	cout << "Tilemap" << endl;
 }
 
 Tilemap::~Tilemap()
@@ -33,25 +35,28 @@ void Tilemap::loadTilemap(string fichero)
 		string linea;
 		vector<vector<int>> matriz;
 
-		while (getline(f, linea)) {
-			istringstream stream(linea);
-			string valor;
-			vector<int> fila;
+		while (getline(f, linea)) // lee linea del fichero f y lo guarda en string linea 
+		{
+			istringstream stream(linea); // para procesar la linea
+			string valor; // almacena temporalmente el valor extraido de la linea 
 
+			vector<int> fila; // para almacenar nums de la fila
 
 			// Leer cada valor separado por coma
-			while (getline(stream, valor, ',')) {
-				istringstream convertir(valor); // Crear un istringstream para la conversión
-				int num;
-				convertir >> num; // Convertir el string a int
+			while (getline(stream, valor, ',')) // lee cada valor de la linea (stream), separando los valores por comas
+			{
+				istringstream convertir(valor); // istringstream para la conversion de string a int
 
-				fila.push_back(num); // Agregar el número a la fila
+				int num;
+				convertir >> num; // guardamos el int convertido en num
+
+				fila.push_back(num); // pushback del numero a la fila
 			}
 
 			indices.push_back(fila); // Agregar la fila a la matriz
-
 		}
 
+		// para comprobar que se ha guardado bien: 
 		//for (const auto& row : indices) {
 		//	for (const auto& value : row) {
 		//		std::cout << value << " ";
@@ -78,27 +83,24 @@ void Tilemap::renderTilemap()
 	rect.h = TILE_SIDE;
 
 	// Pintamos los WINDOW_WIDTH + 1 (aunque se salga) x WINDOW_HEIGHT recuadros del mapa
-	for (int i = 0; i < WINDOW_WIDTH + 1; ++i) {
-		for (int j = 0; j < WINDOW_HEIGHT; ++j) {
+	for (int i = 0; i < WINDOW_WIDTH + 1; ++i) 
+	{
+		for (int j = 0; j < WINDOW_HEIGHT; ++j) 
+		{
+			// Índice en el conjunto de patrones de la matriz de índices
+			int indice = indices[j][x0 + i];
 
-			if (x0 + i < indices.size() && j < indices[0].size()) {
-				// Índice en el conjunto de patrones de la matriz de índices
-				int indice = indices[x0 + i][j];
+			// Si el índice es -1 no se pinta nada
+			if (indice != -1) {
+				// Separa número de fila y de columna
+				int fx = indice / 9;
+				int fy = indice % 9;
 
+				rect.x = -d0 + i * TILE_SIDE;
+				rect.y = j * TILE_SIDE;
 
-				// Si el índice es -1 no se pinta nada
-				if (indice != -1) {
-					// Separa número de fila y de columna
-					int fx = indice / 9;
-					int fy = indice % 9;
-
-					rect.x = j * TILE_SIDE - d0;
-					rect.y = i * TILE_SIDE;
-
-					// Usa renderFrame para pintar la tesela
-					background->renderFrame(rect, fx, fy);
-				}
-
+				// Usa renderFrame para pintar la tesela
+				background->renderFrame(rect, fx, fy);
 			}
 		}
 	}
@@ -106,13 +108,10 @@ void Tilemap::renderTilemap()
 
 void Tilemap::render()
 {
-
 	renderTilemap();
-	
 }
 
 void Tilemap::update()
 {
-
 	renderTilemap();
 }

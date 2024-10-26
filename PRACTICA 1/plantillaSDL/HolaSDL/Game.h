@@ -22,8 +22,8 @@ class Tilemap;
 class Player;
 
 static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
-static constexpr int WINDOW_WIDTH = 16;
-static constexpr int WINDOW_HEIGHT = 18;
+static constexpr int WINDOW_WIDTH = 18;
+static constexpr int WINDOW_HEIGHT = 16;
 
 
 //
@@ -51,7 +51,7 @@ private:
 	// Interruptor para terminar el juego
 	bool seguir;
 
-	// desplazamiento del mapa
+	// coordenada x del extremo izquierdo de la vista
 	int mapOffset;
 
 	// Objetos del juego

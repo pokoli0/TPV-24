@@ -4,23 +4,25 @@ Player::Player()
 {
 }
 
-Player::Player(Game* g)
+Player::Player(Game* g, int posx, int posy)
 {
 	game = g;
 	actualAspect = MARIO;
 	lives = 3;
 	dir = 1;
 
-	x = 20;
-	y = 20;
+	x = posx;
+	y = posy;
 
 	texture = game->getTexture(Game::MARIO);
+
+	cout << "Mario" << endl;
 }
 
 Player::~Player()
 {
 	//texture = nullptr;
-	//delete texture;
+	delete texture;
 }
 
 void Player::render()
@@ -31,7 +33,17 @@ void Player::render()
 	rect.w = texture->getFrameWidth();
 	rect.h = texture->getFrameHeight();
 
-	texture->renderFrame(rect, 0, texture->getNumColumns());
+	// fila 0 (no hay mas filas)
+	// columna 0 - frame 0
+	texture->renderFrame(rect, 0, 0);
 
-	cout << "render player" << endl;
+}
+
+void Player::update()
+{
+	// movimiento
+
+	//...
+
+	render();
 }
