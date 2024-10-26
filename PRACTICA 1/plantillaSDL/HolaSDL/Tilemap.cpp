@@ -20,7 +20,6 @@ Tilemap::~Tilemap()
 {
 	delete texture;
 	delete background;
-	delete game;
 }
 
 void Tilemap::loadTilemap(string fichero)
@@ -86,16 +85,20 @@ void Tilemap::renderTilemap()
 				// Índice en el conjunto de patrones de la matriz de índices
 				int indice = indices[x0 + i][j];
 
-				// Separa número de fila y de columna
-				int fx = indice / 9;
-				int fy = indice % 9;
 
-				rect.y = i * TILE_SIDE;
-				rect.x = j * TILE_SIDE - d0; // raro
+				// Si el índice es -1 no se pinta nada
+				if (indice != -1) {
+					// Separa número de fila y de columna
+					int fx = indice / 9;
+					int fy = indice % 9;
 
+					rect.x = j * TILE_SIDE - d0;
+					rect.y = i * TILE_SIDE;
 
-				// Usa renderFrame para pintar la tesela
-				background->renderFrame(rect, fx, fy);
+					// Usa renderFrame para pintar la tesela
+					background->renderFrame(rect, fx, fy);
+				}
+
 			}
 		}
 	}

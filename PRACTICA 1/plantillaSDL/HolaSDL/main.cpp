@@ -38,7 +38,7 @@ void firstTest()
 
 int main(int argc, char* argv[])
 {
-	firstTest();
+	//firstTest();
 
 	try {
 		Game* game = new Game();

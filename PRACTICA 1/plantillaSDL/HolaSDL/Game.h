@@ -12,16 +12,18 @@
 // Nuestras clases
 #include "Texture.h"
 #include "Tilemap.h"
+#include "Player.h"
 #include "Block.h"
 
 using uint = unsigned int;
 using namespace std;
 
 class Tilemap;
+class Player;
 
 static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
-static constexpr int WINDOW_WIDTH = 18;
-static constexpr int WINDOW_HEIGHT = 16;
+static constexpr int WINDOW_WIDTH = 16;
+static constexpr int WINDOW_HEIGHT = 18;
 
 
 //
@@ -54,7 +56,7 @@ private:
 
 	// Objetos del juego
 	Tilemap* tilemap;
-	//Dog* perro;
+	Player* player;
 
 public:
 	// bucle principal del juego
@@ -80,9 +82,6 @@ public:
 
 	// se encarga de invertir la direccion de goombas, koopas y champis ?
 	void collides();
-
-
-
 };
 
 inline Texture*

@@ -28,7 +28,7 @@ Game::Game()
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow("First test with SDL",
+	window = SDL_CreateWindow("Super Mario",
 	                          SDL_WINDOWPOS_CENTERED,
 	                          SDL_WINDOWPOS_CENTERED,
 	                          WIN_WIDTH,
@@ -45,18 +45,18 @@ Game::Game()
 		textures[i] = new Texture(renderer,
 		                          (textureRoot + textureSpec[i].name).c_str(),
 		                          textureSpec[i].numRows,
-					  textureSpec[i].numColumns);
+								  textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	//perro = new Dog(this, -textures[DOG]->getFrameWidth(), 390);
 	tilemap = new Tilemap(this, "../assets/maps/world1.csv");
-
+	player = new Player(this);
 }
 
 Game::~Game()
 {
 	// Elimina los objetos del juego
 	delete tilemap;
+	delete player;
 
 	// Elimina las texturas
 	for (Texture* texture : textures)
@@ -98,9 +98,8 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
-	//textures[BACKGROUND]->render();
-	//perro->render();
 	tilemap->render();
+	player->render();
 
 	// escena en pantalla 
 	SDL_RenderPresent(renderer);
@@ -111,6 +110,7 @@ Game::update()
 {
 	// Actualiza los objetos del juego
 	tilemap->update();
+	//mario->update();
 }
 
 void
