@@ -151,18 +151,8 @@ Game::handleEvents()
 		if (evento.type == SDL_QUIT) {
 			seguir = false;
 		}
-		else if (evento.type == SDL_KEYDOWN) {
-			if (evento.key.keysym.sym == SDLK_RIGHT)
-			{
-				player->handleEvents(1);
-			}
-			else if (evento.key.keysym.sym == SDLK_LEFT)
-			{
-				player->handleEvents(-1);
-			}
-		}
-		else if (evento.type == SDL_KEYUP){
-			player->handleEvents(0);
+		else {
+			player->handleEvents(evento);
 		}
 	}
 }

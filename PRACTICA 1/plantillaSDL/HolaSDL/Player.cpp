@@ -59,9 +59,26 @@ void Player::update()
 	}
 }
 
-void Player::handleEvents(int direction)
+void Player::handleEvents(const SDL_Event& event)
 {
-	// actualiza direccion de mario
-	dir = direction;
-	cout << "Mario X: " << x << endl;
+	if (event.type == SDL_KEYDOWN)
+	{
+		switch (event.key.keysym.sym) {
+		case SDLK_RIGHT:
+			dir = 1;
+			break;
+
+		case SDLK_LEFT:
+			dir = -1;
+			break;
+
+		case SDLK_SPACE:
+			cout << "salto" << endl;
+			break;
+		}
+	}
+	else if (event.type == SDL_KEYUP) {
+		dir = 0;
+		cout << "suelto tecla" << endl;
+	}
 }
