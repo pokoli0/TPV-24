@@ -21,7 +21,6 @@ private:
 
 	Point2D<int> pos;
 	int speed;
-	int maxHeight;
 
 	// 1 si mario se mueve hacia la derecha, 
 	// -1 si es hacia la izquierda
@@ -47,6 +46,10 @@ private:
 	bool flipSprite;
 	// para la animacion de salto
 	bool jumping;
+     
+	int jumpVelocity;
+	int gravity;         
+	int groundY;
 
 public:
 	Player();

@@ -13,7 +13,9 @@ Player::Player(Game* g, int posx, int posy)
 
 	pos = Point2D<int>(posx, posy);
 	speed = 8;
-	maxHeight = 400;
+	
+
+	groundY = posy;
 
 	texture = game->getTexture(Game::MARIO);
 	
@@ -22,6 +24,8 @@ Player::Player(Game* g, int posx, int posy)
 	frameCounter = 0;
 	flipSprite = false;
 	jumping = false;
+	jumpVelocity = 0;
+	gravity = 1;
 
 	cout << "Mario" << endl;
 }
@@ -58,7 +62,17 @@ void Player::render()
 void Player::update()
 {
 	move();
+	if (jumping) {
+		pos.setY(pos.getY() + jumpVelocity);
+		jumpVelocity += gravity; // Aumenta velocidad hacia abajo
 
+		// Comprobamos si ha alcanzado el suelo
+		if (pos.getY() >= groundY) {
+			pos.setY(groundY);
+			jumping = false; 
+			jumpVelocity = 0; 
+		}
+	}
 	updateAnim();
 }
 
@@ -88,17 +102,21 @@ void Player::move()
 void Player::jump()
 {
 	cout << "salto" << endl;
-	jumping = true;
 
+	if (!jumping) {
+		cout << "Salto" << endl;
+		jumping = true;
+		jumpVelocity = -15; 
+	}
 
-
-	// hay que poner el jumping a false cuando acabe la accion
-	jumping = false;
 }
 
 void Player::updateAnim()
 {
-	if (dir != 0) // si se esta moviendo
+	if (jumping) {
+		frame = 6;
+	}
+	else if (dir != 0) // si se esta moviendo
 	{
 		frameCounter++;
 		if (frameCounter >= 1){		
@@ -115,9 +133,6 @@ void Player::updateAnim()
 				frame = 4;
 			}
 		}
-	}
-	else if (jumping) {
-		frame = 6;
 	}
 	else {
 		frame = 0;
