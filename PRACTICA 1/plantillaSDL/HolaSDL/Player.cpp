@@ -10,8 +10,10 @@ Player::Player(Game* g, int posx, int posy)
 	actualAspect = MARIO;
 	lives = 3;
 	dir = 0;
+	
+	initPos = Point2D<int>(posx, posy);
+	pos = initPos;
 
-	pos = Point2D<int>(posx, posy);
 	speed = 5; // def: 8
 	//backgroundScrollSpeed = 5; // def: 5
 	
@@ -62,7 +64,6 @@ void Player::render()
 		rect.h = supertexture->getFrameHeight() * 2;
 		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
-
 
 	// anterior renderframe:
 	// fila 0 (no hay mas filas)
@@ -160,6 +161,19 @@ void Player::grow()
 	actualAspect = SUPERMARIO;
 }
 
+void Player::resetLevel()
+{
+	cout << "Level Reset" << endl;
+	game->setMapOffset(0);
+	pos = initPos;
+	actualAspect = MARIO;
+
+	if (lives == 0) {
+		cout << "Game Lost" << endl;
+		lives = 3; // resetGame
+	}
+}
+
 void Player::handleEvents(const SDL_Event& event)
 {
 	if (event.type == SDL_KEYDOWN)
@@ -179,6 +193,14 @@ void Player::handleEvents(const SDL_Event& event)
 
 		case SDLK_g:
 			grow();
+			break;
+
+		case SDLK_h:
+			hit(actualAspect);
+			break;
+
+		case SDLK_r:
+			resetLevel();
 			break;
 
 		case SDLK_PLUS:
@@ -202,6 +224,20 @@ void Player::handleEvents(const SDL_Event& event)
 	}
 }
 
+void Player::hit(Aspect m)
+{
+	if (m == MARIO)
+	{
+		lives--;
+		resetLevel();
+	}
+	else 
+	{
+		actualAspect = MARIO;
+		inmune = true;
+	}
+}
+
 void Player::debug(bool d)
 {
 	if (d) {
@@ -218,6 +254,7 @@ void Player::debug(bool d)
 		cout << "Texture frame: " << frame << endl;
 		cout << "Jumping: " << jumping << endl;
 		cout << "Aspect: " << actualAspect << endl;
+		cout << "Lives: " << lives << endl;
 
 		cout << "Map Offset: " << game->getMapOffset() << endl;
 

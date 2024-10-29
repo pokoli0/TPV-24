@@ -21,8 +21,8 @@ private:
 	Game* game = nullptr;
 
 	Point2D<int> pos;
+	Point2D<int> initPos;
 	int speed;
-	int backgroundScrollSpeed;
 
 	// 1 si mario se mueve hacia la derecha, 
 	// -1 si es hacia la izquierda
@@ -38,6 +38,9 @@ private:
 	// 0: MARIO
 	// 1: SUPERMARIO
 	Aspect actualAspect;
+
+	// cuando supermario sea golpeado inmune = true durante un par de segundos
+	bool inmune;
 	
 	// --- para las animaciones
 	// textura actual de mario
@@ -69,6 +72,7 @@ public:
 
 	// movimiento
 	void move();
+	//activa el salto
 	void jump();
 
 	// actualiza el frame de la textura
@@ -77,13 +81,20 @@ public:
 	// cambia el aspecto a SUPERMARIO
 	void grow();
 
+	// reinicia el nivel
+	void resetLevel();
+
 	// maneja eventos de teclado y determina el estado del movimiento
 	void handleEvents(const SDL_Event& event);
 
 	//detecta colisiones y recibe daño
-	//Cuando Mario colisione con un enemigo o caiga en una fosa del mapa se reducirá su número de vidas
-	//y volverá a su posición inicial en el nivel.Super Mario, en cambio, al chocar con un enemigo se convertirá
-	//en Mario, permanecerá donde está y se mantendrá invulnerable durante un par de segundos.
+	// MARIO colisiona con un enemigo o caiga 
+	// -> lives--
+	// -> volverá a su posición inicial en el nivel
+	// SUPERMARIO al chocar con un enemigo 
+	// -> se convertirá en MARIO
+	// -> permanecerá donde está
+	// se mantendrá invulnerable durante un par de segundos
 	void hit(Aspect m);
 
 	/// GETTERS --------------------------------
