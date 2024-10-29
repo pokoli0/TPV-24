@@ -62,4 +62,4 @@ public:
 	}
 };
 
-using Point2D = Vector2D<int>;
+template <class T> using Point2D = Vector2D<T>;

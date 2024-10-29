@@ -7,6 +7,7 @@
 
 #include "Texture.h"
 #include "Game.h"
+#include "Vector2D.h"
 
 using namespace std;
 
@@ -18,7 +19,9 @@ private:
 	Texture* texture = nullptr;
 	Game* game = nullptr;
 
-	int x, y;
+	Point2D<int> pos;
+	int speed;
+	int maxHeight;
 
 	// 1 si mario se mueve hacia la derecha, 
 	// -1 si es hacia la izquierda

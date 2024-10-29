@@ -8,7 +8,7 @@
 class Block
 {
 private:
-	Point2D pos;
+	Point2D<int> pos;
 
 	enum TipoBloque {
 		LADRILLO,
@@ -28,7 +28,7 @@ private:
 public:
 
 	Block();
-	Block(Point2D pos, TipoBloque tipo, AccionBloque accion, std::istream& archivo);
+	Block(Point2D<int> pos, TipoBloque tipo, AccionBloque accion, std::istream& archivo);
 
 	void render();
 	void update();

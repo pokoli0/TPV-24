@@ -11,8 +11,9 @@ Player::Player(Game* g, int posx, int posy)
 	lives = 3;
 	dir = 0;
 
-	x = posx;
-	y = posy;
+	pos = Point2D<int>(posx, posy);
+	speed = 8;
+	maxHeight = 400;
 
 	texture = game->getTexture(Game::MARIO);
 	
@@ -34,8 +35,8 @@ Player::~Player()
 void Player::render()
 {
 	SDL_Rect rect;
-	rect.x = x;
-	rect.y = y;
+	rect.x = pos.getX();
+	rect.y = pos.getY();
 	rect.w = texture->getFrameWidth();
 	rect.h = texture->getFrameHeight();
 
@@ -68,17 +69,18 @@ void Player::move()
 	// movimiento
 	if (dir == 1) {
 		flipSprite = false;
-		if (x >= Game::WIN_WIDTH / 2) {
+		if (pos.getX() >= Game::WIN_WIDTH / 2)
+		{
 			game->setMapOffset(offset + 5);
 		}
 		else {
-			x = x + 5;
+			pos.setX(pos.getX() + speed);
 		}
 	}
 	else if (dir == -1) {
 		flipSprite = true;;
-		if (x > TILE_SIDE) {
-			x = x - 5;
+		if (pos.getX() > TILE_SIDE) {
+			pos.setX(pos.getX() - speed);
 		}
 	}
 }
@@ -99,13 +101,19 @@ void Player::updateAnim()
 	if (dir != 0) // si se esta moviendo
 	{
 		frameCounter++;
-		if (frameCounter >= 2) { 
+		if (frameCounter >= 1){		
 			frameCounter = 0;
-			walkFrame = (walkFrame + 1) % 4;  // Ciclo 0,1,2,3, y luego se reinicie 
+			walkFrame = (walkFrame + 1) % 4;
 
-			if (walkFrame == 0 || walkFrame == 3) frame = 2;
-			else if (walkFrame == 1) frame = 3;
-			else if (walkFrame == 2) frame = 4;
+			if (walkFrame == 0 || walkFrame == 3) {
+				frame = 2;
+			}
+			else if (walkFrame == 1) {
+				frame = 3;
+			}
+			else if (walkFrame == 2) {
+				frame = 4;
+			}
 		}
 	}
 	else if (jumping) {
