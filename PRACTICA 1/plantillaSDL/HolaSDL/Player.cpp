@@ -20,6 +20,7 @@ Player::Player(Game* g, int posx, int posy)
 	walkFrame = 0;
 	frameCounter = 0;
 	flipSprite = false;
+	jumping = false;
 
 	cout << "Mario" << endl;
 }
@@ -85,8 +86,12 @@ void Player::move()
 void Player::jump()
 {
 	cout << "salto" << endl;
+	jumping = true;
 
 
+
+	// hay que poner el jumping a false cuando acabe la accion
+	jumping = false;
 }
 
 void Player::updateAnim()
@@ -102,6 +107,9 @@ void Player::updateAnim()
 			else if (walkFrame == 1) frame = 3;
 			else if (walkFrame == 2) frame = 4;
 		}
+	}
+	else if (jumping) {
+		frame = 6;
 	}
 	else {
 		frame = 0;

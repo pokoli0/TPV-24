@@ -42,6 +42,8 @@ private:
 	int frameCounter;
 	// true izquierda, false derecha
 	bool flipSprite;
+	// para la animacion de salto
+	bool jumping;
 
 public:
 	Player();
@@ -65,6 +67,7 @@ public:
 	//en Mario, permanecerá donde está y se mantendrá invulnerable durante un par de segundos.
 	void hit(Aspect m);
 
+	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
 

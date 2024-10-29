@@ -82,11 +82,12 @@ public:
 
 	void loadObjectMap();
 
-	int getMapOffset() { return mapOffset; }
-	void setMapOffset(int m) { mapOffset = m; }
-
 	// se encarga de invertir la direccion de goombas, koopas y champis ?
 	void collides();
+
+	/// GETTERS --------------------------------
+	int getMapOffset() { return mapOffset; }
+	void setMapOffset(int m) { mapOffset = m; }
 };
 
 inline Texture*
