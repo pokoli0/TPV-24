@@ -12,7 +12,8 @@ Player::Player(Game* g, int posx, int posy)
 	dir = 0;
 
 	pos = Point2D<int>(posx, posy);
-	speed = 8;
+	speed = 5; // def: 8
+	//backgroundScrollSpeed = 5; // def: 5
 	
 	groundY = posy;
 	jumping = false;
@@ -20,6 +21,7 @@ Player::Player(Game* g, int posx, int posy)
 	gravity = 1;
 
 	texture = game->getTexture(Game::MARIO);
+	supertexture = game->getTexture(Game::SUPERMARIO);
 	
 	frame = 0;
 	walkFrame = 0;
@@ -39,23 +41,33 @@ void Player::render()
 {
 	SDL_Rect rect;
 	rect.x = pos.getX();
-	rect.y = pos.getY();
-	rect.w = texture->getFrameWidth();
-	rect.h = texture->getFrameHeight();
 
+	// Flipear al mario segun la direccion
+	SDL_RendererFlip flip;
+	if (flipSprite) flip = SDL_FLIP_HORIZONTAL;
+	else flip = SDL_FLIP_NONE;
+
+	// renderframe con flipeado
+	if (actualAspect == MARIO) 
+	{
+		rect.y = pos.getY();
+		rect.w = texture->getFrameWidth();
+		rect.h = texture->getFrameHeight();
+		texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
+	}
+	else 
+	{
+		rect.y = pos.getY() - TILE_SIDE; // si no se sale del suelo
+		rect.w = supertexture->getFrameWidth() * 2;
+		rect.h = supertexture->getFrameHeight() * 2;
+		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
+	}
+
+
+	// anterior renderframe:
 	// fila 0 (no hay mas filas)
 	// columna 0 - frame 0
 	//texture->renderFrame(rect, 0, frame);
-
-	SDL_RendererFlip flip;
-	if (flipSprite) {
-		flip = SDL_FLIP_HORIZONTAL;
-	}
-	else {
-		flip = SDL_FLIP_NONE;
-	}
-
-	texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 }
 
 void Player::update()
@@ -63,6 +75,8 @@ void Player::update()
 	move();
 
 	updateAnim();
+
+	//debug(true);
 }
 
 void Player::move()
@@ -74,15 +88,17 @@ void Player::move()
 		flipSprite = false;
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{
-			game->setMapOffset(offset + 5);
+			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
+				game->setMapOffset(offset + speed);
+			}
 		}
 		else {
 			pos.setX(pos.getX() + speed);
 		}
 	}
 	else if (dir == -1) {
-		flipSprite = true;;
-		if (pos.getX() > TILE_SIDE) {
+		flipSprite = true;
+		if (pos.getX() > 0) {
 			pos.setX(pos.getX() - speed);
 		}
 	}
@@ -105,21 +121,20 @@ void Player::jump()
 {
 	if (!jumping) 
 	{
-		cout << "Salto" << endl;
 		jumping = true;
 		jumpVelocity = -15; 
 	}
-
 }
 
 void Player::updateAnim()
 {
-	if (dir != 0) // si se esta moviendo
+	if (dir != 0 && !jumping) // si se esta moviendo
 	{
 		frameCounter++;
-		if (frameCounter >= 1){		
+		if (frameCounter >= 1)
+		{		
 			frameCounter = 0;
-			walkFrame = (walkFrame + 1) % 4;
+			walkFrame = (walkFrame + 1) % 4; // para que se repita el ciclo
 
 			if (walkFrame == 0 || walkFrame == 3) {
 				frame = 2;
@@ -140,6 +155,10 @@ void Player::updateAnim()
 	}
 }
 
+void Player::grow()
+{
+	actualAspect = SUPERMARIO;
+}
 
 void Player::handleEvents(const SDL_Event& event)
 {
@@ -157,9 +176,59 @@ void Player::handleEvents(const SDL_Event& event)
 		case SDLK_SPACE:
 			jump();
 			break;
+
+		case SDLK_g:
+			grow();
+			break;
+
+		case SDLK_PLUS:
+			if (!fastMode) fastMode = true;
+			else { fastMode = false; }
+			break;
 		}
 	}
-	else if (event.type == SDL_KEYUP) {
-		dir = 0;
+	else if (event.type == SDL_KEYUP) // soltar teclas
+	{
+		switch (event.key.keysym.sym) {
+		case SDLK_RIGHT:
+			dir = 0;
+			break;
+
+		case SDLK_LEFT:
+			dir = 0;
+			break;
+
+		}
+	}
+}
+
+void Player::debug(bool d)
+{
+	if (d) {
+		system("cls"); //limpia consola
+
+		cout << "-- DEBUG MODE ON --" << endl << endl;
+		cout << "Pulsa + para activar Fast Mode." << endl << endl;
+
+		cout << "Mario Window Position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
+		cout << "Mario X Position On Tilemap: " << pos.getX() + game->getMapOffset() << endl;
+		cout << "Direction: " << dir << endl;
+		cout << "Mario & Scrolling Speed: " << speed << endl;
+
+		cout << "Texture frame: " << frame << endl;
+		cout << "Jumping: " << jumping << endl;
+		cout << "Aspect: " << actualAspect << endl;
+
+		cout << "Map Offset: " << game->getMapOffset() << endl;
+
+		cout << endl;
+		cout << "Fast Mode: " << fastMode << endl;
+
+		if (fastMode) {
+			speed = 15;
+		}
+		else {
+			speed = 8;
+		}
 	}
 }

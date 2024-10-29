@@ -27,6 +27,8 @@ static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
 static constexpr int WINDOW_WIDTH = 18;
 static constexpr int WINDOW_HEIGHT = 16;
 
+static constexpr int MAX_MAP_OFFSET = 6150;
+
 
 //
 // Clase que representa el juego y controla todos sus aspectos
@@ -38,6 +40,7 @@ public:
 	enum TextureName {
 		BACKGROUND,
 		MARIO,
+		SUPERMARIO,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 

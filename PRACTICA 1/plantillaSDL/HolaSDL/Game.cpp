@@ -16,6 +16,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 {
 	TextureSpec	{"background.png", 9, 7},
 				{"mario.png", 12, 1},
+				{"supermario.png", 22, 1},
 };
 
 Game::Game()

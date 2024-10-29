@@ -17,10 +17,12 @@ class Player
 {
 private:
 	Texture* texture = nullptr;
+	Texture* supertexture = nullptr;
 	Game* game = nullptr;
 
 	Point2D<int> pos;
 	int speed;
+	int backgroundScrollSpeed;
 
 	// 1 si mario se mueve hacia la derecha, 
 	// -1 si es hacia la izquierda
@@ -33,6 +35,8 @@ private:
 		SUPERMARIO
 	};
 
+	// 0: MARIO
+	// 1: SUPERMARIO
 	Aspect actualAspect;
 	
 	// --- para las animaciones
@@ -44,12 +48,16 @@ private:
 	int frameCounter;
 	// true izquierda, false derecha
 	bool flipSprite;
-	// para la animacion de salto
+
+	// --- salto
 	bool jumping;
-     
-	int jumpVelocity;
+    int jumpVelocity;
 	int gravity;         
 	int groundY;
+
+
+	// --- DEBUGGING
+	bool fastMode = false;
 
 public:
 	Player();
@@ -59,10 +67,15 @@ public:
 	void render();
 	void update();
 
+	// movimiento
 	void move();
 	void jump();
 
+	// actualiza el frame de la textura
 	void updateAnim();
+
+	// cambia el aspecto a SUPERMARIO
+	void grow();
 
 	// maneja eventos de teclado y determina el estado del movimiento
 	void handleEvents(const SDL_Event& event);
@@ -77,5 +90,7 @@ public:
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
 
+	// d = true: para mostrar en consola debugs y poder usar fastMode
+	void debug(bool d);
 };
 
