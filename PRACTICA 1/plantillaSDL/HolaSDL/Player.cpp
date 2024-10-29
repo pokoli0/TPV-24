@@ -15,6 +15,8 @@ Player::Player(Game* g, int posx, int posy)
 	y = posy;
 
 	texture = game->getTexture(Game::MARIO);
+	
+	frame = 0;
 
 	cout << "Mario" << endl;
 }
@@ -35,16 +37,33 @@ void Player::render()
 
 	// fila 0 (no hay mas filas)
 	// columna 0 - frame 0
-	texture->renderFrame(rect, 0, 0);
+	//texture->renderFrame(rect, 0, frame);
 
+	SDL_RendererFlip flip;
+	if (flipSprite) {
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	else {
+		flip = SDL_FLIP_NONE;
+	}
+
+	texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 }
 
 void Player::update()
+{
+	move();
+
+	updateAnim();
+}
+
+void Player::move()
 {
 	int offset = game->getMapOffset();
 
 	// movimiento
 	if (dir == 1) {
+		flipSprite = false;
 		if (x >= Game::WIN_WIDTH / 2) {
 			game->setMapOffset(offset + 5);
 		}
@@ -53,11 +72,39 @@ void Player::update()
 		}
 	}
 	else if (dir == -1) {
+		flipSprite = true;;
 		if (x > TILE_SIDE) {
 			x = x - 5;
 		}
 	}
 }
+
+void Player::jump()
+{
+	cout << "salto" << endl;
+
+
+}
+
+void Player::updateAnim()
+{
+	if (dir != 0) // si se esta moviendo
+	{
+		frameTimer++;
+		if (frameTimer >= 2) { 
+			frameTimer = 0;
+			walkFrame = (walkFrame + 1) % 4;  // Ciclo 0,1,2,3, y luego se reinicie 
+
+			if (walkFrame == 0 || walkFrame == 3) frame = 2;
+			else if (walkFrame == 1) frame = 3;
+			else if (walkFrame == 2) frame = 4;
+		}
+	}
+	else {
+		frame = 0;
+	}
+}
+
 
 void Player::handleEvents(const SDL_Event& event)
 {
@@ -73,12 +120,11 @@ void Player::handleEvents(const SDL_Event& event)
 			break;
 
 		case SDLK_SPACE:
-			cout << "salto" << endl;
+			jump();
 			break;
 		}
 	}
 	else if (event.type == SDL_KEYUP) {
 		dir = 0;
-		cout << "suelto tecla" << endl;
 	}
 }

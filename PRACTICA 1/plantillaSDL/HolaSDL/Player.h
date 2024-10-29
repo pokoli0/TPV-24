@@ -32,6 +32,13 @@ private:
 	};
 
 	Aspect actualAspect;
+	
+	// para las animaciones
+	int frame;
+
+	int walkFrame = 0;
+	int frameTimer = 0;
+	bool flipSprite = false;
 
 public:
 	Player();
@@ -40,6 +47,11 @@ public:
 
 	void render();
 	void update();
+
+	void move();
+	void jump();
+
+	void updateAnim();
 
 	// maneja eventos de teclado y determina el estado del movimiento
 	void handleEvents(const SDL_Event& event);
