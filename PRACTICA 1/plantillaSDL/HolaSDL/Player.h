@@ -33,12 +33,15 @@ private:
 
 	Aspect actualAspect;
 	
-	// para las animaciones
+	// --- para las animaciones
+	// textura actual de mario
 	int frame;
-
-	int walkFrame = 0;
-	int frameTimer = 0;
-	bool flipSprite = false;
+	// frame de andado 
+	int walkFrame;
+	// contador de frames
+	int frameCounter;
+	// true izquierda, false derecha
+	bool flipSprite;
 
 public:
 	Player();

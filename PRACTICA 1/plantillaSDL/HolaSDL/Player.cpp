@@ -17,6 +17,9 @@ Player::Player(Game* g, int posx, int posy)
 	texture = game->getTexture(Game::MARIO);
 	
 	frame = 0;
+	walkFrame = 0;
+	frameCounter = 0;
+	flipSprite = false;
 
 	cout << "Mario" << endl;
 }
@@ -90,9 +93,9 @@ void Player::updateAnim()
 {
 	if (dir != 0) // si se esta moviendo
 	{
-		frameTimer++;
-		if (frameTimer >= 2) { 
-			frameTimer = 0;
+		frameCounter++;
+		if (frameCounter >= 2) { 
+			frameCounter = 0;
 			walkFrame = (walkFrame + 1) % 4;  // Ciclo 0,1,2,3, y luego se reinicie 
 
 			if (walkFrame == 0 || walkFrame == 3) frame = 2;
