@@ -22,6 +22,7 @@ using namespace std;
 
 class Tilemap;
 class Player;
+class Block;
 
 static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
 static constexpr int WINDOW_WIDTH = 18;
@@ -41,6 +42,7 @@ public:
 		BACKGROUND,
 		MARIO,
 		SUPERMARIO,
+		BLOCKS,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -62,6 +64,7 @@ private:
 	// Objetos del juego
 	Tilemap* tilemap;
 	Player* player;
+	Block* block;
 
 public:
 	// bucle principal del juego

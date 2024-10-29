@@ -41,7 +41,9 @@ private:
 
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
 	bool inmune;
-	
+
+	int backgroundScrollSpeed;
+
 	// --- para las animaciones
 	// textura actual de mario
 	int frame;
@@ -60,6 +62,7 @@ private:
 
 
 	// --- DEBUGGING
+	bool debugMode = false;
 	bool fastMode = false;
 
 public:
@@ -102,6 +105,6 @@ public:
 	int getLives() const { return lives; }
 
 	// d = true: para mostrar en consola debugs y poder usar fastMode
-	void debug(bool d);
+	void debug();
 };
 

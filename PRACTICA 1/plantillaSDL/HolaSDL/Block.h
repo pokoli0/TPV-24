@@ -17,18 +17,23 @@ private:
 		OCULTO,
 	};
 
+	TipoBloque tipoBloque;
+
 	enum AccionBloque {
 		POTENCIADOR,
-		MONEDA
+		MONEDA,
+		NADA,
 	};
+	AccionBloque accionBloque;
 
-	//Texture* texturaBloque;
-	//Game* game;
+	Texture* texture;
+	int frame;
+	Game* game;
 
 public:
 
 	Block();
-	Block(Point2D<int> pos, TipoBloque tipo, AccionBloque accion, std::istream& archivo);
+	Block(Game* g, int x, int y, char tipo, char accion);
 
 	void render();
 	void update();

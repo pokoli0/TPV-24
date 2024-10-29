@@ -17,6 +17,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 	TextureSpec	{"background.png", 9, 7},
 				{"mario.png", 12, 1},
 				{"supermario.png", 22, 1},
+				{"blocks.png", 6, 1},
 };
 
 Game::Game()
@@ -45,7 +46,8 @@ Game::Game()
 
 	//Crea los objetos del juego
 	tilemap = new Tilemap(this, "../assets/maps/world1.csv");
-	player = new Player(this, 32, 32 * 13);
+
+	loadObjectMap();
 }
 
 Game::~Game()
@@ -53,6 +55,7 @@ Game::~Game()
 	// Elimina los objetos del juego
 	delete tilemap;
 	delete player;
+	delete block;
 
 	// Elimina las texturas
 	for (Texture* texture : textures)
@@ -78,20 +81,27 @@ void Game::loadObjectMap()
 	// Leemos el mapa línea a línea para evitar acarreo de errores
 	// y permitir extensiones del formato
 	string line;
-	getline(file, line);
 
-	while (!file) {
+	while (getline(file, line)) {
 		// Usamos un stringstream para leer la línea como si fuera un flujo
 		stringstream lineStream(line);
 
-		char tipo;
-		lineStream >> tipo;
+		char tipo, atrib, accion;
+		int x, y;
+		lineStream >> tipo >> x >> y >> atrib >> accion;
+		
+		// conversion
+		x = x + TILE_SIDE;
+		y = y * TILE_SIDE - TILE_SIDE;
 
 		switch (tipo) {
 		case 'M':
-			//player = new Player(this, lineStream);
+			player = new Player(this, x, y); // 32, 32*13
 			break;
-			// uno para cada objeto
+		case 'B':
+			block = new Block(this, x, y, atrib, accion);
+			break;
+
 		}
 	}
 }
@@ -128,6 +138,7 @@ Game::render() const
 	// Pinta los objetos del juego
 	tilemap->render();
 	player->render();
+	block->render();
 
 	// escena en pantalla 
 	SDL_RenderPresent(renderer);

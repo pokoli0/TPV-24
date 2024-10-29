@@ -14,8 +14,8 @@ Player::Player(Game* g, int posx, int posy)
 	initPos = Point2D<int>(posx, posy);
 	pos = initPos;
 
-	speed = 5; // def: 8
-	//backgroundScrollSpeed = 5; // def: 5
+	speed = 8; // def: 8
+	backgroundScrollSpeed = 5; // def: 5
 	
 	groundY = posy;
 	jumping = false;
@@ -30,7 +30,7 @@ Player::Player(Game* g, int posx, int posy)
 	frameCounter = 0;
 	flipSprite = false;
 
-	cout << "Mario" << endl;
+	cout << "Mario " << posx << ", " << posy << endl;
 }
 
 Player::~Player()
@@ -77,7 +77,8 @@ void Player::update()
 
 	updateAnim();
 
-	//debug(true);
+	if(debugMode) debug();
+
 }
 
 void Player::move()
@@ -90,7 +91,7 @@ void Player::move()
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{
 			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-				game->setMapOffset(offset + speed);
+				game->setMapOffset(offset + backgroundScrollSpeed);
 			}
 		}
 		else {
@@ -207,6 +208,12 @@ void Player::handleEvents(const SDL_Event& event)
 			if (!fastMode) fastMode = true;
 			else { fastMode = false; }
 			break;
+
+		case SDLK_d:
+			if (!debugMode) debugMode = true;
+			else { debugMode = false; system("cls");
+			}
+			break;
 		}
 	}
 	else if (event.type == SDL_KEYUP) // soltar teclas
@@ -238,34 +245,35 @@ void Player::hit(Aspect m)
 	}
 }
 
-void Player::debug(bool d)
+void Player::debug()
 {
-	if (d) {
-		system("cls"); //limpia consola
+	system("cls"); //limpia consola
 
-		cout << "-- DEBUG MODE ON --" << endl << endl;
-		cout << "Pulsa + para activar Fast Mode." << endl << endl;
+	cout << "-- DEBUG MODE ON --" << endl << endl;
+	cout << "Pulsa + para activar Fast Mode." << endl << endl;
 
-		cout << "Mario Window Position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
-		cout << "Mario X Position On Tilemap: " << pos.getX() + game->getMapOffset() << endl;
-		cout << "Direction: " << dir << endl;
-		cout << "Mario & Scrolling Speed: " << speed << endl;
+	cout << "Mario Window Position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
+	cout << "Mario X Position On Tilemap: " << pos.getX() + game->getMapOffset() << endl;
+	cout << "Direction: " << dir << endl;
+	cout << "Mario & Scrolling Speed: " << speed << endl;
 
-		cout << "Texture frame: " << frame << endl;
-		cout << "Jumping: " << jumping << endl;
-		cout << "Aspect: " << actualAspect << endl;
-		cout << "Lives: " << lives << endl;
+	cout << "Texture frame: " << frame << endl;
+	cout << "Jumping: " << jumping << endl;
+	cout << "Aspect: " << actualAspect << endl;
+	cout << "Lives: " << lives << endl;
 
-		cout << "Map Offset: " << game->getMapOffset() << endl;
+	cout << "Map Offset: " << game->getMapOffset() << endl;
 
-		cout << endl;
-		cout << "Fast Mode: " << fastMode << endl;
+	cout << endl;
+	cout << "Fast Mode: " << fastMode << endl;
 
-		if (fastMode) {
-			speed = 15;
-		}
-		else {
-			speed = 8;
-		}
+	if (fastMode) {
+		speed = 15;
+		backgroundScrollSpeed = 15;
 	}
+	else {
+		speed = 8;
+		backgroundScrollSpeed = 5;
+	}
+
 }
