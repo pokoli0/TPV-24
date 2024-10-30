@@ -91,7 +91,7 @@ void Game::loadObjectMap()
 		lineStream >> tipo >> x >> y >> atrib >> accion;
 		
 		// conversion
-		x = x + TILE_SIDE;
+		//x = x + TILE_SIDE;
 		y = y * TILE_SIDE - TILE_SIDE;
 
 		switch (tipo) {

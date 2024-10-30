@@ -38,8 +38,8 @@ void Block::render()
 	SDL_Rect rect;
 	rect.x = pos.getX();
 	rect.y = pos.getY();
-	rect.w = texture->getFrameWidth();
-	rect.h = texture->getFrameHeight();
+	rect.w = TILE_SIDE;
+	rect.h = TILE_SIDE;
 
 	// columna 0 - frame 0
 	switch (tipoBloque) {
