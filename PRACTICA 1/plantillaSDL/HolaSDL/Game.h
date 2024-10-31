@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 // Biblioteca SDL
 #include <SDL.h>
@@ -17,12 +18,13 @@
 #include "Player.h"
 #include "Block.h"
 
+class Block;
+class Tilemap;
+class Player;
+
 using uint = unsigned int;
 using namespace std;
 
-class Tilemap;
-class Player;
-class Block;
 
 static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
 static constexpr int WINDOW_WIDTH = 18;
@@ -62,9 +64,11 @@ private:
 	int mapOffset;
 
 	// Objetos del juego
-	Tilemap* tilemap;
-	Player* player;
-	Block* block;
+	Tilemap* tilemap = nullptr;
+	Player* player = nullptr;
+	Block* block = nullptr;
+
+	vector<Block*> blockVector;
 
 public:
 	// bucle principal del juego

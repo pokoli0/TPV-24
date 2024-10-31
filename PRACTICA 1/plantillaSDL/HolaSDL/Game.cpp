@@ -92,14 +92,15 @@ void Game::loadObjectMap()
 		
 		// conversion
 		//x = x + TILE_SIDE;
-		y = y * TILE_SIDE - TILE_SIDE;
+		//y = y * TILE_SIDE - TILE_SIDE;
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y); // 32, 32*13
+			player = new Player(this, x*32, 32*13); // 32, 32*13
 			break;
 		case 'B':
 			block = new Block(this, x, y, atrib, accion);
+			blockVector.push_back(block);
 			break;
 
 		}
@@ -138,7 +139,11 @@ Game::render() const
 	// Pinta los objetos del juego
 	tilemap->render();
 	player->render();
-	block->render();
+
+	for (int i = 0; i < blockVector.size(); i++)
+	{
+		blockVector[i]->render();
+	}
 
 	// escena en pantalla 
 	SDL_RenderPresent(renderer);
@@ -150,6 +155,11 @@ Game::update()
 	// Actualiza los objetos del juego
 	tilemap->update();
 	player->update();
+
+	for (int i = 0; i < blockVector.size(); i++)
+	{
+		blockVector[i]->update();
+	}
 }
 
 void

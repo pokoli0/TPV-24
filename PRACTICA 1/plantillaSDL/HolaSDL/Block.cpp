@@ -30,14 +30,14 @@ Block::Block(Game* g, int x, int y, char tipo, char accion)
 	}
 
 	texture = game->getTexture(Game::BLOCKS);
-	cout << "Bloque " << x << ", " << y << "," << tipo << "," << accion << endl;
+	//cout << "Bloque " << x << ", " << y << "," << tipo << "," << accion << endl;
 }
 
 void Block::render()
 {
 	SDL_Rect rect;
-	rect.x = pos.getX();
-	rect.y = pos.getY();
+	rect.x = pos.getX() * TILE_SIDE - game->getMapOffset();
+	rect.y = pos.getY() * TILE_SIDE - TILE_SIDE;
 	rect.w = TILE_SIDE;
 	rect.h = TILE_SIDE;
 
@@ -58,6 +58,10 @@ void Block::render()
 	}
 
 	texture->renderFrame(rect, 0, frame);
+}
+
+void Block::update()
+{
 }
 
 void Block::hit()
