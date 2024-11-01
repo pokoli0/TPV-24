@@ -23,6 +23,12 @@ private:
 	int speed;
 	int backgroundScrollSpeed;
 
+	// para que no se muevan mientras no aparezcan en pantalla
+	bool frozen;
+
+
+
+
 public:
 
 	Goomba();
@@ -33,6 +39,10 @@ public:
 	void hit();
 
 	void move();
+
+	// compara con mapOffset para ver si el goomba aparece en pantalla
+	// y asi poner frozen a true
+	void checkFrozen();
 
 };
 

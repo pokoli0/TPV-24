@@ -15,6 +15,8 @@ Goomba::Goomba(Game* g, int x, int y)
 
 	flipSprite = true; // izda = 1
 
+	frozen = true;
+
 	cout << "Goomba (" << x << ", " << y << ")" << endl;
 }
 
@@ -51,7 +53,16 @@ void Goomba::update()
 void Goomba::move()
 {
 	//movimiento horizontal (si colisiona tiene que cambiar dir)
-	pos.setX(pos.getX() + speed * dir);
+	if (!frozen) {
+		pos.setX(pos.getX() + speed * dir);
+	}
+
 
 	// caida???
 }
+
+void Goomba::checkFrozen()
+{
+}
+
+
