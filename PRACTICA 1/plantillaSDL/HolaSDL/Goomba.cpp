@@ -9,6 +9,12 @@ Goomba::Goomba(Game* g, int x, int y)
 
 	frameCounter = 0;
 
+	dir = -1; //izda
+	speed = 5; // def: 8
+	backgroundScrollSpeed = 5; // def: 5
+
+	flipSprite = true; // izda = 1
+
 	cout << "Goomba (" << x << ", " << y << ")" << endl;
 }
 
@@ -20,6 +26,10 @@ void Goomba::render()
 	rect.w = texture->getFrameWidth() * 2;
 	rect.h = texture->getFrameHeight() * 2;
 
+	SDL_RendererFlip flip;
+	if (flipSprite) flip = SDL_FLIP_HORIZONTAL;
+	else flip = SDL_FLIP_NONE;
+
 	frameCounter++;
 	if (frameCounter == 5) {
 		frameCounter = 0;
@@ -30,9 +40,18 @@ void Goomba::render()
 		frame = 1;
 	}
 
-	texture->renderFrame(rect, 0, frame);
+	texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 }
 
 void Goomba::update()
 {
+	move();
+}
+
+void Goomba::move()
+{
+	//movimiento horizontal (si colisiona tiene que cambiar dir)
+	pos.setX(pos.getX() + speed * dir);
+
+	// caida???
 }
