@@ -36,8 +36,8 @@ Block::Block(Game* g, int x, int y, char tipo, char accion)
 void Block::render()
 {
 	SDL_Rect rect;
-	rect.x = pos.getX() * TILE_SIDE - game->getMapOffset();
-	rect.y = pos.getY() * TILE_SIDE - TILE_SIDE;
+	rect.x = pos.getX() - game->getMapOffset();
+	rect.y = pos.getY();
 	rect.w = TILE_SIDE;
 	rect.h = TILE_SIDE;
 

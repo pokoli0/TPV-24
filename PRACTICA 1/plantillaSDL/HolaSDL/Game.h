@@ -17,10 +17,14 @@
 #include "Tilemap.h"
 #include "Player.h"
 #include "Block.h"
+#include "Goomba.h"
+#include "Koopa.h"
 
 class Block;
 class Tilemap;
 class Player;
+class Goomba;
+class Koopa;
 
 using uint = unsigned int;
 using namespace std;
@@ -45,6 +49,8 @@ public:
 		MARIO,
 		SUPERMARIO,
 		BLOCKS,
+		GOOMBA,
+		KOOPA,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -67,8 +73,11 @@ private:
 	Tilemap* tilemap = nullptr;
 	Player* player = nullptr;
 	Block* block = nullptr;
-
-	vector<Block*> blockVector;
+	vector<Block*> blockGroup;
+	Goomba* goomba = nullptr;
+	vector<Goomba*> goombaGroup;
+	Koopa* koopa = nullptr;
+	vector<Koopa*> koopaGroup;
 
 public:
 	// bucle principal del juego

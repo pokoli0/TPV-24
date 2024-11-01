@@ -30,7 +30,7 @@ Player::Player(Game* g, int posx, int posy)
 	frameCounter = 0;
 	flipSprite = false;
 
-	cout << "Mario " << posx << ", " << posy << endl;
+	cout << "Mario (" << posx << ", " << posy << ")" << endl;
 }
 
 Player::~Player()

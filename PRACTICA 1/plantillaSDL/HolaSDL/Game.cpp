@@ -18,6 +18,8 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 				{"mario.png", 12, 1},
 				{"supermario.png", 22, 1},
 				{"blocks.png", 6, 1},
+				{"goomba.png", 3, 1},
+				{"koopa.png", 4, 1},
 };
 
 Game::Game()
@@ -55,7 +57,18 @@ Game::~Game()
 	// Elimina los objetos del juego
 	delete tilemap;
 	delete player;
-	delete block;
+	for (int i = 0; i < blockGroup.size(); i++)
+	{
+		delete blockGroup[i];
+	}
+	for (int i = 0; i < goombaGroup.size(); i++)
+	{
+		delete goombaGroup[i];
+	}
+	for (int i = 0; i < koopaGroup.size(); i++)
+	{
+		delete koopaGroup[i];
+	}
 
 	// Elimina las texturas
 	for (Texture* texture : textures)
@@ -91,16 +104,24 @@ void Game::loadObjectMap()
 		lineStream >> tipo >> x >> y >> atrib >> accion;
 		
 		// conversion
-		//x = x + TILE_SIDE;
-		//y = y * TILE_SIDE - TILE_SIDE;
+		x = x * TILE_SIDE;
+		y = y * TILE_SIDE - TILE_SIDE;
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x*32, 32*13); // 32, 32*13
+			player = new Player(this, x, y); // 32, 32*13
 			break;
 		case 'B':
 			block = new Block(this, x, y, atrib, accion);
-			blockVector.push_back(block);
+			blockGroup.push_back(block);
+			break;
+		case 'G':
+			goomba = new Goomba(this, x, y);
+			goombaGroup.push_back(goomba);
+			break;
+		case 'K':
+			koopa = new Koopa(this, x, y);
+			koopaGroup.push_back(koopa);
 			break;
 
 		}
@@ -140,9 +161,20 @@ Game::render() const
 	tilemap->render();
 	player->render();
 
-	for (int i = 0; i < blockVector.size(); i++)
+	for (int i = 0; i < blockGroup.size(); i++)
 	{
-		blockVector[i]->render();
+		blockGroup[i]->render();
+		blockGroup[i]->render();
+	}
+
+	for (int i = 0; i < goombaGroup.size(); i++)
+	{
+		goombaGroup[i]->render();
+	}
+
+	for (int i = 0; i < koopaGroup.size(); i++)
+	{
+		koopaGroup[i]->render();
 	}
 
 	// escena en pantalla 
@@ -156,9 +188,19 @@ Game::update()
 	tilemap->update();
 	player->update();
 
-	for (int i = 0; i < blockVector.size(); i++)
+	for (int i = 0; i < blockGroup.size(); i++)
 	{
-		blockVector[i]->update();
+		blockGroup[i]->update();
+	}
+
+	for (int i = 0; i < goombaGroup.size(); i++)
+	{
+		goombaGroup[i]->update();
+	}
+
+	for (int i = 0; i < koopaGroup.size(); i++)
+	{
+		koopaGroup[i]->update();
 	}
 }
 
