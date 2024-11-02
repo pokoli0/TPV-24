@@ -119,14 +119,14 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
 	//int row0 = rec.y / TILE_SIDE;
-	int col0 = rec.x / TILE_SIDE;
+	//int col0 = rec.x / TILE_SIDE;
 
 	// Celda del nivel que contiene la esquina inferior derecha del rectángulo
-	int row1 = (rect.y + rect.h) / TILE_SIDE;
-	int col1 = (rect.x + rect.w) / TILE_SIDE;
+	//int row1 = (rect.y + rect.h) / TILE_SIDE;
+	//int col1 = (rect.x + rect.w) / TILE_SIDE;
 
-	for (int row = row0; row <= row1; ++row)
-		for (int col = col0; col <= col1; ++col)
+	//for (int row = row0; row <= row1; ++row)
+		//for (int col = col0; col <= col1; ++col)
 			//if (matriz[row][col] % texture->getNumColumns() < OBSTACLE_THRESHOLD)
 				//return true;
 
