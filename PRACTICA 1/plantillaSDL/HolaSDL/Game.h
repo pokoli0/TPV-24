@@ -19,7 +19,7 @@
 #include "Block.h"
 #include "Goomba.h"
 #include "Koopa.h"
-
+#include "Collision.h"
 class Block;
 class Tilemap;
 class Player;
@@ -83,6 +83,7 @@ public:
 	// bucle principal del juego
 	void run();
 
+	Collision checkCollision(const SDL_Rect& rect);
 	void update();
 	void render() const;
 	void handleEvents();

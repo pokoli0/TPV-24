@@ -50,6 +50,11 @@ void Goomba::update()
 	move();
 }
 
+Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
+{
+	return Collision();
+}
+
 void Goomba::move()
 {
 	//movimiento horizontal (si colisiona tiene que cambiar dir)

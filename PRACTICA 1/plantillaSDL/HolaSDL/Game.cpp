@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "Block.h"
 // Formato de la especificación de una textura
 struct TextureSpec
 {
@@ -219,4 +219,8 @@ Game::handleEvents()
 			player->handleEvents(evento);
 		}
 	}
+}
+
+Collision Game::checkCollision(const SDL_Rect& rect) {
+
 }

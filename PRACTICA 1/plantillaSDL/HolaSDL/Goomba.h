@@ -36,7 +36,7 @@ public:
 
 	void render();
 	void update();
-	void hit();
+	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
 	void move();
 

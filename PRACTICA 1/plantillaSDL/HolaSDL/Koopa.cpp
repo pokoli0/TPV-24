@@ -48,6 +48,12 @@ void Koopa::update()
 	move();
 }
 
+
+Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
+{
+	return Collision();
+}
+
 void Koopa::move()
 {
 	//movimiento horizontal (si colisiona tiene que cambiar dir)

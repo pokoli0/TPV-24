@@ -231,9 +231,10 @@ void Player::handleEvents(const SDL_Event& event)
 	}
 }
 
-void Player::hit(Aspect m)
+Collision Player::hit(const SDL_Rect& rect, bool fromPlayer)
 {
-	if (m == MARIO)
+
+	/*if (m == MARIO)
 	{
 		lives--;
 		resetLevel();
@@ -242,7 +243,7 @@ void Player::hit(Aspect m)
 	{
 		actualAspect = MARIO;
 		inmune = true;
-	}
+	}*/
 }
 
 void Player::debug()

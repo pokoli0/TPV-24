@@ -98,7 +98,7 @@ public:
 	// -> se convertirá en MARIO
 	// -> permanecerá donde está
 	// se mantendrá invulnerable durante un par de segundos
-	void hit(Aspect m);
+	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
