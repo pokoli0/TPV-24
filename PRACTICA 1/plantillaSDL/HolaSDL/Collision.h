@@ -1,16 +1,14 @@
 #pragma once
-class Collision
+#include "checkML.h"
+#include <SDL.h>
+
+struct Collision 
 {
-	struct collision 
-	{
-		bool collides;
-		bool damages;
-		
-		operator bool() const { return collides; }
-	};
+    bool collides = false;
+    bool damages = false;
 
-public:
-	Collision(){}
+    SDL_Rect intersection;       // rectangulo de interseccion de la colision
+    void* collider = nullptr;    // puntero al objeto con el que se colisiona
 
+    operator bool() const { return collides; }
 };
-

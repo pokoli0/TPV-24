@@ -224,5 +224,15 @@ Game::handleEvents()
 Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer) 
 {
 
+	Collision result;
+
+	// tilemap
+	Collision tileCollision = tilemap->hit(rect, fromPlayer);
+	if (tileCollision.collides) {
+		result = tileCollision;
+	}
+
+	return result;
+
 	return Collision();
 }

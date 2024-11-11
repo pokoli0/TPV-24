@@ -112,30 +112,45 @@ void Tilemap::render()
 
 Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 {
-	vector<vector<int>> matrix; // atributos de TileMap
-	Texture* texture;
 
-	constexpr int OBSTACLE_THRESHOLD = 4; // constante
+	// DE RUBEN: DUDA IMPLEMENTACION DE COLISIONES
 
-	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
-	//int row0 = rec.y / TILE_SIDE;
-	//int col0 = rec.x / TILE_SIDE;
 
-	// Celda del nivel que contiene la esquina inferior derecha del rectángulo
-	//int row1 = (rect.y + rect.h) / TILE_SIDE;
-	//int col1 = (rect.x + rect.w) / TILE_SIDE;
+	Collision collision; // Inicializa una instancia de Collision
 
-	//for (int row = row0; row <= row1; ++row)
-		//for (int col = col0; col <= col1; ++col)
-			//if (matriz[row][col] % texture->getNumColumns() < OBSTACLE_THRESHOLD)
-				//return true;
+	// Calcula las celdas del nivel que contienen las esquinas del rectángulo
+	int row0 = rect.y / TILE_SIDE;
+	int col0 = rect.x / TILE_SIDE;
+	int row1 = (rect.y + rect.h - 1) / TILE_SIDE;
+	int col1 = (rect.x + rect.w - 1) / TILE_SIDE;
 
-	//return false;
+	for (int row = row0; row <= row1; ++row) {
+		for (int col = col0; col <= col1; ++col) {
+			int index = indices[row][col];
 
-	return Collision();
+			// Verifica si hay colisión con un obstáculo
+			if (index != -1 && index % texture->getNumColumns() < OBSTACLE_THRESHOLD) {
+				collision.collides = true;
+
+				// Calcula la intersección entre rect y el tile en cuestión
+				SDL_Rect tileRect = { col * TILE_SIDE, row * TILE_SIDE, TILE_SIDE, TILE_SIDE };
+				SDL_IntersectRect(&rect, &tileRect, &collision.intersection);
+
+				// Aquí puedes asignar el puntero `collider` y establecer `damages` si aplica
+				collision.collider = nullptr; // Ajusta esto según tu implementación
+				collision.damages = fromPlayer; // Ejemplo: tal vez solo daña si es el jugador
+
+				return collision;
+			}
+		}
+	}
+
+	return collision; // Retorna la instancia sin colisión si no encontró obstáculos
 }
 
 void Tilemap::update()
 {
 	renderTilemap();
+
+	//game->checkCollision(rect, true);
 }

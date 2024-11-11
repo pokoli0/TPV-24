@@ -39,6 +39,7 @@ static constexpr int WINDOW_HEIGHT = 16;
 static constexpr int MAX_MAP_OFFSET = 6150;
 static constexpr int BACKGROUND_SCROLL_SPEED = 5;
 
+static constexpr int OBSTACLE_THRESHOLD = 4;
 
 //
 // Clase que representa el juego y controla todos sus aspectos
