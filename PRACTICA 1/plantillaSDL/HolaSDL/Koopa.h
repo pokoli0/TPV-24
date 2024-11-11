@@ -12,6 +12,8 @@ class Koopa
 private:
 	Point2D<int> pos;
 
+	SDL_Rect rect;
+
 	Texture* texture;
 	int frame;
 	Game* game;
@@ -23,7 +25,6 @@ private:
 	// true izda, false dcha
 	bool flipSprite;
 	int speed;
-	int backgroundScrollSpeed;
 
 	bool frozen;
 

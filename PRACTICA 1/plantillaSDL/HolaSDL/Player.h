@@ -22,7 +22,7 @@ private:
 	Texture* supertexture = nullptr;
 	Game* game = nullptr;
 
-	//SDL_Rect rect;
+	SDL_Rect rect;
 
 	Point2D<int> pos;
 	Point2D<int> initPos;
@@ -45,8 +45,6 @@ private:
 
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
 	bool inmune;
-
-	int backgroundScrollSpeed;
 
 	// --- para las animaciones
 	// textura actual de mario

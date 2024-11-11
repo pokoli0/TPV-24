@@ -26,6 +26,8 @@ private:
 	};
 	AccionBloque accionBloque;
 
+	SDL_Rect rect;
+
 	Texture* texture;
 	int frame;
 	Game* game;

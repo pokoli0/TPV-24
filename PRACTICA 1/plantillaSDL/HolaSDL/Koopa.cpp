@@ -11,9 +11,8 @@ Koopa::Koopa(Game* g, int x, int y)
 
 	dir = -1; //izda
 	speed = 5; // def: 8
-	backgroundScrollSpeed = 5; // def: 5
 
-	flipSprite = true; // izda
+	flipSprite = false; // izda
 
 	frozen = true;
 
@@ -22,7 +21,6 @@ Koopa::Koopa(Game* g, int x, int y)
 
 void Koopa::render()
 {
-	SDL_Rect rect;
 	rect.x = pos.getX() - game->getMapOffset();
 	rect.y = pos.getY() - TILE_SIDE;
 	rect.w = texture->getFrameWidth() * 2;

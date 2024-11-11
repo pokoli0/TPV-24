@@ -11,7 +11,6 @@ Goomba::Goomba(Game* g, int x, int y)
 
 	dir = -1; //izda
 	speed = 5; // def: 8
-	backgroundScrollSpeed = 5; // def: 5
 
 	flipSprite = true; // izda = 1
 
@@ -22,7 +21,6 @@ Goomba::Goomba(Game* g, int x, int y)
 
 void Goomba::render()
 {
-	SDL_Rect rect;
 	rect.x = pos.getX() - game->getMapOffset();
 	rect.y = pos.getY();
 	rect.w = texture->getFrameWidth() * 2;

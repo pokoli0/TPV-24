@@ -12,6 +12,8 @@ class Goomba
 private:
 	Point2D<int> pos;
 
+	SDL_Rect rect;
+
 	Texture* texture;
 	int frame;
 	Game* game;
@@ -23,7 +25,6 @@ private:
 	// true izda, false dcha
 	bool flipSprite;
 	int speed;
-	int backgroundScrollSpeed;
 
 	// para que no se muevan mientras no aparezcan en pantalla
 	bool frozen;

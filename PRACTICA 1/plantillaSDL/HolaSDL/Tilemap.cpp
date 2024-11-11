@@ -78,7 +78,6 @@ void Tilemap::renderTilemap()
 	int d0 = offset % TILE_SIDE;
 
 	// Recuadro donde se pintará la tesela en la ventana
-	SDL_Rect rect;
 	rect.w = TILE_SIDE;
 	rect.h = TILE_SIDE;
 

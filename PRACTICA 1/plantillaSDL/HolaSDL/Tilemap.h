@@ -25,6 +25,8 @@ private:
 	Texture* background = nullptr;
 	Game* game = nullptr;
 
+	SDL_Rect rect;
+
 	vector<vector<int>> indices;
 	int x, y;
 

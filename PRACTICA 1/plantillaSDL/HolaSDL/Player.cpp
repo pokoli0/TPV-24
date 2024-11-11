@@ -15,7 +15,6 @@ Player::Player(Game* g, int posx, int posy)
 	pos = initPos;
 
 	speed = 8; // def: 8
-	backgroundScrollSpeed = 5; // def: 5
 	
 	groundY = posy;
 	jumping = false;
@@ -41,7 +40,6 @@ Player::~Player()
 
 void Player::render()
 {
-	SDL_Rect rect;
 	rect.x = pos.getX();
 
 	// Flipear al mario segun la direccion
@@ -87,7 +85,7 @@ void Player::move()
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{
 			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-				game->setMapOffset(offset + backgroundScrollSpeed);
+				game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
 			}
 		}
 		else {
@@ -270,11 +268,11 @@ void Player::debug()
 
 	if (fastMode) {
 		speed = 15;
-		backgroundScrollSpeed = 15;
+		//backgroundScrollSpeed = 15;
 	}
 	else {
 		speed = 8;
-		backgroundScrollSpeed = 5;
+		//backgroundScrollSpeed = 5;
 	}
 
 }
