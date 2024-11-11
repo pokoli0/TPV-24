@@ -64,11 +64,6 @@ void Player::render()
 		rect.h = supertexture->getFrameHeight() * 2;
 		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
-
-	// anterior renderframe:
-	// fila 0 (no hay mas filas)
-	// columna 0 - frame 0
-	//texture->renderFrame(rect, 0, frame);
 }
 
 void Player::update()

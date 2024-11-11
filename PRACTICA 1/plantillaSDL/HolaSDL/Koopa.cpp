@@ -58,20 +58,13 @@ Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
 
 void Koopa::move()
 {
-	//cout << pos.getX() << endl;
-
 	if (frozen) {
-		//comprueba si aparece koopa en mapa para que se mueva
-		if (game->getMapOffset() > pos.getX() )
-		{
+		if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
 			frozen = false;
 		}
 	}
 	else {
-		//movimiento horizontal (si colisiona tiene que cambiar dir)
 		pos.setX(pos.getX() + speed * dir);
-
-		// caida???
 	}
 
 }

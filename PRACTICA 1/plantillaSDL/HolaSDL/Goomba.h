@@ -29,8 +29,6 @@ private:
 	bool frozen;
 
 
-
-
 public:
 
 	Goomba();

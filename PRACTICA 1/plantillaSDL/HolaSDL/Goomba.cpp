@@ -56,9 +56,15 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 }
 
 void Goomba::move()
-{
-	//movimiento horizontal (si colisiona tiene que cambiar dir)
-	if (!frozen) {
+{ 
+	//movimiento horizontal
+	// si la pos del goomba es menor que el offset mas el ancho de la pantalla -> se defrozea
+	if (frozen) {
+		if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE+5) < game->getMapOffset()) {
+			frozen = false; 
+		}
+	}
+	else {
 		pos.setX(pos.getX() + speed * dir);
 	}
 
