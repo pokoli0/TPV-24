@@ -5,6 +5,8 @@
 #include "Texture.h"
 #include "Game.h"
 
+#include "Collision.h"
+
 class Koopa
 {
 private:
@@ -22,6 +24,8 @@ private:
 	bool flipSprite;
 	int speed;
 	int backgroundScrollSpeed;
+
+	bool frozen;
 
 public:
 

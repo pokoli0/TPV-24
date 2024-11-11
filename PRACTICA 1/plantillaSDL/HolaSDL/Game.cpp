@@ -221,6 +221,8 @@ Game::handleEvents()
 	}
 }
 
-Collision Game::checkCollision(const SDL_Rect& rect) {
+Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer) 
+{
 
+	return Collision();
 }

@@ -10,6 +10,8 @@
 #include "Texture.h"
 #include "Game.h"
 
+#include "Collision.h"
+
 using namespace std;
 using uint = unsigned int;
 

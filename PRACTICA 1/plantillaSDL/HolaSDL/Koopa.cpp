@@ -15,6 +15,8 @@ Koopa::Koopa(Game* g, int x, int y)
 
 	flipSprite = true; // izda
 
+	frozen = true;
+
 	cout << "Koopa (" << x << ", " << y << ")" << endl;
 }
 
@@ -56,8 +58,20 @@ Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
 
 void Koopa::move()
 {
-	//movimiento horizontal (si colisiona tiene que cambiar dir)
-	pos.setX(pos.getX() + speed * dir);
+	//cout << pos.getX() << endl;
 
-	// caida???
+	if (frozen) {
+		//comprueba si aparece koopa en mapa para que se mueva
+		if (game->getMapOffset() > pos.getX() )
+		{
+			frozen = false;
+		}
+	}
+	else {
+		//movimiento horizontal (si colisiona tiene que cambiar dir)
+		pos.setX(pos.getX() + speed * dir);
+
+		// caida???
+	}
+
 }

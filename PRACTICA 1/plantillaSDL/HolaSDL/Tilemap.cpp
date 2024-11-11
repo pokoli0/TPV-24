@@ -110,6 +110,7 @@ void Tilemap::render()
 {
 	renderTilemap();
 }
+
 Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	vector<vector<int>> matrix; // atributos de TileMap
@@ -131,7 +132,10 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 				//return true;
 
 	//return false;
+
+	return Collision();
 }
+
 void Tilemap::update()
 {
 	renderTilemap();

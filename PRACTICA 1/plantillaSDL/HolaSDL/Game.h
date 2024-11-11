@@ -19,7 +19,9 @@
 #include "Block.h"
 #include "Goomba.h"
 #include "Koopa.h"
+
 #include "Collision.h"
+
 class Block;
 class Tilemap;
 class Player;
@@ -83,7 +85,17 @@ public:
 	// bucle principal del juego
 	void run();
 
-	Collision checkCollision(const SDL_Rect& rect);
+	/*
+	Game tiene acceso a todos los objetos del juego, así que puede preguntarle a cada uno de ellos 
+	(con el método hit) si colisiona con el rectángulo.
+
+	@param rect: objeto que se va a mover y del que queremos comprobar colisiones
+	@param fromPlayer: origen de colision es mario (true) o un enemigo (false)
+
+	@return objeto colision con toda la informacion estructurada
+	*/
+	Collision checkCollision(const SDL_Rect& rect, bool fromPlayer);
+
 	void update();
 	void render() const;
 	void handleEvents();

@@ -77,8 +77,9 @@ void Player::update()
 
 	updateAnim();
 
-	if(debugMode) debug();
+	//game->checkCollision
 
+	if(debugMode) debug();
 }
 
 void Player::move()
@@ -197,7 +198,7 @@ void Player::handleEvents(const SDL_Event& event)
 			break;
 
 		case SDLK_h:
-			hit(actualAspect);
+			//hit(actualAspect);
 			break;
 
 		case SDLK_r:
@@ -233,6 +234,8 @@ void Player::handleEvents(const SDL_Event& event)
 
 Collision Player::hit(const SDL_Rect& rect, bool fromPlayer)
 {
+	//	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect 
+	// con su caja de colisión y la que recibe para determinar si hay colisión.
 
 	/*if (m == MARIO)
 	{
@@ -244,6 +247,8 @@ Collision Player::hit(const SDL_Rect& rect, bool fromPlayer)
 		actualAspect = MARIO;
 		inmune = true;
 	}*/
+
+	return Collision();
 }
 
 void Player::debug()

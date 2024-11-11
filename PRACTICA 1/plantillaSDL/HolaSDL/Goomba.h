@@ -5,6 +5,8 @@
 #include "Texture.h"
 #include "Game.h"
 
+#include "Collision.h"
+
 class Goomba
 {
 private:

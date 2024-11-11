@@ -1,13 +1,16 @@
 #pragma once
 class Collision
 {
-	struct collision {
+	struct collision 
+	{
 		bool collides;
 		bool damages;
 		
-
 		operator bool() const { return collides; }
 	};
+
+public:
+	Collision(){}
 
 };
 
