@@ -110,6 +110,8 @@ public:
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
+	// devuelve el aspecto actual de mario
+	Aspect getAspect() { return actualAspect; }
 
 	// d = true: para mostrar en consola debugs y poder usar fastMode
 	void debug();

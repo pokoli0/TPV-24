@@ -70,7 +70,31 @@ void Player::update()
 
 	updateAnim();
 
-	//game->checkCollision
+	// comprobacion de colisiones
+	SDL_Rect r;
+	if (actualAspect == MARIO) {
+		r.x = pos.getX();
+		r.y = pos.getY() - texture->getFrameHeight();
+		r.w = texture->getFrameWidth();
+		r.h = texture->getFrameHeight();
+	}
+	else
+	{
+		r.x = pos.getX();
+		r.y = pos.getY() - supertexture->getFrameHeight();
+		r.w = supertexture->getFrameWidth();
+		r.h = supertexture->getFrameHeight();
+	}
+	
+
+	Collision col = game->checkCollision(r, true);
+
+	if (col) {
+		cout << "col ";
+		// restricciones de movimiento vertical
+
+	}
+
 
 	if(debugMode) debug();
 }

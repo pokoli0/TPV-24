@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "Game.h"
 
+
 class Block
 {
 private:
@@ -32,6 +33,8 @@ private:
 	int frame;
 	Game* game;
 
+	bool isAlive;
+
 public:
 
 	Block();
@@ -39,6 +42,7 @@ public:
 
 	void render();
 	void update();
+
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 };
 

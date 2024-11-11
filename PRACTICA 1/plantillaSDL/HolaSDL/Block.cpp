@@ -30,7 +30,8 @@ Block::Block(Game* g, int x, int y, char tipo, char accion)
 	}
 
 	texture = game->getTexture(Game::BLOCKS);
-	//cout << "Bloque " << x << ", " << y << "," << tipo << "," << accion << endl;
+	
+	isAlive = true;
 }
 
 void Block::render()
@@ -70,6 +71,30 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 	//    - Si es tipo LADRILLO y Mario es GRANDE el bloque se destruye.
 	//    - Si es tipo SORPRESA/OCULTO, Mario es GRANDE y la accion es POTENCIADOR, aparece un Superchampi y lo convierte en tipo VACIO.
 
-	return Collision();
+	Collision col;
+	SDL_Rect blockRect { pos.getX(), pos.getY(), texture->getFrameWidth(), texture->getFrameHeight()};
+
+	col.collides = SDL_IntersectRect(&rect, &blockRect, &col.rect);
+
+	// si hay colision y es del jugador y la colision es desde abajo
+	if (col && fromPlayer && 
+		col.rect.y > blockRect.y + texture->getFrameHeight() / 4 && 
+		col.rect.w > texture->getFrameWidth() / 4)
+	{
+		if (tipoBloque == SORPRESA || tipoBloque == OCULTO) 
+		{
+			tipoBloque = VACIO;
+			if (accionBloque == POTENCIADOR) {
+				//game->addMushroom(pos);
+			}
+		}
+
+		// si es un bloque de ladrillos y somos supermario, lo destruye
+		//if (tipoBloque == LADRILLO && player->getAspect() == 1) {
+		//	isAlive = false;
+		//}
+	}
+	return col;
 }
+
 

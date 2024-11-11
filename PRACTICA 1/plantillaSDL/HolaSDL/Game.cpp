@@ -223,16 +223,13 @@ Game::handleEvents()
 
 Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer) 
 {
+	Collision col;
 
-	Collision result;
-
-	// tilemap
-	Collision tileCollision = tilemap->hit(rect, fromPlayer);
-	if (tileCollision.collides) {
-		result = tileCollision;
+	// bloques
+	for (int i = 0; i < blockGroup.size(); i++) {
+		col = blockGroup[i]->hit(rect, fromPlayer);
 	}
 
-	return result;
 
-	return Collision();
+	return col;
 }
