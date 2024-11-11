@@ -26,6 +26,7 @@ private:
 
 	Point2D<int> pos;
 	Point2D<int> initPos;
+	Point2D<int> nextPos;
 	int speed;
 
 	// 1 si mario se mueve hacia la derecha, 
@@ -58,6 +59,7 @@ private:
 
 	// --- salto
 	bool jumping;
+	bool onGround;
     int jumpVelocity;
 	int gravity;         
 	int groundY;
@@ -105,7 +107,7 @@ public:
 	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect 
 	con su caja de colisión y la que recibe para determinar si hay colisión.
 	*/
-	Collision hit(const SDL_Rect& rect, bool fromPlayer);
+	void hit();
 
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales

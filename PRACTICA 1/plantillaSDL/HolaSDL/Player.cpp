@@ -69,7 +69,7 @@ void Player::update()
 	move();
 
 	updateAnim();
-
+	hit();
 	// comprobacion de colisiones
 	SDL_Rect r;
 	if (actualAspect == MARIO) {
@@ -249,7 +249,7 @@ void Player::handleEvents(const SDL_Event& event)
 	}
 }
 
-Collision Player::hit(const SDL_Rect& rect, bool fromPlayer)
+void Player::hit()
 {
 	//	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect 
 	// con su caja de colisión y la que recibe para determinar si hay colisión.
@@ -264,8 +264,56 @@ Collision Player::hit(const SDL_Rect& rect, bool fromPlayer)
 		actualAspect = MARIO;
 		inmune = true;
 	}*/
+	//cosas
+	
+	// Inicializar nextPos como la posición actual
+	/*nextPos = pos;
 
-	return Collision();
+	// **Movimiento Vertical**
+	nextPos.setY(pos.getY() + jumpVelocity); // Aplicar la velocidad de salto o caída a nextPos en Y
+
+	// Crear un rectángulo de colisión usando nextPos para la comprobación vertical
+	SDL_Rect rectY{ pos.getX(), nextPos.getY() - texture->getFrameHeight(), texture->getFrameWidth(), texture->getFrameHeight() };
+	Collision collY = game->checkCollision(rectY, true);
+
+	if (collY.collides) {
+		// Ajustar posición en Y para evitar la colisión
+		if (jumpVelocity > 0) { // Si el personaje está cayendo
+			pos.setY(pos.getY() - collY.rect.h); // Empujar hacia arriba
+			onGround = true; // El personaje está en el suelo
+		}
+		else { // Si el personaje está saltando
+			pos.setY(pos.getY() + collY.rect.h); // Empujar hacia abajo
+		}
+		jumpVelocity = 0; // Detener el movimiento vertical
+	}
+	else {
+		pos.setY(nextPos.getY()); // Si no hay colisión, actualizar pos con nextPos en el eje Y
+	}
+
+	// **Movimiento Horizontal**
+	nextPos.setX(pos.getX()); // Ajustar nextPos en X usando dir y la velocidad
+
+	// Crear un rectángulo de colisión usando nextPos para la comprobación horizontal
+	SDL_Rect rectX{ nextPos.getX(), pos.getY() - texture->getFrameHeight(), texture->getFrameWidth(), texture->getFrameHeight() };
+	Collision collX = game->checkCollision(rectX, true);
+
+	if (collX.collides) {
+	//	// Ajustar posición en X para evitar la colisión
+		if (dir > 0) { // Si el personaje se mueve a la derecha
+			pos.setX(pos.getX() - collX.rect.w); // Empujar hacia la izquierda
+		}
+	else { // Si el personaje se mueve a la izquierda
+			pos.setX(pos.getX() + collX.rect.w); // Empujar hacia la derecha
+		}
+	}
+	else {
+		pos.setX(nextPos.getX()); // Si no hay colisión, actualizar pos con nextPos en el eje X
+	}
+	*/
+
+
+
 }
 
 void Player::debug()

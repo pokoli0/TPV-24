@@ -14,7 +14,7 @@ Tilemap::Tilemap(Game* g, string f)
 	loadTilemap(f);
 	game = g;
 	background = game->getTexture(Game::BACKGROUND);
-
+	texture = game->getTexture(Game::BACKGROUND);
 	cout << "Tilemap" << endl;
 }
 
@@ -112,14 +112,32 @@ void Tilemap::render()
 
 Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 {
+	Collision collision;
+		int aux1 = game->getMapOffset() / 32;
+		int aux2 = aux1 + Game::WIN_WIDTH / 33;
+		for (int i = 0; !collision  && i < indices.size(); i++) {
+
+			for (int j = aux1; !collision && j < aux2; j++) {
 
 
-	return Collision();
+				if (indices[i][j] > 0 && indices[i][j] % texture->getNumColumns() < 4) {
+
+					SDL_Rect auxrect{ j * 32, i * 32, 32, 32 };
+					collision.collides = SDL_IntersectRect(&rect, &auxrect, &collision.rect);
+
+					if (collision) {
+						collision.collides = true;
+					}
+				}
+			}
+		}
+
+		return collision;
 }
 
 void Tilemap::update()
 {
 	renderTilemap();
 
-	//game->checkCollision(rect, true);
+	game->checkCollision(rect, true);
 }
