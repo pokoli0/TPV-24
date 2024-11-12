@@ -100,15 +100,17 @@ void Player::update()
 		onGround = false;
 	}
 
-	// segunda comprobacion
-	col = game->checkCollision(rect, true);
-
 	if (col && !col.ground)
 	{
 		if (dir.getX() == 1) // si esta yendo hacia la derecha
 		{
-			pos.setX(pos.getX() - TILE_SIDE / 4 - 1);
+			pos.setX(pos.getX() - TILE_SIDE / 4 - 1);						// FALTA incluir el offset en el move !!!
 		}
+		else if (dir.getX() == -1) // si esta yendo hacia la izquierda
+		{
+			pos.setX(pos.getX() + TILE_SIDE / 4 - 1);						// FALTA que no atraviese !!!
+		}
+
 		dir.setX(0);
 	}
 
