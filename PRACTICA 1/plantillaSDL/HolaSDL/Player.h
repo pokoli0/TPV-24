@@ -73,9 +73,10 @@ public:
 	void render();
 	void update();
 
-	// movimiento
+	// movimiento intencionado
 	void move();
-	//activa el salto
+
+	// pone la direccion en y a 1 hasta que llega a cierta altura
 	void jump();
 
 	// actualiza el frame de la textura

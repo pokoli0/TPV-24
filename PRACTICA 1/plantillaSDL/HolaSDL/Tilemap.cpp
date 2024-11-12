@@ -71,35 +71,34 @@ void Tilemap::loadTilemap(string fichero)
 void Tilemap::renderTilemap()
 {
 	int offset = game->getMapOffset();  // atributo de Game
-
 	// Primera columna de la matriz del mapa visible en la ventana
-	int x0 = offset / TILE_SIDE;
+	int col0 = offset / TILE_SIDE;
 	// Anchura oculta de esa primera columna
 	int d0 = offset % TILE_SIDE;
 
 	// Recuadro donde se pintará la tesela en la ventana
+	SDL_Rect rect;
 	rect.w = TILE_SIDE;
 	rect.h = TILE_SIDE;
 
 	// Pintamos los WINDOW_WIDTH + 1 (aunque se salga) x WINDOW_HEIGHT recuadros del mapa
-	for (int i = 0; i < WINDOW_WIDTH + 1; ++i) 
-	{
-		for (int j = 0; j < WINDOW_HEIGHT; ++j) 
-		{
+	for (int col = 0; col < WINDOW_WIDTH + 1; ++col) {
+		rect.x = -d0 + col * TILE_SIDE;
+
+		for (int row = 0; row < WINDOW_HEIGHT; ++row) {
 			// Índice en el conjunto de patrones de la matriz de índices
-			int indice = indices[j][x0 + i];
+			int indice = indices[row][col0 + col];
 
 			// Si el índice es -1 no se pinta nada
 			if (indice != -1) {
 				// Separa número de fila y de columna
-				int fx = indice / 9;								// !!!!! esto estaba al reves (/ por %)
-				int fy = indice % 9;								// !!!!! esto estaba al reves (/ por %)
+				int frameCol = indice % texture->getNumColumns();
+				int frameRow = indice / texture->getNumColumns();
 
-				rect.x = -d0 + i * TILE_SIDE;
-				rect.y = j * TILE_SIDE;
+				rect.y = row * TILE_SIDE;
 
 				// Usa renderFrame para pintar la tesela
-				background->renderFrame(rect, fx, fy);				// !!!!! esto estaba al reves (fx por fy)
+				background->renderFrame(rect, frameRow, frameCol);
 			}
 		}
 	}
@@ -114,27 +113,27 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision colision;
 
-    int ini = game->getMapOffset() / TILE_SIDE;
-    int fin = ini + Game::WIN_WIDTH / TILE_SIDE;
+	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
+	int row0 = rect.y / TILE_SIDE;
+	int col0 = rect.x / TILE_SIDE;
 
-    for (int i = 0; i < indices.size() && !colision; i++) 
-	{
-        for (int j = ini; j < fin && !colision; j++) 
-		{
-            if (indices[i][j] > 0 && indices[i][j] % texture->getNumColumns() < OBSTACLE_THRESHOLD) 
-			{
-                SDL_Rect tileRect{ j * TILE_SIDE, i * TILE_SIDE, TILE_SIDE, TILE_SIDE };
-                colision.collides = SDL_IntersectRect(&rect, &tileRect, &colision.rect);
+	// Celda del nivel que contiene la esquina inferior derecha del rectángulo
+	int row1 = (rect.y + rect.h - 1) / TILE_SIDE;
+	int col1 = (rect.x + rect.w - 1) / TILE_SIDE;
 
-                if (colision) {
-                    colision.collides = true;
-					return colision;
-                }
-            }
-        }
-    }
+	for (int row = row0; row <= row1; ++row) {
+		for (int col = col0; col <= col1; ++col) {
+			int indice = indices[row][col];
 
-    return colision;
+			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD) {
+				colision.collides = true;
+				cout << "colision true" << endl;
+				return colision;
+			}
+		}
+	}
+	//cout << "colision false" << endl;
+	return colision;
 }
 
 void Tilemap::update()

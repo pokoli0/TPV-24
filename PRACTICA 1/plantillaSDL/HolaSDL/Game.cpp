@@ -109,7 +109,7 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y); // 32, 32*13
+			player = new Player(this, 32, 32); // 32, 32*13
 			break;
 		case 'B':
 			block = new Block(this, x, y, atrib, accion);
@@ -225,9 +225,9 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	// bloques
-	for (int i = 0; i < blockGroup.size(); i++) {
-		col = blockGroup[i]->hit(rect, fromPlayer);
-	}
+	//for (int i = 0; i < blockGroup.size(); i++) {
+	//	col = blockGroup[i]->hit(rect, fromPlayer);
+	//}
 
 	//tilemap
 	col = tilemap->hit(rect, fromPlayer);

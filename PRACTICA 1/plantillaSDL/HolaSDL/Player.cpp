@@ -18,7 +18,7 @@ Player::Player(Game* g, int posx, int posy)
 	speed = 8; // def: 8
 	
 	groundY = posy;
-	onGround = true;
+	onGround = false;
 	jumping = false;
 	jumpVelocity = 0;
 	gravity = 1;
@@ -69,53 +69,41 @@ void Player::render()
 
 void Player::update()
 {
-	pos.setY(pos.getY() + 1);
+	// gravedad: caida de mario si no esta en el suelo y si no esta saltando
+	if (!onGround && !jumping) {
+		cout << "NOTonGround" << endl;
+		pos.setY(pos.getY() + 5); // caida por gravedad
+
+	}
+	else if (onGround) {
+		cout << "onGround" << endl;
+		dir.setY(0); // no sube ni baja
+	}
+	
+	if (jumping)
+	{
+		dir.setY(1);
+	}
+
 
 	move();
 
 	updateAnim();
 
-	pos.setY(pos.getY() + dir.getY());
-
-	SDL_Rect rectY{ pos.getX(), pos.getY(),
-		texture->getFrameWidth(), texture->getFrameHeight() };
-
-	Collision col = game->checkCollision(rectY, true);
+	// vemos colisiones -> ahora vienen de mario
+	Collision col = game->checkCollision(rect, true);
 
 	if (col) {
-		if (dir.getY() > 0)
+		if(dir.getY() == -1) // si esta bajando
 		{
-			pos.setY(pos.getY() + col.rect.h);
 			onGround = true;
+			pos.setY(pos.getY() - TILE_SIDE/4);
 		}
-		else {
-			pos.setY(pos.getY() - col.rect.h);
-		}
-		dir.setY(0.0f);
 	}
-
-
-	pos.setX(pos.getX() + dir.getX());
-
-	SDL_Rect rectX{ pos.getX(), pos.getY() - texture->getFrameHeight(),
-		texture->getFrameWidth(), texture->getFrameHeight() };
-
-	col = game->checkCollision(rectX, true);
-	if (col) {
-		if (dir.getX() > 0)
-		{
-			pos.setX(pos.getX() - col.rect.w);
-		}
-		else {
-			pos.setX(pos.getX() + col.rect.w);
-		}
-		dir.setX(0.0f);
-	}
-
-
-	if (col.damages) // si hace daño restar vida
+	else // si no hay colision, no estara tocando el suelo
 	{
-		lives--;
+		dir.setY(-1); // baja
+		onGround = false;
 	}
 
 
@@ -127,19 +115,24 @@ void Player::move()
 {
 	int offset = game->getMapOffset();
 
-	// movimiento horizontal
+	/// movimiento horizontal ---
+
+	// hacia la derecha
 	if (dir.getX() == 1) {
 		flipSprite = false;
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{
+			// mueve el fondo
 			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
 				game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
 			}
 		}
 		else {
+			// mueve a mario
 			pos.setX(pos.getX() + speed);
 		}
 	}
+	// hacia la izquierda
 	else if (dir.getX() == -1) {
 		flipSprite = true;
 		if (pos.getX() > 0) {
@@ -147,29 +140,29 @@ void Player::move()
 		}
 	}
 
-	// salto
-	if (dir.getY() == 1) 
-	{
-		pos.setY(pos.getY() + jumpVelocity);
-		jumpVelocity += gravity;
-	}
-	else if(dir.getY() == 0) {
-		onGround = true;
-		jumping = false;
-		jumpVelocity = 0;
-	}	
 
-	//pos.setY(pos.getY() + 1);
+	/// movimiento vertical ---
+
+	// SALTO
+	if (dir.getY() == 1) // si estamos subiendo
+	{
+		pos.setY(pos.getY() + jumpVelocity); // aumentamos la altura
+		jumpVelocity -= GRAVITY;
+		
+		if (jumpVelocity <= 0) { // cuando llega a la altura empieza a bajar
+			dir.setY(-1); 
+			jumping = false;
+		}
+	}
 }
 
 void Player::jump()
 {
 	if (!jumping && onGround) 
 	{
-		dir.setY(1);
-		onGround = false;
 		jumping = true;
-		jumpVelocity = -15; 
+		onGround = false;
+		jumpVelocity = 15; 
 	}
 }
 
