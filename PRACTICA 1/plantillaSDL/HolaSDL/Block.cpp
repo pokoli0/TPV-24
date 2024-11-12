@@ -30,7 +30,7 @@ Block::Block(Game* g, int x, int y, char tipo, char accion)
 	}
 
 	texture = game->getTexture(Game::BLOCKS);
-	
+	frameCounter = 0;
 	isAlive = true;
 }
 
@@ -44,7 +44,7 @@ void Block::render()
 	// columna 0 - frame 0
 	switch (tipoBloque) {
 	case SORPRESA:
-		frame = 3;
+		frame = 0;
 		break;
 	case LADRILLO:
 		frame = 5;
@@ -62,6 +62,25 @@ void Block::render()
 
 void Block::update()
 {
+	if (tipoBloque == SORPRESA)
+	{
+		frameTimer++;
+		if (frameTimer >= 1050) {  // Velocidad del ciclo
+			frameTimer = 0;
+			frameCounter = (frameCounter + 1) % 3;  // Ciclo 0,1,2,3, y luego se reinicie 
+
+			if (frameCounter == 0) frame = 1;
+			else if (frameCounter == 1) frame = 2;
+			else if (frameCounter == 2) frame = 0;
+		}
+	}
+
+	rect.x = pos.getX();
+	rect.y = pos.getY();
+	rect.h = TILE_SIDE;
+	rect.w = TILE_SIDE;
+
+	texture->renderFrame(rect, 0, frame);
 }
 
 Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)

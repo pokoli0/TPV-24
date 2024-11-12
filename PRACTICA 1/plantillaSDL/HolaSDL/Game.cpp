@@ -164,7 +164,6 @@ Game::render() const
 	for (int i = 0; i < blockGroup.size(); i++)
 	{
 		blockGroup[i]->render();
-		blockGroup[i]->render();
 	}
 
 	for (int i = 0; i < goombaGroup.size(); i++)

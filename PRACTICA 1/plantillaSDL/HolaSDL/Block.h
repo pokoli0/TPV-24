@@ -31,9 +31,12 @@ private:
 
 	Texture* texture;
 	int frame;
+	int frameTimer = 0;
+	int frameCounter;
 	Game* game;
 
 	bool isAlive;
+
 
 public:
 
