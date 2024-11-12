@@ -103,12 +103,13 @@ void Player::update()
 	// segunda comprobacion
 	col = game->checkCollision(rect, true);
 
-	if (col)
+	if (col && !col.ground)
 	{
 		if (dir.getX() == 1) // si esta yendo hacia la derecha
 		{
-			//pos.setX(pos.getX() - TILE_SIDE / 4);
+			pos.setX(pos.getX() - TILE_SIDE / 4 - 1);
 		}
+		dir.setX(0);
 	}
 
 	if(debugMode) debug();

@@ -9,5 +9,7 @@ struct Collision
 
     SDL_Rect rect;
 
+    bool ground = false;
+
     operator bool() const { return collides; }
 };

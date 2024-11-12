@@ -127,10 +127,12 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 		{
 			int indice = indices[row][col];
 
-			cout << indice << endl;
 			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD)
 			{
 				colision.collides = true;
+				
+				if (indice == 36) colision.ground = true;
+
 				cout << indice << endl;
 
 				return colision;
