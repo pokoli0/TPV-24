@@ -24,7 +24,7 @@ private:
 	// true izda, false dcha
 	bool flipSprite;
 	int speed;
-
+	bool isAlive;
 	// para que no se muevan mientras no aparezcan en pantalla
 	bool frozen;
 

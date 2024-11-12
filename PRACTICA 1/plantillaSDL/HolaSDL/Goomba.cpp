@@ -58,7 +58,26 @@ void Goomba::update()
 
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 {
-	return Collision();
+	Collision col;
+	SDL_Rect arribarect{ pos.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE };
+	col.collides = SDL_IntersectRect(&rect, &arribarect, &col.rect);
+	if (col)
+	{
+		if (fromPlayer)
+		{
+			if (col.rect.y <= arribarect.y)
+			{
+				isAlive = false;
+			}
+			else {
+				col.damages = true;
+			}
+		}
+		/*else {
+			col.damages = true;
+		}*/
+	}
+	return col;
 }
 
 void Goomba::move()
@@ -73,7 +92,33 @@ void Goomba::move()
 	else {
 		pos.setX(pos.getX() + speed * dir.getX());
 	}
+	//colisones
+	//SDL_Rect auxrect{ pos.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE };
+	//Collision col = game->checkCollision(auxrect, false);
 
+	//if (col)
+	//{
+	//	if (dir.getY() == -1) // si esta bajando
+	//	{
+	//		pos.setY(pos.getY() - TILE_SIDE / 4 - 1);
+	//	}
+	//}
+	//else {
+	//	dir.setY(-1);
+	//}
+	//if (col)
+	//{
+	//	if (dir.getX() == 1) // si esta yendo hacia la derecha
+	//	{
+	//		pos.setX(pos.getX() - TILE_SIDE / 4 - 1);				
+	//	}
+	//	else if (dir.getX() == -1) // si esta yendo hacia la izquierda
+	//	{
+	//		pos.setX(pos.getX() + TILE_SIDE / 4 - 1);
+	//	}
+
+	//	dir.setX(0);
+	//}
  
 	// caida???
 }
