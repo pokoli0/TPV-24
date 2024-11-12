@@ -232,7 +232,7 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 	//tilemap
 	col = tilemap->hit(rect, fromPlayer);
 
-	if (col) return col;
+
 
 	return col;
 }

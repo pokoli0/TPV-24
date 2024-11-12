@@ -3,3 +3,6 @@ MARCOS PANTOJA RAFAEL DE LA CRUZ
 
 Hemos implementado los bloques, los goombas y los koopas con sus movimientos.
 Nos faltan gran parte de las colisiones, solo tenemos las del Tilemap y Mario, y no funcionan bien.
+
+Preguntar a Rubén:
+- Por que método hit del tilemap no detecta huecos.

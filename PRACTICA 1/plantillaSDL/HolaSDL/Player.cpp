@@ -70,22 +70,16 @@ void Player::render()
 void Player::update()
 {
 	// gravedad: caida de mario si no esta en el suelo y si no esta saltando
-	if (!onGround && !jumping) {
-		cout << "NOTonGround" << endl;
-
+	if (!onGround && !jumping) 
+	{
 		dir.setY(-1);
 		pos.setY(pos.getY() + 5); // caida por gravedad
 	}
 	else if (onGround)
 	{
-		cout << "onGround" << endl;
-
 		dir.setY(0); // no sube ni baja
 	}
 	
-
-
-
 	move();
 
 	updateAnim();
@@ -97,13 +91,25 @@ void Player::update()
 	{
 		if(dir.getY() == -1) // si esta bajando
 		{
-			pos.setY(pos.getY() - TILE_SIDE/4);
+			pos.setY(pos.getY() - TILE_SIDE/4 - 1);
 			onGround = true;
 		}
 	}
+	else 
+	{
+		onGround = false;
+	}
 
+	// segunda comprobacion
+	col = game->checkCollision(rect, true);
 
-
+	if (col)
+	{
+		if (dir.getX() == 1) // si esta yendo hacia la derecha
+		{
+			//pos.setX(pos.getX() - TILE_SIDE / 4);
+		}
+	}
 
 	if(debugMode) debug();
 }

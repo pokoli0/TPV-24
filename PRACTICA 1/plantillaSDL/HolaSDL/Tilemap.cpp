@@ -56,7 +56,7 @@ void Tilemap::loadTilemap(string fichero)
 			indices.push_back(fila); // Agregar la fila a la matriz
 		}
 
-		// para comprobar que se ha guardado bien: 
+		//para comprobar que se ha guardado bien: 
 		//for (const auto& row : indices) {
 		//	for (const auto& value : row) {
 		//		std::cout << value << " ";
@@ -115,24 +115,29 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
 	int row0 = rect.y / TILE_SIDE;
-	int col0 = rect.x / TILE_SIDE;
+	int col0 = (rect.x / TILE_SIDE) + game->getMapOffset() / TILE_SIDE;
 
 	// Celda del nivel que contiene la esquina inferior derecha del rectángulo
 	int row1 = (rect.y + rect.h - 1) / TILE_SIDE;
-	int col1 = (rect.x + rect.w - 1) / TILE_SIDE;
+	int col1 = ((rect.x + rect.w - 1) / TILE_SIDE) + game->getMapOffset() / TILE_SIDE;
 
-	for (int row = row0; row <= row1; ++row) {
-		for (int col = col0; col <= col1; ++col) {
+	for (int row = row0; row <= row1; ++row) 
+	{
+		for (int col = col0; col <= col1; ++col)
+		{
 			int indice = indices[row][col];
 
-			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD) {
+			cout << indice << endl;
+			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD)
+			{
 				colision.collides = true;
-				cout << "colision true" << endl;
+				cout << indice << endl;
+
 				return colision;
 			}
 		}
 	}
-	//cout << "colision false" << endl;
+
 	return colision;
 }
 
