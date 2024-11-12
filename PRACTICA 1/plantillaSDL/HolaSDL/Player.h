@@ -74,7 +74,7 @@ public:
 	void update();
 
 	// movimiento intencionado
-	void move();
+	void move(Collision col);
 
 	// pone la direccion en y a 1 hasta que llega a cierta altura
 	void jump();

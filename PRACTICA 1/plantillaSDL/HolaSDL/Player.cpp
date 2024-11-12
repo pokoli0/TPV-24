@@ -79,8 +79,6 @@ void Player::update()
 	{
 		dir.setY(0); // no sube ni baja
 	}
-	
-	move();
 
 	updateAnim();
 
@@ -100,31 +98,37 @@ void Player::update()
 		onGround = false;
 	}
 
-	if (col && !col.ground)
-	{
-		if (dir.getX() == 1) // si esta yendo hacia la derecha
-		{
-			pos.setX(pos.getX() - TILE_SIDE / 4 - 1);						// FALTA incluir el offset en el move !!!
-		}
-		else if (dir.getX() == -1) // si esta yendo hacia la izquierda
-		{
-			pos.setX(pos.getX() + TILE_SIDE / 4 - 1);						// FALTA que no atraviese !!!
-		}
+	// horizontal
+	//if (col && !col.ground)
+	//{
+	//	if (dir.getX() == 1) // si esta yendo hacia la derecha
+	//	{
+	//		pos.setX(pos.getX() - TILE_SIDE / 4 - 1);						// FALTA incluir el offset en el move !!!
+	//	}
 
-		dir.setX(0);
-	}
+	//	dir.setX(0);
+	//}
+
+	move(col);
 
 	if(debugMode) debug();
 }
 
-void Player::move()
+void Player::move(Collision col)
 {
+
+	// otra posible implementacion
+	bool moverDcha = true;
+
+	if (col && !col.ground) { 
+		moverDcha = false;
+	}
+
 	int offset = game->getMapOffset();
 
 	/// movimiento horizontal ---
-
 	// hacia la derecha
-	if (dir.getX() == 1) {
+	if (dir.getX() == 1 && moverDcha) {
 		flipSprite = false;
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{
@@ -145,7 +149,6 @@ void Player::move()
 			pos.setX(pos.getX() - speed);
 		}
 	}
-
 
 	/// movimiento vertical ---
 
