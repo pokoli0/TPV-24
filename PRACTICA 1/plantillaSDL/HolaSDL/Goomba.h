@@ -20,8 +20,7 @@ private:
 
 	int frameCounter;
 
-	// -1 izda, 1 dcha
-	int dir;
+	Point2D<int> dir;
 	// true izda, false dcha
 	bool flipSprite;
 	int speed;

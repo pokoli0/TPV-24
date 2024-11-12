@@ -9,14 +9,16 @@ Player::Player(Game* g, int posx, int posy)
 	game = g;
 	actualAspect = MARIO;
 	lives = 3;
-	dir = 0;
 	
 	initPos = Point2D<int>(posx, posy);
 	pos = initPos;
 
+	dir = Point2D<int>(0, 0);
+
 	speed = 8; // def: 8
 	
 	groundY = posy;
+	onGround = true;
 	jumping = false;
 	jumpVelocity = 0;
 	gravity = 1;
@@ -28,6 +30,7 @@ Player::Player(Game* g, int posx, int posy)
 	walkFrame = 0;
 	frameCounter = 0;
 	flipSprite = false;
+
 
 	cout << "Mario (" << posx << ", " << posy << ")" << endl;
 }
@@ -66,34 +69,54 @@ void Player::render()
 
 void Player::update()
 {
+	pos.setY(pos.getY() + 1);
+
 	move();
 
 	updateAnim();
-	hit();
-	// comprobacion de colisiones
-	SDL_Rect r;
-	if (actualAspect == MARIO) {
-		r.x = pos.getX();
-		r.y = pos.getY() - texture->getFrameHeight();
-		r.w = texture->getFrameWidth();
-		r.h = texture->getFrameHeight();
+
+	pos.setY(pos.getY() + dir.getY());// Comprobación vertical
+
+	SDL_Rect rectY{ pos.getX(), pos.getY(),
+		texture->getFrameWidth(), texture->getFrameHeight() };
+
+	Collision coll = game->checkCollision(rectY, true);
+
+	if (coll) {
+		if (dir.getY() > 0)
+		{
+			pos.setY(pos.getY() + coll.rect.h);// empujar hacia arriba
+			onGround = true;
+		}
+		else {
+			pos.setY(pos.getY() - coll.rect.h); // empujar hacia abajo
+		}
+		dir.setY(0.0f);
 	}
-	else
+
+
+	pos.setX(pos.getX() + dir.getX());// Comprobación horizontal
+	SDL_Rect rectX{ pos.getX(), pos.getY() - texture->getFrameHeight(),
+		texture->getFrameWidth(), texture->getFrameHeight() };
+
+	coll = game->checkCollision(rectX, true);
+	if (coll) {
+		if (dir.getX() > 0)
+		{
+			pos.setX(pos.getX() - coll.rect.w);// empujar hacia izquierda
+		}
+		else {
+			pos.setX(pos.getX() + coll.rect.w);// empujar hacia derecha
+		}
+		dir.setX(0.0f);
+	}
+
+
+	if (coll.damages) // si hace daño restar vida
 	{
-		r.x = pos.getX();
-		r.y = pos.getY() - supertexture->getFrameHeight();
-		r.w = supertexture->getFrameWidth();
-		r.h = supertexture->getFrameHeight();
+		lives--;
 	}
-	
 
-	Collision col = game->checkCollision(r, true);
-
-	if (col) {
-		cout << "col ";
-		// restricciones de movimiento vertical
-
-	}
 
 
 	if(debugMode) debug();
@@ -104,7 +127,7 @@ void Player::move()
 	int offset = game->getMapOffset();
 
 	// movimiento horizontal
-	if (dir == 1) {
+	if (dir.getX() == 1) {
 		flipSprite = false;
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{
@@ -116,7 +139,7 @@ void Player::move()
 			pos.setX(pos.getX() + speed);
 		}
 	}
-	else if (dir == -1) {
+	else if (dir.getX() == -1) {
 		flipSprite = true;
 		if (pos.getX() > 0) {
 			pos.setX(pos.getX() - speed);
@@ -124,23 +147,26 @@ void Player::move()
 	}
 
 	// salto
-	if (jumping) {
+	if (dir.getY() == 1) 
+	{
 		pos.setY(pos.getY() + jumpVelocity);
-		jumpVelocity += gravity; // Aumenta velocidad hacia abajo
-
-		// Comprobamos si ha alcanzado el suelo
-		if (pos.getY() >= groundY) {
-			pos.setY(groundY);
-			jumping = false;
-			jumpVelocity = 0;
-		}
+		jumpVelocity += gravity;
 	}
+	else if(dir.getY() == 0) {
+		onGround = true;
+		jumping = false;
+		jumpVelocity = 0;
+	}	
+
+	//pos.setY(pos.getY() + 1);
 }
 
 void Player::jump()
 {
-	if (!jumping) 
+	if (!jumping && onGround) 
 	{
+		dir.setY(1);
+		onGround = false;
 		jumping = true;
 		jumpVelocity = -15; 
 	}
@@ -148,7 +174,7 @@ void Player::jump()
 
 void Player::updateAnim()
 {
-	if (dir != 0 && !jumping) // si se esta moviendo
+	if (dir.getX() != 0 && !jumping) // si se esta moviendo
 	{
 		frameCounter++;
 		if (frameCounter >= 1)
@@ -199,11 +225,11 @@ void Player::handleEvents(const SDL_Event& event)
 	{
 		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
-			dir = 1;
+			dir.setX(1);
 			break;
 
 		case SDLK_LEFT:
-			dir = -1;
+			dir.setX(-1);
 			break;
 
 		case SDLK_SPACE:
@@ -238,11 +264,11 @@ void Player::handleEvents(const SDL_Event& event)
 	{
 		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
-			dir = 0;
+			dir.setX(0);
 			break;
 
 		case SDLK_LEFT:
-			dir = 0;
+			dir.setX(0);
 			break;
 
 		}
@@ -264,53 +290,7 @@ void Player::hit()
 		actualAspect = MARIO;
 		inmune = true;
 	}*/
-	//cosas
 	
-	// Inicializar nextPos como la posición actual
-	/*nextPos = pos;
-
-	// **Movimiento Vertical**
-	nextPos.setY(pos.getY() + jumpVelocity); // Aplicar la velocidad de salto o caída a nextPos en Y
-
-	// Crear un rectángulo de colisión usando nextPos para la comprobación vertical
-	SDL_Rect rectY{ pos.getX(), nextPos.getY() - texture->getFrameHeight(), texture->getFrameWidth(), texture->getFrameHeight() };
-	Collision collY = game->checkCollision(rectY, true);
-
-	if (collY.collides) {
-		// Ajustar posición en Y para evitar la colisión
-		if (jumpVelocity > 0) { // Si el personaje está cayendo
-			pos.setY(pos.getY() - collY.rect.h); // Empujar hacia arriba
-			onGround = true; // El personaje está en el suelo
-		}
-		else { // Si el personaje está saltando
-			pos.setY(pos.getY() + collY.rect.h); // Empujar hacia abajo
-		}
-		jumpVelocity = 0; // Detener el movimiento vertical
-	}
-	else {
-		pos.setY(nextPos.getY()); // Si no hay colisión, actualizar pos con nextPos en el eje Y
-	}
-
-	// **Movimiento Horizontal**
-	nextPos.setX(pos.getX()); // Ajustar nextPos en X usando dir y la velocidad
-
-	// Crear un rectángulo de colisión usando nextPos para la comprobación horizontal
-	SDL_Rect rectX{ nextPos.getX(), pos.getY() - texture->getFrameHeight(), texture->getFrameWidth(), texture->getFrameHeight() };
-	Collision collX = game->checkCollision(rectX, true);
-
-	if (collX.collides) {
-	//	// Ajustar posición en X para evitar la colisión
-		if (dir > 0) { // Si el personaje se mueve a la derecha
-			pos.setX(pos.getX() - collX.rect.w); // Empujar hacia la izquierda
-		}
-	else { // Si el personaje se mueve a la izquierda
-			pos.setX(pos.getX() + collX.rect.w); // Empujar hacia la derecha
-		}
-	}
-	else {
-		pos.setX(nextPos.getX()); // Si no hay colisión, actualizar pos con nextPos en el eje X
-	}
-	*/
 
 
 
@@ -325,7 +305,7 @@ void Player::debug()
 
 	cout << "Mario Window Position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
 	cout << "Mario X Position On Tilemap: " << pos.getX() + game->getMapOffset() << endl;
-	cout << "Direction: " << dir << endl;
+	cout << "Direction: " << dir.getX() << endl;
 	cout << "Mario & Scrolling Speed: " << speed << endl;
 
 	cout << "Texture frame: " << frame << endl;

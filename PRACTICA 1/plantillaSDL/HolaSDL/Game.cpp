@@ -229,10 +229,11 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 	for (int i = 0; i < blockGroup.size(); i++) {
 		col = blockGroup[i]->hit(rect, fromPlayer);
 	}
-	//tilemap
-	 col = tilemap->hit(rect, fromPlayer);
-	if (col)return col;
 
+	//tilemap
+	col = tilemap->hit(rect, fromPlayer);
+
+	if (col) return col;
 
 	return col;
 }

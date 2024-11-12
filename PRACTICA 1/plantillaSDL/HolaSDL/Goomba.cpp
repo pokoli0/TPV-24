@@ -9,7 +9,7 @@ Goomba::Goomba(Game* g, int x, int y)
 
 	frameCounter = 0;
 
-	dir = -1; //izda
+	dir = Point2D<int>(-1, 0); //izda
 	speed = 5; // def: 8
 
 	flipSprite = true; // izda = 1
@@ -46,6 +46,14 @@ void Goomba::render()
 void Goomba::update()
 {
 	move();
+
+	//Collision col = game->checkCollision(rect, false);
+
+	//if (!col) {
+	//	// caida
+	//	pos.setY(pos.getY() + GRAVITY);
+	//}
+
 }
 
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
@@ -63,10 +71,10 @@ void Goomba::move()
 		}
 	}
 	else {
-		pos.setX(pos.getX() + speed * dir);
+		pos.setX(pos.getX() + speed * dir.getX());
 	}
 
-
+ 
 	// caida???
 }
 

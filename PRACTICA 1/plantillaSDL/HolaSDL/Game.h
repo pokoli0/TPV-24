@@ -41,6 +41,8 @@ static constexpr int BACKGROUND_SCROLL_SPEED = 5;
 
 static constexpr int OBSTACLE_THRESHOLD = 4;
 
+static constexpr int GRAVITY = 1;
+
 //
 // Clase que representa el juego y controla todos sus aspectos
 //
@@ -88,8 +90,9 @@ public:
 	void run();
 
 	/*
-	Game tiene acceso a todos los objetos del juego, así que puede preguntarle a cada uno de ellos 
-	(con el método hit) si colisiona con el rectángulo.
+	Lo llama cada objeto en su update y su caja de colision.
+	Itera sobre los objetos del juego llamando a sus metodos hit.
+	Si ha habido una colision (detectada por hit), interrumpe la busqueda y la devuelve.
 
 	@param rect: objeto que se va a mover y del que queremos comprobar colisiones
 	@param fromPlayer: origen de colision es mario (true) o un enemigo (false)
@@ -115,9 +118,6 @@ public:
 	~Game();
 
 	void loadObjectMap();
-
-	// se encarga de invertir la direccion de goombas, koopas y champis ?
-	void collides();
 
 	/// GETTERS --------------------------------
 	int getMapOffset() { return mapOffset; }

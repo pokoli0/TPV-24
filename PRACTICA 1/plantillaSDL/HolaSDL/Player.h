@@ -26,12 +26,8 @@ private:
 
 	Point2D<int> pos;
 	Point2D<int> initPos;
-	Point2D<int> nextPos;
+	Point2D<int> dir;
 	int speed;
-
-	// 1 si mario se mueve hacia la derecha, 
-	// -1 si es hacia la izquierda
-	int dir;
 
 	int lives;
 
