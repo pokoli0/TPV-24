@@ -80,7 +80,6 @@ void Block::update()
 	rect.h = TILE_SIDE;
 	rect.w = TILE_SIDE;
 
-	texture->renderFrame(rect, 0, frame);
 }
 
 Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
