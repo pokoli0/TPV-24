@@ -72,18 +72,18 @@ void Player::update()
 	// gravedad: caida de mario si no esta en el suelo y si no esta saltando
 	if (!onGround && !jumping) {
 		cout << "NOTonGround" << endl;
-		pos.setY(pos.getY() + 5); // caida por gravedad
 
+		dir.setY(-1);
+		pos.setY(pos.getY() + 5); // caida por gravedad
 	}
-	else if (onGround) {
+	else if (onGround)
+	{
 		cout << "onGround" << endl;
+
 		dir.setY(0); // no sube ni baja
 	}
 	
-	if (jumping)
-	{
-		dir.setY(1);
-	}
+
 
 
 	move();
@@ -93,18 +93,15 @@ void Player::update()
 	// vemos colisiones -> ahora vienen de mario
 	Collision col = game->checkCollision(rect, true);
 
-	if (col) {
+	if (col) 
+	{
 		if(dir.getY() == -1) // si esta bajando
 		{
-			onGround = true;
 			pos.setY(pos.getY() - TILE_SIDE/4);
+			onGround = true;
 		}
 	}
-	else // si no hay colision, no estara tocando el suelo
-	{
-		dir.setY(-1); // baja
-		onGround = false;
-	}
+
 
 
 
@@ -144,15 +141,16 @@ void Player::move()
 	/// movimiento vertical ---
 
 	// SALTO
-	if (dir.getY() == 1) // si estamos subiendo
+	if (dir.getY() == 1) {
+		pos.setY(pos.getY() - jumpVelocity);
+
+		jumpVelocity -= 1;
+
+		if(jumpVelocity <= 0) dir.setY(-1); // caida
+	}
+	else if (dir.getY() == -1)
 	{
-		pos.setY(pos.getY() + jumpVelocity); // aumentamos la altura
-		jumpVelocity -= GRAVITY;
-		
-		if (jumpVelocity <= 0) { // cuando llega a la altura empieza a bajar
-			dir.setY(-1); 
-			jumping = false;
-		}
+		jumping = false; // deja de subir
 	}
 }
 
@@ -162,13 +160,16 @@ void Player::jump()
 	{
 		jumping = true;
 		onGround = false;
+
+		dir.setY(1);
+
 		jumpVelocity = 15; 
 	}
 }
 
 void Player::updateAnim()
 {
-	if (dir.getX() != 0 && !jumping) // si se esta moviendo
+	if (dir.getX() != 0 && dir.getY() == 0) // si se esta moviendo EN HORIZONTAL
 	{
 		frameCounter++;
 		if (frameCounter >= 1)
@@ -187,7 +188,7 @@ void Player::updateAnim()
 			}
 		}
 	}
-	else if (jumping) {
+	else if (dir.getY() != 0) {
 		frame = 6;
 	}
 	else {
