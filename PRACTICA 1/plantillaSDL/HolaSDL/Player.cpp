@@ -75,44 +75,45 @@ void Player::update()
 
 	updateAnim();
 
-	pos.setY(pos.getY() + dir.getY());// Comprobación vertical
+	pos.setY(pos.getY() + dir.getY());
 
 	SDL_Rect rectY{ pos.getX(), pos.getY(),
 		texture->getFrameWidth(), texture->getFrameHeight() };
 
-	Collision coll = game->checkCollision(rectY, true);
+	Collision col = game->checkCollision(rectY, true);
 
-	if (coll) {
+	if (col) {
 		if (dir.getY() > 0)
 		{
-			pos.setY(pos.getY() + coll.rect.h);// empujar hacia arriba
+			pos.setY(pos.getY() + col.rect.h);
 			onGround = true;
 		}
 		else {
-			pos.setY(pos.getY() - coll.rect.h); // empujar hacia abajo
+			pos.setY(pos.getY() - col.rect.h);
 		}
 		dir.setY(0.0f);
 	}
 
 
-	pos.setX(pos.getX() + dir.getX());// Comprobación horizontal
+	pos.setX(pos.getX() + dir.getX());
+
 	SDL_Rect rectX{ pos.getX(), pos.getY() - texture->getFrameHeight(),
 		texture->getFrameWidth(), texture->getFrameHeight() };
 
-	coll = game->checkCollision(rectX, true);
-	if (coll) {
+	col = game->checkCollision(rectX, true);
+	if (col) {
 		if (dir.getX() > 0)
 		{
-			pos.setX(pos.getX() - coll.rect.w);// empujar hacia izquierda
+			pos.setX(pos.getX() - col.rect.w);
 		}
 		else {
-			pos.setX(pos.getX() + coll.rect.w);// empujar hacia derecha
+			pos.setX(pos.getX() + col.rect.w);
 		}
 		dir.setX(0.0f);
 	}
 
 
-	if (coll.damages) // si hace daño restar vida
+	if (col.damages) // si hace daño restar vida
 	{
 		lives--;
 	}

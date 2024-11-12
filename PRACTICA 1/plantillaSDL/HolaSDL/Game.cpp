@@ -9,7 +9,7 @@ struct TextureSpec
 };
 
 // Directorio raiz de los archivos de textura
-const string textureRoot = "../assets/imgs/";
+const string textureRoot = "../assets/images/";
 
 // Especificacion de las texturas del juego
 const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
