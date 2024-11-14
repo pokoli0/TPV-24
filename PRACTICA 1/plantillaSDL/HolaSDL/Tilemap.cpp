@@ -135,7 +135,7 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 				// esto esta muy pocho pero por ahora
 				if (indice == 36 || indice == 2 || indice == 3) colision.ground = true;
 
-				cout << indice << endl;
+				//cout << indice << endl;
 
 				return colision;
 			}
