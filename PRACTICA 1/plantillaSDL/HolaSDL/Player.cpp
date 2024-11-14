@@ -86,13 +86,13 @@ void Player::update()
 
 	Collision col = game->checkCollision(rect, true);
 
-	if (col.ground) // si hay colision con el suelo, que deje de caer
+	if (col.ground && dir.getY() == -1) // si hay colision con el suelo, que deje de caer
 	{
 		dir.setY(0);
 		onGround = true;
 
 		// ajustamos a mario porq atraviesa el suelo si no:
-		pos.setY(pos.getY() - 1);
+		pos.setY(pos.getY() - 5);
 	}
 
 	updateAnim();
