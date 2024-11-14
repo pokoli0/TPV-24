@@ -68,7 +68,7 @@ void Tilemap::loadTilemap(string fichero)
 	f.close();
 }
 
-void Tilemap::renderTilemap()
+void Tilemap::render(SDL_Renderer* renderer)
 {
 	int offset = game->getMapOffset();  // atributo de Game
 	// Primera columna de la matriz del mapa visible en la ventana
@@ -99,14 +99,15 @@ void Tilemap::renderTilemap()
 
 				// Usa renderFrame para pintar la tesela
 				background->renderFrame(rect, frameRow, frameCol);
+
+				if (DEBUG) {
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, 128);
+					SDL_RenderDrawRect(renderer, &rect);
+					SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+				}
 			}
 		}
 	}
-}
-
-void Tilemap::render()
-{
-	renderTilemap();
 }
 
 Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
@@ -146,7 +147,5 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 
 void Tilemap::update()
 {
-	renderTilemap();
-
 	game->checkCollision(rect, false);
 }

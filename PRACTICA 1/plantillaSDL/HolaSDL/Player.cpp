@@ -41,7 +41,7 @@ Player::~Player()
 	delete texture;
 }
 
-void Player::render()
+void Player::render(SDL_Renderer* renderer)
 {
 	rect.x = pos.getX();
 
@@ -65,51 +65,52 @@ void Player::render()
 		rect.h = supertexture->getFrameHeight() * 2;
 		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
+
+	if (DEBUG) {
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 128);
+		SDL_RenderDrawRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	}
 }
 
 void Player::update()
 {
-	// gravedad: caida de mario si no esta en el suelo y si no esta saltando
-	if (!onGround && !jumping) 
-	{
-		dir.setY(-1);
-		pos.setY(pos.getY() + 5); // caida por gravedad
+	// comprobacion de caida
+	if (!onGround) dir.setY(-1);
+	else if (onGround && !jumping) dir.setY(0);
+
+	// caida si la hay
+	if (dir.getY() == -1) {
+		pos.setY(pos.getY() + 5);
 	}
-	else if (onGround)
+
+	Collision col = game->checkCollision(rect, true);
+
+	if (col.ground) // si hay colision con el suelo, que deje de caer
 	{
-		dir.setY(0); // no sube ni baja
+		dir.setY(0);
+		onGround = true;
+
+		// ajustamos a mario porq atraviesa el suelo si no:
+		pos.setY(pos.getY() - 1);
 	}
 
 	updateAnim();
 
-	// vemos colisiones -> ahora vienen de mario
-	Collision col = game->checkCollision(rect, true);
 
-	if (col) 
-	{
-		if(dir.getY() == -1) // si esta bajando
-		{
-			pos.setY(pos.getY() - TILE_SIDE/4 - 1);
-			onGround = true;
-		}
-	}
-	else 
-	{
-		onGround = false;
-	}
-
-	// horizontal
-	//if (col && !col.ground)
+	//if (col && col.ground) 
 	//{
-	//	if (dir.getX() == 1) // si esta yendo hacia la derecha
+	//	if(dir.getY() == -1) // si esta bajando
 	//	{
-	//		pos.setX(pos.getX() - TILE_SIDE / 4 - 1);						// FALTA incluir el offset en el move !!!
+	//		onGround = true;
 	//	}
-
-	//	dir.setX(0);
+	//}
+	//else 
+	//{
+	//	onGround = false;
 	//}
 
-	move(col);
+	//move(col);
 
 	if(debugMode) debug();
 }
@@ -117,18 +118,11 @@ void Player::update()
 void Player::move(Collision col)
 {
 
-	// otra posible implementacion
-	bool moverDcha = true;
-
-	if (col && !col.ground) { 
-		moverDcha = false;
-	}
-
 	int offset = game->getMapOffset();
 
 	/// movimiento horizontal ---
 	// hacia la derecha
-	if (dir.getX() == 1 && moverDcha) {
+	if (dir.getX() == 1) {
 		flipSprite = false;
 		if (pos.getX() >= Game::WIN_WIDTH / 2)
 		{

@@ -43,6 +43,8 @@ static constexpr int OBSTACLE_THRESHOLD = 4;
 
 static constexpr int GRAVITY = 1;
 
+static constexpr bool DEBUG = true;
+
 //
 // Clase que representa el juego y controla todos sus aspectos
 //
@@ -122,6 +124,8 @@ public:
 	/// GETTERS --------------------------------
 	int getMapOffset() { return mapOffset; }
 	void setMapOffset(int m) { mapOffset = m; }
+
+	SDL_Renderer* getRender() { return renderer; }
 };
 
 inline Texture*

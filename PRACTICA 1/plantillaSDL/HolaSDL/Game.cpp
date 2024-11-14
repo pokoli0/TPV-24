@@ -109,7 +109,7 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y); // 32, 32*13
+			player = new Player(this, 32, 300); // 32, 32*13
 			break;
 		case 'B':
 			block = new Block(this, x, y, atrib, accion);
@@ -158,8 +158,8 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
-	tilemap->render();
-	player->render();
+	tilemap->render(renderer);
+	player->render(renderer);
 
 	for (int i = 0; i < blockGroup.size(); i++)
 	{

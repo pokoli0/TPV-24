@@ -37,9 +37,8 @@ public:
 	
 	// leera lineas completas con getline para pasarselo al constructor del objeto
 	void loadTilemap(string fichero);
-	void renderTilemap();
 
-	void render();
+	void render(SDL_Renderer* renderer);
 	// mueve el fondo
 	void update();
 

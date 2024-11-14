@@ -70,7 +70,7 @@ public:
 	Player(Game* g, int x, int y);
 	~Player();
 
-	void render();
+	void render(SDL_Renderer* renderer);
 	void update();
 
 	// movimiento intencionado
