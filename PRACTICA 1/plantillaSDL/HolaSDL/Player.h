@@ -26,8 +26,7 @@ private:
 
 	Point2D<int> pos;
 	Point2D<int> initPos;
-	Point2D<int> dir;
-	int speed;
+	Point2D<int> speed;
 
 	int lives;
 
@@ -59,8 +58,6 @@ private:
     int jumpVelocity;
 	int gravity;         
 	int groundY;
-	int lastXDir;
-	bool onWall;
 
 	// --- DEBUGGING
 	bool debugMode = false;

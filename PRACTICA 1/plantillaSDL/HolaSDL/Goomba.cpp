@@ -60,12 +60,12 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
 	SDL_Rect arribarect{ pos.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE };
-	col.collides = SDL_IntersectRect(&rect, &arribarect, &col.rect);
+	col.collides = SDL_IntersectRect(&rect, &arribarect, &col.intersectionRect);
 	if (col)
 	{
 		if (fromPlayer)
 		{
-			if (col.rect.y <= arribarect.y)
+			if (col.intersectionRect.y <= arribarect.y)
 			{
 				isAlive = false;
 			}

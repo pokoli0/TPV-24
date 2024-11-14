@@ -92,12 +92,12 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 	SDL_Rect blockRect { pos.getX(), pos.getY(), texture->getFrameWidth(), texture->getFrameHeight()};
 
-	col.collides = SDL_IntersectRect(&rect, &blockRect, &col.rect);
+	col.collides = SDL_IntersectRect(&rect, &blockRect, &col.intersectionRect);
 
 	// si hay colision y es del jugador y la colision es desde abajo
 	if (col && fromPlayer && 
-		col.rect.y > blockRect.y + texture->getFrameHeight() / 4 && 
-		col.rect.w > texture->getFrameWidth() / 4)
+		col.intersectionRect.y > blockRect.y + texture->getFrameHeight() / 4 && 
+		col.intersectionRect.w > texture->getFrameWidth() / 4)
 	{
 		if (tipoBloque == SORPRESA || tipoBloque == OCULTO) 
 		{

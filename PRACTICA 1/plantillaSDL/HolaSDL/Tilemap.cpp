@@ -122,27 +122,18 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 	int row1 = (rect.y + rect.h - 1) / TILE_SIDE;
 	int col1 = ((rect.x + rect.w - 1) / TILE_SIDE) + game->getMapOffset() / TILE_SIDE;
 
-	for (int row = row0; row <= row1; ++row) 
+	for (int row = row0; row <= row1 && !colision; ++row) 
 	{
-		for (int col = col0; col <= col1; ++col)
+		for (int col = col0; col <= col1 && !colision; ++col)
 		{
 			int indice = indices[row][col];
 
 			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD)
 			{
-				colision.collides = true;
-				
-				// esto esta muy pocho pero por ahora
-				if (indice == 36 || indice == 2 || indice == 3) {
-					colision.ground = true;
-				}
-				else { 
-					colision.wall = true; 
-				}
+				SDL_Rect auxRect{ col * TILE_SIDE, row * TILE_SIDE, TILE_SIDE, TILE_SIDE };
+				colision.collides = SDL_IntersectRect(&rect, &auxRect, &colision.intersectionRect);
 
-				//cout << indice << endl;
-
-				return colision;
+				//if (colision.collides) colision.intersectionRect.h =+ 5;
 			}
 		}
 	}

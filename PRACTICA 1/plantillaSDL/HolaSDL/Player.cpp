@@ -13,17 +13,13 @@ Player::Player(Game* g, int posx, int posy)
 	initPos = Point2D<int>(posx, posy);
 	pos = initPos;
 
-	dir = Point2D<int>(0, 0);
-	lastXDir = 1;
-
-	speed = 8; // def: 8
+	speed = Point2D<int>(0, 0);
 	
 	groundY = posy;
 	onGround = false;
-	onWall = false;
+	//onWall = false;
 	jumping = false;
 	jumpVelocity = 0;
-	gravity = 1;
 
 	texture = game->getTexture(Game::MARIO);
 	supertexture = game->getTexture(Game::SUPERMARIO);
@@ -49,7 +45,7 @@ void Player::render(SDL_Renderer* renderer)
 
 	// Flipear al mario segun la direccion
 	SDL_RendererFlip flip;
-	if (flipSprite) flip = SDL_FLIP_HORIZONTAL;
+	if (speed.getX() > 0) flip = SDL_FLIP_HORIZONTAL;
 	else flip = SDL_FLIP_NONE;
 
 	// renderframe con flipeado
@@ -77,119 +73,146 @@ void Player::render(SDL_Renderer* renderer)
 
 void Player::update()
 {
-	// comprobacion de caida
-	if (!onGround && !jumping) dir.setY(-1);
-	else if (onGround && !jumping) dir.setY(0);
+	// Caida por gravedad
+	speed.setY(speed.getY() + GRAVITY);
 
-	// caida si la hay
-	if (dir.getY() == -1 && !onGround) {
-		pos.setY(pos.getY() + GRAVITY);
+
+	// Colisiones verticales
+	SDL_Rect verticalRect;
+	verticalRect.x = rect.x;
+	verticalRect.y = rect.y + speed.getY();
+	verticalRect.h = rect.h;
+	verticalRect.w = rect.w;
+
+	Collision col = game->checkCollision(verticalRect, true);
+
+	if (!col) {
+		pos.setY(pos.getY() + speed.getY());
 	}
-
-	Collision col = game->checkCollision(rect, true);
-
-	if (col.ground && dir.getY() == -1) // si hay colision con el suelo, que deje de caer
+	else 
 	{
-		dir.setY(0);
+		pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
 		onGround = true;
-
-		// ajustamos a mario porq atraviesa el suelo si no:
-		pos.setY(pos.getY() - GRAVITY);
 	}
-	else if (!col.ground && !col.wall)// si no hay col con el suelo:
-	{
-		onGround = false;
-	}
+	speed.setY(0);
 
-	// SALTO
-	if (dir.getY() == 1) {
-		pos.setY(pos.getY() - jumpVelocity);
+	// Colisiones horizontales
+	SDL_Rect horizontalRect;
+	horizontalRect.x = rect.x + speed.getX();
+	horizontalRect.y = rect.y;
+	horizontalRect.h = rect.h;
+	horizontalRect.w = rect.w;
 
-		jumpVelocity -= 1;
-		//cout << jumpVelocity << endl;
+	col = game->checkCollision(horizontalRect, true);
 
-		if (jumpVelocity <= 0) {
-			dir.setY(-1); // caida
-			jumping = false;
+	if (!col) {
+		// derecha
+		if (speed.getX() > 0)
+		{
+			flipSprite = false;
+			if (pos.getX() >= Game::WIN_WIDTH / 2)
+			{
+				// mueve el fondo
+				if (game->getMapOffset() <= MAX_MAP_OFFSET) {
+					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED);
+				}
+			}
+			else
+			{
+				// mueve a mario
+				pos.setX(pos.getX() + speed.getX());
+			}
+
+		}
+		else if (speed.getX() < 0)  // izquierda
+		{
+			flipSprite = true;
+			if (pos.getX() > 0) {
+				pos.setX(pos.getX() + speed.getX());
+			}
 		}
 	}
-
-	// comprobacion de movimiento
-	if (onWall) dir.setX(0);
-
-	// movimiento si se puede
-	if (dir.getX() != 0 && !onWall) {
-		move(col);
-	}
-
-
-	if (col.wall && dir.getX() != 0 && lastXDir == dir.getX()) //  
+	else
 	{
-		dir.setX(0);
-		onWall = true;
-
-		if (lastXDir == 1) pos.setX(pos.getX() - 10);
-		else if (lastXDir == -1) pos.setX(pos.getX() + 5);
-		
+		// derecha
+		if (speed.getX() > 0) 
+		{
+			flipSprite = false;
+			if (pos.getX() >= Game::WIN_WIDTH / 2)
+			{
+				// mueve el fondo
+				if (game->getMapOffset() <= MAX_MAP_OFFSET) {
+					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED);
+				}
+			}
+			else 
+			{
+				// mueve a mario
+				pos.setX(pos.getX() + speed.getX() - col.intersectionRect.w);
+			}
+			
+		}
+		else if(speed.getX() < 0)  // izquierda
+		{
+			flipSprite = true;
+			if (pos.getX() > 0) {
+				pos.setX(pos.getX() + speed.getX() + col.intersectionRect.w);
+			}	
+		}
 	}
-	else if (!col.wall)
-	{
-		onWall = false;
-	}
-	
-
+	speed.setX(0);
 
 	updateAnim();
 
 	if(debugMode) debug();
 }
 
-void Player::move(Collision col)
-{
-	int offset = game->getMapOffset();
-
-	// hacia la derecha
-	if (dir.getX() == 1)
-	{
-		flipSprite = false;
-		if (pos.getX() >= Game::WIN_WIDTH / 2)
-		{
-			// mueve el fondo
-			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-				game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
-			}
-		}
-		else {
-			// mueve a mario
-			pos.setX(pos.getX() + speed);
-		}
-
-	}
-	// hacia la izquierda
-	else if (dir.getX() == -1) {
-		flipSprite = true;
-		if (pos.getX() > 0) {
-			pos.setX(pos.getX() - speed);
-		}
-	}
-}
+//void Player::move(Collision col)
+//{
+//	int offset = game->getMapOffset();
+//
+//	// hacia la derecha
+//	if (dir.getX() == 1)
+//	{
+//		flipSprite = false;
+//		if (pos.getX() >= Game::WIN_WIDTH / 2)
+//		{
+//			// mueve el fondo
+//			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
+//				game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
+//			}
+//		}
+//		else {
+//			// mueve a mario
+//			pos.setX(pos.getX() + speed);
+//		}
+//
+//	}
+//	// hacia la izquierda
+//	else if (dir.getX() == -1) {
+//		flipSprite = true;
+//		if (pos.getX() > 0) {
+//			pos.setX(pos.getX() - speed);
+//		}
+//	}
+//}
 
 void Player::jump()
 {
-	if (!jumping && onGround) 
-	{
-		jumping = true;
-		onGround = false;
-		
-		dir.setY(1);
+	//if (!jumping && onGround) 
+	//{
+	//	jumping = true;
+	//	onGround = false;
+	//	
+	//	dir.setY(1);
 
-		jumpVelocity = 15; 
-	}
+	//	jumpVelocity = 15; 
+	//}
 }
 
 void Player::updateAnim()
 {
-	if (dir.getX() != 0 && dir.getY() == 0) // si se esta moviendo EN HORIZONTAL
+	if (speed.getX() != 0 && speed.getY() == 0) // si se esta moviendo EN HORIZONTAL
 	{
 		frameCounter++;
 		if (frameCounter >= 1)
@@ -208,7 +231,7 @@ void Player::updateAnim()
 			}
 		}
 	}
-	else if (dir.getY() != 0) {
+	else if (speed.getY() != 0) {
 		frame = 6;
 	}
 	else {
@@ -240,13 +263,11 @@ void Player::handleEvents(const SDL_Event& event)
 	{
 		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
-			dir.setX(1);
-			lastXDir = 1;
+			speed.setX(8);
 			break;
 
 		case SDLK_LEFT:
-			dir.setX(-1);
-			lastXDir = -1;
+			speed.setX(-8);
 			break;
 
 		case SDLK_SPACE:
@@ -281,11 +302,11 @@ void Player::handleEvents(const SDL_Event& event)
 	{
 		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
-			dir.setX(0);
+			speed.setX(0);
 			break;
 
 		case SDLK_LEFT:
-			dir.setX(0);
+			speed.setX(0);
 			break;
 
 		}
@@ -328,10 +349,10 @@ void Player::debug()
 	//cout << "Texture frame: " << frame << endl;
 	cout << "Jumping: " << jumping << endl;
 	cout << "On Ground: " << onGround << endl;
-	cout << "On Wall: " << onWall << endl;
-	cout << "Dir Y: " << dir.getY() << endl;
-	cout << "Dir X: " << dir.getX() << endl;
-	cout << "Last X Dir: " << lastXDir << endl;
+	//cout << "On Wall: " << onWall << endl;
+	//cout << "Dir Y: " << dir.getY() << endl;
+	//cout << "Dir X: " << dir.getX() << endl;
+	//cout << "Last X Dir: " << lastXDir << endl;
 	/*cout << "Aspect: " << actualAspect << endl;
 	cout << "Lives: " << lives << endl;*/
 
@@ -340,13 +361,13 @@ void Player::debug()
 	cout << endl;
 	cout << "Fast Mode: " << fastMode << endl;
 
-	if (fastMode) {
-		speed = 15;
-		//backgroundScrollSpeed = 15;
-	}
-	else {
-		speed = 8;
-		//backgroundScrollSpeed = 5;
-	}
+	//if (fastMode) {
+	//	speed = 15;
+	//	//backgroundScrollSpeed = 15;
+	//}
+	//else {
+	//	speed = 8;
+	//	//backgroundScrollSpeed = 5;
+	//}
 
 }
