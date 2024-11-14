@@ -59,7 +59,8 @@ private:
     int jumpVelocity;
 	int gravity;         
 	int groundY;
-
+	int lastXDir;
+	bool onWall;
 
 	// --- DEBUGGING
 	bool debugMode = false;

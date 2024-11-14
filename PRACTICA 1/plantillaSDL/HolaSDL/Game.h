@@ -41,7 +41,7 @@ static constexpr int BACKGROUND_SCROLL_SPEED = 5;
 
 static constexpr int OBSTACLE_THRESHOLD = 4;
 
-static constexpr int GRAVITY = 1;
+static constexpr int GRAVITY = 5;
 
 static constexpr bool DEBUG = true;
 

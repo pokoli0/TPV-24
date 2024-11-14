@@ -10,6 +10,7 @@ struct Collision
     SDL_Rect rect;
 
     bool ground = false;
+    bool wall = false;
 
     operator bool() const { return collides; }
 };

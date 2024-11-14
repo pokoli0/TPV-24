@@ -14,11 +14,13 @@ Player::Player(Game* g, int posx, int posy)
 	pos = initPos;
 
 	dir = Point2D<int>(0, 0);
+	lastXDir = 1;
 
 	speed = 8; // def: 8
 	
 	groundY = posy;
 	onGround = false;
+	onWall = false;
 	jumping = false;
 	jumpVelocity = 0;
 	gravity = 1;
@@ -80,8 +82,8 @@ void Player::update()
 	else if (onGround && !jumping) dir.setY(0);
 
 	// caida si la hay
-	if (dir.getY() == -1) {
-		pos.setY(pos.getY() + 5);
+	if (dir.getY() == -1 && !onGround) {
+		pos.setY(pos.getY() + GRAVITY);
 	}
 
 	Collision col = game->checkCollision(rect, true);
@@ -92,14 +94,50 @@ void Player::update()
 		onGround = true;
 
 		// ajustamos a mario porq atraviesa el suelo si no:
-		pos.setY(pos.getY() - 5);
+		pos.setY(pos.getY() - GRAVITY);
 	}
-	else // si no hay col con el suelo:
+	else if (!col.ground && !col.wall)// si no hay col con el suelo:
 	{
 		onGround = false;
 	}
 
-	move(col);
+	// SALTO
+	if (dir.getY() == 1) {
+		pos.setY(pos.getY() - jumpVelocity);
+
+		jumpVelocity -= 1;
+		//cout << jumpVelocity << endl;
+
+		if (jumpVelocity <= 0) {
+			dir.setY(-1); // caida
+			jumping = false;
+		}
+	}
+
+	// comprobacion de movimiento
+	if (onWall) dir.setX(0);
+
+	// movimiento si se puede
+	if (dir.getX() != 0 && !onWall) {
+		move(col);
+	}
+
+
+	if (col.wall && dir.getX() != 0 && lastXDir == dir.getX()) //  
+	{
+		dir.setX(0);
+		onWall = true;
+
+		if (lastXDir == 1) pos.setX(pos.getX() - 10);
+		else if (lastXDir == -1) pos.setX(pos.getX() + 5);
+		
+	}
+	else if (!col.wall)
+	{
+		onWall = false;
+	}
+	
+
 
 	updateAnim();
 
@@ -108,46 +146,32 @@ void Player::update()
 
 void Player::move(Collision col)
 {
-	// SALTO
-	if (dir.getY() == 1) {
-		pos.setY(pos.getY() - jumpVelocity);
-
-		jumpVelocity -= 1;
-		cout << jumpVelocity << endl;
-		if (jumpVelocity <= 0) {
-			dir.setY(-1); // caida
-			jumping = false;
-		}
-	}
-
 	int offset = game->getMapOffset();
 
-	/// movimiento horizontal ---
 	// hacia la derecha
-	//if (dir.getX() == 1) {
-	//	flipSprite = false;
-	//	if (pos.getX() >= Game::WIN_WIDTH / 2)
-	//	{
-	//		// mueve el fondo
-	//		if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-	//			game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
-	//		}
-	//	}
-	//	else {
-	//		// mueve a mario
-	//		pos.setX(pos.getX() + speed);
-	//	}
-	//}
-	//// hacia la izquierda
-	//else if (dir.getX() == -1) {
-	//	flipSprite = true;
-	//	if (pos.getX() > 0) {
-	//		pos.setX(pos.getX() - speed);
-	//	}
-	//}
-	
+	if (dir.getX() == 1)
+	{
+		flipSprite = false;
+		if (pos.getX() >= Game::WIN_WIDTH / 2)
+		{
+			// mueve el fondo
+			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
+				game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
+			}
+		}
+		else {
+			// mueve a mario
+			pos.setX(pos.getX() + speed);
+		}
 
-
+	}
+	// hacia la izquierda
+	else if (dir.getX() == -1) {
+		flipSprite = true;
+		if (pos.getX() > 0) {
+			pos.setX(pos.getX() - speed);
+		}
+	}
 }
 
 void Player::jump()
@@ -217,10 +241,12 @@ void Player::handleEvents(const SDL_Event& event)
 		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
 			dir.setX(1);
+			lastXDir = 1;
 			break;
 
 		case SDLK_LEFT:
 			dir.setX(-1);
+			lastXDir = -1;
 			break;
 
 		case SDLK_SPACE:
@@ -302,11 +328,14 @@ void Player::debug()
 	//cout << "Texture frame: " << frame << endl;
 	cout << "Jumping: " << jumping << endl;
 	cout << "On Ground: " << onGround << endl;
+	cout << "On Wall: " << onWall << endl;
 	cout << "Dir Y: " << dir.getY() << endl;
+	cout << "Dir X: " << dir.getX() << endl;
+	cout << "Last X Dir: " << lastXDir << endl;
 	/*cout << "Aspect: " << actualAspect << endl;
 	cout << "Lives: " << lives << endl;*/
 
-	cout << "Map Offset: " << game->getMapOffset() << endl;
+	//cout << "Map Offset: " << game->getMapOffset() << endl;
 
 	cout << endl;
 	cout << "Fast Mode: " << fastMode << endl;
