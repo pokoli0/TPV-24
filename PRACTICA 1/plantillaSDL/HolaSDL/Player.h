@@ -27,8 +27,10 @@ private:
 	Point2D<int> pos;
 	Point2D<int> initPos;
 	Point2D<int> speed;
+	int xSpeed;
 
 	int lives;
+	bool isAlive;
 
 	enum Aspect {
 		MARIO,
@@ -51,18 +53,20 @@ private:
 	int frameCounter;
 	// true izquierda, false derecha
 	bool flipSprite;
+	// flipeador
 	SDL_RendererFlip flip;
 
 	// --- salto
 	bool jumping;
 	bool onGround;
     int jumpVelocity;
-	int gravity;         
-	int groundY;
+
 
 	// --- DEBUGGING
 	bool debugMode = false;
 	bool fastMode = false;
+	int bgSpeed;
+
 
 public:
 	Player();
@@ -80,6 +84,9 @@ public:
 
 	// cambia el aspecto a SUPERMARIO
 	void grow();
+
+	// comprueba cuantas vidas le quedan o si se ha caido
+	void checkAlive();
 
 	// reinicia el nivel
 	void resetLevel();

@@ -14,8 +14,8 @@ Player::Player(Game* g, int posx, int posy)
 	pos = initPos;
 
 	speed = Point2D<int>(0, 0);
-	
-	groundY = posy;
+	xSpeed = 8;
+
 	onGround = false;
 
 	jumping = false;
@@ -27,10 +27,11 @@ Player::Player(Game* g, int posx, int posy)
 	frame = 0;
 	walkFrame = 0;
 	frameCounter = 0;
-	flipSprite = false;
+	flipSprite = true;
 
-
-	cout << "Mario (" << posx << ", " << posy << ")" << endl;
+	bgSpeed = 1;
+	
+	//cout << "Mario (" << posx << ", " << posy << ")" << endl;
 }
 
 Player::~Player()
@@ -68,6 +69,8 @@ void Player::render(SDL_Renderer* renderer)
 
 void Player::update()
 {
+	checkAlive();
+
 	// Caida por gravedad
 	speed.setY(speed.getY() + GRAVITY);
 
@@ -110,7 +113,7 @@ void Player::update()
 			{
 				// mueve el fondo
 				if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED);
+					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED * bgSpeed);
 				}
 			}
 			else
@@ -140,9 +143,9 @@ void Player::update()
 
 	}
 
-
-
 	updateAnim();
+
+
 
 	if(debugMode) debug();
 }
@@ -193,17 +196,33 @@ void Player::grow()
 	actualAspect = SUPERMARIO;
 }
 
-void Player::resetLevel()
+void Player::checkAlive()
 {
-	cout << "Level Reset" << endl;
-	game->setMapOffset(0);
-	pos = initPos;
-	actualAspect = MARIO;
+	if (pos.getY() >= 477) {
+		lives--;
+
+		cout << "Caida" << endl;
+		cout << "Vidas: " << lives << endl;
+
+		isAlive = false;
+	}
 
 	if (lives == 0) {
 		cout << "Game Lost" << endl;
 		lives = 3; // resetGame
+		isAlive = false;
 	}
+
+	if (!isAlive) resetLevel();
+}
+
+void Player::resetLevel()
+{
+	cout << "Level Reset" << endl;
+	game->setMapOffset(1);
+	pos = initPos;
+	isAlive = true;
+	actualAspect = MARIO;
 }
 
 void Player::handleEvents(const SDL_Event& event)
@@ -212,11 +231,11 @@ void Player::handleEvents(const SDL_Event& event)
 	{
 		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
-			speed.setX(8);
+			speed.setX(xSpeed);
 			break;
 
 		case SDLK_LEFT:
-			speed.setX(-8);
+			speed.setX(-xSpeed);
 			break;
 
 		case SDLK_SPACE:
@@ -290,7 +309,7 @@ void Player::debug()
 	cout << "-- DEBUG MODE ON --" << endl << endl;
 	cout << "Pulsa + para activar Fast Mode." << endl << endl;
 
-	//cout << "Mario Window Position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
+	cout << "Mario Window Position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
 	//cout << "Mario X Position On Tilemap: " << pos.getX() + game->getMapOffset() << endl;
 	//cout << "Direction: " << dir.getX() << endl;
 	//cout << "Mario & Scrolling Speed: " << speed << endl;
@@ -309,13 +328,13 @@ void Player::debug()
 	cout << endl;
 	cout << "Fast Mode: " << fastMode << endl;
 
-	//if (fastMode) {
-	//	speed = 15;
-	//	//backgroundScrollSpeed = 15;
-	//}
-	//else {
-	//	speed = 8;
-	//	//backgroundScrollSpeed = 5;
-	//}
+	if (fastMode) {
+		xSpeed = 15;
+		bgSpeed = 2;
+	}
+	else {
+		xSpeed = 8;
+		bgSpeed = 1;
+	}
 
 }
