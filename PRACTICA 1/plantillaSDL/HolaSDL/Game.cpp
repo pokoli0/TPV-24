@@ -168,7 +168,7 @@ Game::render() const
 
 	for (int i = 0; i < goombaGroup.size(); i++)
 	{
-		goombaGroup[i]->render();
+		goombaGroup[i]->render(renderer);
 	}
 
 	for (int i = 0; i < koopaGroup.size(); i++)

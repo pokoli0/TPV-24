@@ -17,9 +17,7 @@ Player::Player(Game* g, int posx, int posy)
 	xSpeed = 8;
 
 	onGround = false;
-
 	jumping = false;
-	jumpVelocity = 0;
 
 	texture = game->getTexture(Game::MARIO);
 	supertexture = game->getTexture(Game::SUPERMARIO);
@@ -198,7 +196,7 @@ void Player::grow()
 
 void Player::checkAlive()
 {
-	if (pos.getY() >= 477) {
+	if (pos.getY() >= MAX_HEIGHT) {
 		lives--;
 
 		cout << "Caida" << endl;

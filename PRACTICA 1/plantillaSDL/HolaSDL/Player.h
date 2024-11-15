@@ -59,7 +59,6 @@ private:
 	// --- salto
 	bool jumping;
 	bool onGround;
-    int jumpVelocity;
 
 
 	// --- DEBUGGING
@@ -85,10 +84,10 @@ public:
 	// cambia el aspecto a SUPERMARIO
 	void grow();
 
-	// comprueba cuantas vidas le quedan o si se ha caido
+	// comprueba cuantas vidas le quedan o si se ha caido, para resetear el nivel
 	void checkAlive();
 
-	// reinicia el nivel
+	// reinicia el nivel, poniendo la posicion inicial de mario y las vidas a 3
 	void resetLevel();
 
 	// maneja eventos de teclado y determina el estado del movimiento

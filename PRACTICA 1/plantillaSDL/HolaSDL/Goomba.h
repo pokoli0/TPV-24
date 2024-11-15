@@ -34,7 +34,7 @@ public:
 	Goomba();
 	Goomba(Game* g, int x, int y);
 
-	void render();
+	void render(SDL_Renderer* renderer);
 	void update();
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 

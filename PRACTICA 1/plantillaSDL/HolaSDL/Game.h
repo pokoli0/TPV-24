@@ -37,6 +37,8 @@ static constexpr int WINDOW_WIDTH = 18;
 static constexpr int WINDOW_HEIGHT = 16;
 
 static constexpr int MAX_MAP_OFFSET = 6150;
+static constexpr int MAX_HEIGHT = 475;
+
 static constexpr int BACKGROUND_SCROLL_SPEED = 5;
 
 static constexpr int OBSTACLE_THRESHOLD = 4;

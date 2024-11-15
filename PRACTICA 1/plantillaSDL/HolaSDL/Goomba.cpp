@@ -19,7 +19,7 @@ Goomba::Goomba(Game* g, int x, int y)
 	cout << "Goomba (" << x << ", " << y << ")" << endl;
 }
 
-void Goomba::render()
+void Goomba::render(SDL_Renderer* renderer)
 {
 	rect.x = pos.getX() - game->getMapOffset();
 	rect.y = pos.getY();
@@ -41,6 +41,12 @@ void Goomba::render()
 	}
 
 	texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
+
+	if (DEBUG) {
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 128);
+		SDL_RenderDrawRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	}
 }
 
 void Goomba::update()
