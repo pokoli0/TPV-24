@@ -47,11 +47,9 @@ void Mushroom::update()
 
 	Collision col = game->checkCollision(verticalRect, false);
 
-	cout << col.indice << endl;
 
 	if (!col) // si no hay col, cae normal
 	{
-
 		pos.setY(pos.getY() + speed.getY());
 		onGround = false;
 	}
@@ -61,9 +59,30 @@ void Mushroom::update()
 		speed.setY(0);
 	}
 
+	// Colisiones horizontales
+	SDL_Rect horizontalRect;
+	horizontalRect.x = rect.x + speed.getX();
+	horizontalRect.y = rect.y;
+	horizontalRect.h = rect.h;
+	horizontalRect.w = rect.w;
 
+	col = game->checkCollision(horizontalRect, true);
+
+	if(col) 
+	{
+		if (speed.getX() > 0)
+		{
+			pos.setX(pos.getX() - col.intersectionRect.w / game->getMapOffset() - 1);
+		}
+		else
+		{
+			pos.setX(pos.getX() + col.intersectionRect.w / game->getMapOffset() - 1);
+		}
+		speed.setX(speed.getY() * -1);
+	}
 
 	pos.setX(pos.getX() + speed.getX());
+
 }
 
 Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
