@@ -224,14 +224,8 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
 
-	// bloques
-	//for (int i = 0; i < blockGroup.size(); i++) {
-	//	col = blockGroup[i]->hit(rect, fromPlayer);
-	//}
-
 	//tilemap
 	col = tilemap->hit(rect, fromPlayer);
-
 
 
 	return col;
