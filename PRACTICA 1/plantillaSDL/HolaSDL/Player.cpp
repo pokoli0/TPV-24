@@ -81,16 +81,25 @@ void Player::update()
 
 	Collision col = game->checkCollision(verticalRect, true);
 
-	if (!col) {
+	if (!col) // si no hay col, cae normal
+	{
 		pos.setY(pos.getY() + speed.getY());
 	}
-	else
+	else // si hay col, vemos limites segun la direccion de mario
 	{
-		pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
-		onGround = true;
+		if (speed.getY() > 0) // Colisión hacia abajo, Mario está cayendo
+		{
+			pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
+			onGround = true;
+			
+		}
+		else if (speed.getY() < 0) // Colisión hacia arriba, Mario está subiendo
+		{
+			pos.setY(pos.getY() + speed.getY() + col.intersectionRect.h);
+		}
+
 		jumping = false;
 		speed.setY(0);
-
 	}
 
 	// Colisiones horizontales
