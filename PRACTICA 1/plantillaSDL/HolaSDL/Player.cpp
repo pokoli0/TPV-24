@@ -161,7 +161,7 @@ void Player::jump()
 
 void Player::updateAnim()
 {
-	if (speed.getX() != 0) // si se esta moviendo EN HORIZONTAL
+	if (speed.getX() != 0 && onGround) // si se esta moviendo EN HORIZONTAL
 	{
 		frameCounter++;
 		if (frameCounter >= 1)
@@ -180,7 +180,7 @@ void Player::updateAnim()
 			}
 		}
 	}
-	else if (speed.getY() != 0) {
+	else if (!onGround) {
 		frame = 6;
 	}
 	else {
