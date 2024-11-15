@@ -7,7 +7,10 @@ Player::Player()
 Player::Player(Game* g, int posx, int posy)
 {
 	game = g;
-	actualAspect = MARIO;
+
+	game->setMarioState(0);
+	state = game->getMarioState();
+
 	lives = 3;
 	
 	initPos = Point2D<int>(posx, posy);
@@ -43,7 +46,7 @@ void Player::render(SDL_Renderer* renderer)
 	rect.x = pos.getX();
 
 	// renderframe con flipeado
-	if (actualAspect == MARIO) 
+	if (state == 0) 
 	{
 		rect.y = pos.getY();
 		rect.w = texture->getFrameWidth();
@@ -197,7 +200,8 @@ void Player::updateAnim()
 
 void Player::grow()
 {
-	actualAspect = SUPERMARIO;
+	game->setMarioState(1);
+	state = 1;
 }
 
 void Player::checkAlive()
@@ -226,7 +230,8 @@ void Player::resetLevel()
 	game->setMapOffset(1);
 	pos = initPos;
 	isAlive = true;
-	actualAspect = MARIO;
+	state = 0;
+	game->setMarioState(state);
 }
 
 void Player::handleEvents(const SDL_Event& event)

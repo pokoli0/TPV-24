@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "Block.h"
+
 // Formato de la especificación de una textura
 struct TextureSpec
 {
@@ -50,6 +50,8 @@ Game::Game()
 	tilemap = new Tilemap(this, "../assets/maps/world1.csv");
 
 	loadObjectMap();
+
+	marioState = 0; // empieza mario chiquito
 }
 
 Game::~Game()

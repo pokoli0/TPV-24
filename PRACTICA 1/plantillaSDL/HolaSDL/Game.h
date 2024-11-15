@@ -89,6 +89,9 @@ private:
 	Koopa* koopa = nullptr;
 	vector<Koopa*> koopaGroup;
 
+	// 0: mario, 1: supermario
+	int marioState;
+
 public:
 	// bucle principal del juego
 	void run();
@@ -126,6 +129,10 @@ public:
 	/// GETTERS --------------------------------
 	int getMapOffset() { return mapOffset; }
 	void setMapOffset(int m) { mapOffset = m; }
+
+	int getMarioState() { return marioState; }
+	void setMarioState(int s) { marioState = s; }
+
 
 	SDL_Renderer* getRender() { return renderer; }
 };

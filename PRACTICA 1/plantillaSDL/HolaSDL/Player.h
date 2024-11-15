@@ -32,14 +32,8 @@ private:
 	int lives;
 	bool isAlive;
 
-	enum Aspect {
-		MARIO,
-		SUPERMARIO
-	};
-
-	// 0: MARIO
-	// 1: SUPERMARIO
-	Aspect actualAspect;
+	// 0 mario, 1 supermario
+	int state;
 
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
 	bool inmune;
@@ -111,8 +105,6 @@ public:
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
-	// devuelve el aspecto actual de mario
-	Aspect getAspect() { return actualAspect; }
 
 	// d = true: para mostrar en consola debugs y poder usar fastMode
 	void debug();
