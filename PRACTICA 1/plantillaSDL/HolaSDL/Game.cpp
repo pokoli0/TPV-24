@@ -163,7 +163,7 @@ Game::render() const
 
 	for (int i = 0; i < blockGroup.size(); i++)
 	{
-		blockGroup[i]->render();
+		blockGroup[i]->render(renderer);
 	}
 
 	for (int i = 0; i < goombaGroup.size(); i++)
@@ -173,7 +173,7 @@ Game::render() const
 
 	for (int i = 0; i < koopaGroup.size(); i++)
 	{
-		koopaGroup[i]->render();
+		koopaGroup[i]->render(renderer);
 	}
 
 	// escena en pantalla 

@@ -59,7 +59,7 @@ void Player::render(SDL_Renderer* renderer)
 	}
 
 	if (DEBUG) {
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 128);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 128); // red
 		SDL_RenderDrawRect(renderer, &rect);
 		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
 	}

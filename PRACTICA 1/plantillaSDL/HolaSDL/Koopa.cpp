@@ -19,7 +19,7 @@ Koopa::Koopa(Game* g, int x, int y)
 	cout << "Koopa (" << x << ", " << y << ")" << endl;
 }
 
-void Koopa::render()
+void Koopa::render(SDL_Renderer* renderer)
 {
 	rect.x = pos.getX() - game->getMapOffset();
 	rect.y = pos.getY() - TILE_SIDE;
@@ -41,6 +41,12 @@ void Koopa::render()
 	}
 
 	texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
+
+	if (DEBUG) {
+		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128);
+		SDL_RenderDrawRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	}
 }
 
 void Koopa::update()

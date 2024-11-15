@@ -100,8 +100,9 @@ void Tilemap::render(SDL_Renderer* renderer)
 				// Usa renderFrame para pintar la tesela
 				background->renderFrame(rect, frameRow, frameCol);
 
-				if (DEBUG) {
-					SDL_SetRenderDrawColor(renderer, 0, 255, 0, 128);
+				if (DEBUG && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD) 
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, 128); // green
 					SDL_RenderDrawRect(renderer, &rect);
 					SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
 				}

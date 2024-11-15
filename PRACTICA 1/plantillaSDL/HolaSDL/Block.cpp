@@ -34,7 +34,7 @@ Block::Block(Game* g, int x, int y, char tipo, char accion)
 	isAlive = true;
 }
 
-void Block::render()
+void Block::render(SDL_Renderer* renderer)
 {
 	rect.x = pos.getX() - game->getMapOffset();
 	rect.y = pos.getY();
@@ -58,6 +58,12 @@ void Block::render()
 	}
 
 	texture->renderFrame(rect, 0, frame);
+
+	if (DEBUG) {
+		SDL_SetRenderDrawColor(renderer, 255, 0, 128, 128);
+		SDL_RenderDrawRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	}
 }
 
 void Block::update()

@@ -43,7 +43,7 @@ void Goomba::render(SDL_Renderer* renderer)
 	texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 
 	if (DEBUG) {
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 128);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128);
 		SDL_RenderDrawRect(renderer, &rect);
 		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
 	}
