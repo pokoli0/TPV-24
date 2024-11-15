@@ -30,7 +30,10 @@ Block::Block(Game* g, int x, int y, char tipo, char accion)
 	}
 
 	texture = game->getTexture(Game::BLOCKS);
+
 	frameCounter = 0;
+	surpriseFrame = 0;
+
 	isAlive = true;
 }
 
@@ -57,7 +60,14 @@ void Block::render(SDL_Renderer* renderer)
 		break;
 	}
 
+	if (tipoBloque == SORPRESA) 
+	{
+		updateAnim();
+	}
+
 	texture->renderFrame(rect, 0, frame);
+
+
 
 	if (DEBUG) {
 		SDL_SetRenderDrawColor(renderer, 255, 0, 128, 128);
@@ -91,5 +101,29 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	return col;
 }
+
+void Block::updateAnim()
+{
+	frameCounter++;
+	if (frameCounter >= 5)
+	{
+		frameCounter = 0;
+		surpriseFrame = (surpriseFrame + 1) % 4; // para que se repita el ciclo
+
+		if (surpriseFrame == 0) {
+			frame = 1;
+		}
+		else if (surpriseFrame == 1) {
+			frame = 2;
+		}
+		else if (surpriseFrame == 2) {
+			frame = 3;
+		}
+		else if (surpriseFrame == 3) {
+			frame = 0;
+		}
+	}
+}
+
 
 

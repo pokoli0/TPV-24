@@ -58,6 +58,8 @@ void Player::render(SDL_Renderer* renderer)
 		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
 
+	updateAnim();
+
 	if (DEBUG) {
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 128); // red
 		SDL_RenderDrawRect(renderer, &rect);
@@ -87,13 +89,13 @@ void Player::update()
 	}
 	else // si hay col, vemos limites segun la direccion de mario
 	{
-		if (speed.getY() > 0) // Colisión hacia abajo, Mario está cayendo
+		if (speed.getY() > 0)
 		{
 			pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
 			onGround = true;
 			
 		}
-		else if (speed.getY() < 0) // Colisión hacia arriba, Mario está subiendo
+		else if (speed.getY() < 0)
 		{
 			pos.setY(pos.getY() + speed.getY() + col.intersectionRect.h);
 		}
@@ -111,21 +113,21 @@ void Player::update()
 
 	col = game->checkCollision(horizontalRect, true);
 
-	if (!col) {
-		// derecha
-		if (speed.getX() > 0)
+	if (!col) 
+	{
+		if (speed.getX() > 0) // derecha
 		{
 			flip = SDL_FLIP_NONE;
-			if (pos.getX() >= Game::WIN_WIDTH / 2)
+			if (pos.getX() >= Game::WIN_WIDTH / 2) // si pasa la mitad de la pantalla
 			{
 				// mueve el fondo
-				if (game->getMapOffset() <= MAX_MAP_OFFSET) {
+				if (game->getMapOffset() <= MAX_MAP_OFFSET) 
+				{
 					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED * bgSpeed);
 				}
 			}
-			else
+			else // mueve a mario
 			{
-				// mueve a mario
 				pos.setX(pos.getX() + speed.getX());
 			}
 
@@ -133,26 +135,21 @@ void Player::update()
 		else if (speed.getX() < 0)  // izquierda
 		{
 			flip = SDL_FLIP_HORIZONTAL;
-			if (pos.getX() > 0) {
-				pos.setX(pos.getX() + speed.getX());
-			}
+			if (pos.getX() > 0) pos.setX(pos.getX() + speed.getX());
 		}
 	}
-	else
+	else // COLISION
 	{
 		if (speed.getX() > 0)
 		{
-			pos.setX(pos.getX() - col.intersectionRect.w / game->getMapOffset());// empujar hacia izquierda
+			pos.setX(pos.getX() - col.intersectionRect.w / game->getMapOffset() - 1);// empujar hacia izquierda
 		}
-		else {
-			pos.setX(pos.getX() + col.intersectionRect.w / game->getMapOffset());// empujar hacia derecha
+		else 
+		{
+			pos.setX(pos.getX() + col.intersectionRect.w / game->getMapOffset() - 1);// empujar hacia derecha
 		}
 
 	}
-
-	updateAnim();
-
-
 
 	if(debugMode) debug();
 }

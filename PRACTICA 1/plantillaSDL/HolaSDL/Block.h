@@ -31,6 +31,7 @@ private:
 
 	Texture* texture;
 	int frame;
+	int surpriseFrame;
 	int frameTimer = 0;
 	int frameCounter;
 	Game* game;
@@ -47,5 +48,8 @@ public:
 	void update();
 
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
+
+	// actualiza el frame de la textura
+	void updateAnim();
 };
 
