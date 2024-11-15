@@ -9,8 +9,7 @@ struct Collision
 
     SDL_Rect intersectionRect;
 
-    bool ground = false;
-    bool wall = false;
+    int indice = 0;
 
     operator bool() const { return collides; }
 };

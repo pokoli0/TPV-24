@@ -16,7 +16,7 @@ Koopa::Koopa(Game* g, int x, int y)
 
 	frozen = true;
 
-	cout << "Koopa (" << x << ", " << y << ")" << endl;
+	//cout << "Koopa (" << x << ", " << y << ")" << endl;
 }
 
 void Koopa::render(SDL_Renderer* renderer)

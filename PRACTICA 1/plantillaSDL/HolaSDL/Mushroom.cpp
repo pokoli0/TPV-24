@@ -7,7 +7,7 @@ Mushroom::Mushroom()
 Mushroom::Mushroom(Game* g, int x, int y)
 {
 	game = g;
-	pos = Point2D<int>(x, y);
+	pos = Point2D<int>(500, 100);
 
 	xSpeed = 6;
 	speed = Point2D<int>(xSpeed, 0);
@@ -15,8 +15,6 @@ Mushroom::Mushroom(Game* g, int x, int y)
 	onGround = false;
 
 	texture = game->getTexture(Game::MUSHROOM);
-
-	cout << "mushroom" << endl;
 }
 
 void Mushroom::render(SDL_Renderer* renderer)
@@ -49,22 +47,20 @@ void Mushroom::update()
 
 	Collision col = game->checkCollision(verticalRect, false);
 
+	cout << col.indice << endl;
+
 	if (!col) // si no hay col, cae normal
 	{
+
 		pos.setY(pos.getY() + speed.getY());
 		onGround = false;
 	}
-	else if (col && onGround) // si hay col, vemos limites segun la direccion de mario
+	else 
 	{
-		cout << "col";
-		if (speed.getY() > 0)
-		{
-			pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
-			onGround = true;
-
-		}
+		onGround = true;
 		speed.setY(0);
 	}
+
 
 
 	pos.setX(pos.getX() + speed.getX());
@@ -74,23 +70,23 @@ Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
 
-	SDL_Rect blockRect{
-		pos.getX() - game->getMapOffset(),
-		pos.getY(),
-		TILE_SIDE,
-		TILE_SIDE
-	};
+	//SDL_Rect mushRect{
+	//	pos.getX() - game->getMapOffset(),
+	//	pos.getY(),
+	//	TILE_SIDE,
+	//	TILE_SIDE
+	//};
 
-	// si hay colision, devolvemos true
-	if (SDL_IntersectRect(&rect, &blockRect, &col.intersectionRect))
-	{
-		col.collides = true;
-	}
+	//// si hay colision, devolvemos true
+	//if (SDL_IntersectRect(&rect, &mushRect, &col.intersectionRect))
+	//{
+	//	col.collides = true;
+	//}
 
-	if (col && fromPlayer)// si la colision es del player
-	{
-		cout << "mario col con mush" << endl;
-	}
+	//if (col && fromPlayer)// si la colision es del player
+	//{
+	//	cout << "mario col con mush" << endl;
+	//}
 
 
 

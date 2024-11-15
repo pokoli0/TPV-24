@@ -49,8 +49,8 @@ void Player::render(SDL_Renderer* renderer)
 	if (state == 0) 
 	{
 		rect.y = pos.getY();
-		rect.w = texture->getFrameWidth();
-		rect.h = texture->getFrameHeight();
+		rect.w = TILE_SIDE;
+		rect.h = TILE_SIDE;
 		texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
 	else 

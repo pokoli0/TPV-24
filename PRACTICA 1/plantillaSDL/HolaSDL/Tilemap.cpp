@@ -15,7 +15,6 @@ Tilemap::Tilemap(Game* g, string f)
 	game = g;
 	background = game->getTexture(Game::BACKGROUND);
 	texture = game->getTexture(Game::BACKGROUND);
-	cout << "Tilemap" << endl;
 }
 
 Tilemap::~Tilemap()
@@ -71,13 +70,13 @@ void Tilemap::loadTilemap(string fichero)
 void Tilemap::render(SDL_Renderer* renderer)
 {
 	int offset = game->getMapOffset();  // atributo de Game
+
 	// Primera columna de la matriz del mapa visible en la ventana
 	int col0 = offset / TILE_SIDE;
 	// Anchura oculta de esa primera columna
 	int d0 = offset % TILE_SIDE;
 
 	// Recuadro donde se pintará la tesela en la ventana
-	SDL_Rect rect;
 	rect.w = TILE_SIDE;
 	rect.h = TILE_SIDE;
 
@@ -128,11 +127,12 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer, SDL_Renderer* rend
 		for (int col = col0; col <= col1; ++col) 
 		{
 			int indice = indices[row][col];
+			colision.indice = indice;
 
 			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD) 
 			{
 				colision.collides = true;
-
+				
 				SDL_Rect auxRect {
 					col * TILE_SIDE,
 					row * TILE_SIDE, 
