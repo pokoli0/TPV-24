@@ -96,8 +96,32 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 	if (SDL_IntersectRect(&rect, &blockRect, &col.intersectionRect))
 	{
 		col.collides = true;
-		cout << "block col" << endl;
 	}
+
+	if (col && fromPlayer // si la colision es del player
+		&& col.intersectionRect.y > blockRect.y // coordenada y de la interseccion por debajo del borde superior del bloque
+		&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+	{
+		if (tipoBloque == SORPRESA || tipoBloque == OCULTO) 
+		{
+			if (accionBloque == POTENCIADOR) 
+			{
+				// MUSHROOM
+				cout << "mush" << endl;
+			}
+			else 
+			{
+				cout << "moneda" << endl;
+			}
+			tipoBloque = VACIO;
+		}
+		else if (tipoBloque == LADRILLO) 
+		{
+			isAlive = false; // el bloque se destruye
+		}
+	}
+
+
 
 	return col;
 }
