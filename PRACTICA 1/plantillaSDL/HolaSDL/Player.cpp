@@ -87,10 +87,10 @@ void Player::update()
 	{
 		pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
 		onGround = true;
+		jumping = false;
+		speed.setY(0);
 
 	}
-	speed.setY(0);
-
 
 	// Colisiones horizontales
 	SDL_Rect horizontalRect;
@@ -155,7 +155,7 @@ void Player::jump()
 		onGround = false;	
 		jumping = true;
 
-		speed.setY(-15);
+		speed.setY(-30);
 	}
 }
 
