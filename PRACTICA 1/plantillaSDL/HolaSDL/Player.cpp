@@ -17,7 +17,7 @@ Player::Player(Game* g, int posx, int posy)
 	
 	groundY = posy;
 	onGround = false;
-	//onWall = false;
+
 	jumping = false;
 	jumpVelocity = 0;
 
@@ -42,11 +42,6 @@ Player::~Player()
 void Player::render(SDL_Renderer* renderer)
 {
 	rect.x = pos.getX();
-
-	// Flipear al mario segun la direccion
-	SDL_RendererFlip flip;
-	if (speed.getX() > 0) flip = SDL_FLIP_HORIZONTAL;
-	else flip = SDL_FLIP_NONE;
 
 	// renderframe con flipeado
 	if (actualAspect == MARIO) 
@@ -75,7 +70,6 @@ void Player::update()
 {
 	// Caida por gravedad
 	speed.setY(speed.getY() + GRAVITY);
-
 
 	// Colisiones verticales
 	SDL_Rect verticalRect;
@@ -111,6 +105,7 @@ void Player::update()
 		// derecha
 		if (speed.getX() > 0)
 		{
+			flip = SDL_FLIP_NONE;
 			if (pos.getX() >= Game::WIN_WIDTH / 2)
 			{
 				// mueve el fondo
@@ -127,6 +122,7 @@ void Player::update()
 		}
 		else if (speed.getX() < 0)  // izquierda
 		{
+			flip = SDL_FLIP_HORIZONTAL;
 			if (pos.getX() > 0) {
 				pos.setX(pos.getX() + speed.getX());
 			}
@@ -143,11 +139,10 @@ void Player::update()
 		}
 
 	}
-	speed.setX(0.0f);
 
 
 
-	//updateAnim();
+	updateAnim();
 
 	if(debugMode) debug();
 }
@@ -157,16 +152,16 @@ void Player::jump()
 {
 	if (!jumping && onGround) 
 	{
-		jumping = true;
 		onGround = false;	
-		
-		speed.setY(15);
+		jumping = true;
+
+		speed.setY(-15);
 	}
 }
 
 void Player::updateAnim()
 {
-	if (speed.getX() != 0 && speed.getY() == 0) // si se esta moviendo EN HORIZONTAL
+	if (speed.getX() != 0) // si se esta moviendo EN HORIZONTAL
 	{
 		frameCounter++;
 		if (frameCounter >= 1)
@@ -305,7 +300,7 @@ void Player::debug()
 	cout << "On Ground: " << onGround << endl;
 	//cout << "On Wall: " << onWall << endl;
 	cout << "Speed Y: " << speed.getY() << endl;
-	//cout << "Speed X: " << speed.getX() << endl;
+	cout << "Speed X: " << speed.getX() << endl;
 	/*cout << "Aspect: " << actualAspect << endl;
 	cout << "Lives: " << lives << endl;*/
 

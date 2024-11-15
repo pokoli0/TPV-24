@@ -51,6 +51,7 @@ private:
 	int frameCounter;
 	// true izquierda, false derecha
 	bool flipSprite;
+	SDL_RendererFlip flip;
 
 	// --- salto
 	bool jumping;
