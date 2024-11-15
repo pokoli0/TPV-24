@@ -71,9 +71,6 @@ public:
 	void render(SDL_Renderer* renderer);
 	void update();
 
-	// movimiento intencionado
-	void move(Collision col);
-
 	// pone la direccion en y a 1 hasta que llega a cierta altura
 	void jump();
 

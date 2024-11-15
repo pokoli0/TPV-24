@@ -89,12 +89,14 @@ void Player::update()
 	if (!col) {
 		pos.setY(pos.getY() + speed.getY());
 	}
-	else 
+	else
 	{
 		pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
 		onGround = true;
+
 	}
 	speed.setY(0);
+
 
 	// Colisiones horizontales
 	SDL_Rect horizontalRect;
@@ -109,7 +111,6 @@ void Player::update()
 		// derecha
 		if (speed.getX() > 0)
 		{
-			flipSprite = false;
 			if (pos.getX() >= Game::WIN_WIDTH / 2)
 			{
 				// mueve el fondo
@@ -126,7 +127,6 @@ void Player::update()
 		}
 		else if (speed.getX() < 0)  // izquierda
 		{
-			flipSprite = true;
 			if (pos.getX() > 0) {
 				pos.setX(pos.getX() + speed.getX());
 			}
@@ -134,80 +134,34 @@ void Player::update()
 	}
 	else
 	{
-		// derecha
-		if (speed.getX() > 0) 
+		if (speed.getX() > 0)
 		{
-			flipSprite = false;
-			if (pos.getX() >= Game::WIN_WIDTH / 2)
-			{
-				// mueve el fondo
-				if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED);
-				}
-			}
-			else 
-			{
-				// mueve a mario
-				pos.setX(pos.getX() + speed.getX() - col.intersectionRect.w);
-			}
-			
+			pos.setX(pos.getX() - col.intersectionRect.w / game->getMapOffset());// empujar hacia izquierda
 		}
-		else if(speed.getX() < 0)  // izquierda
-		{
-			flipSprite = true;
-			if (pos.getX() > 0) {
-				pos.setX(pos.getX() + speed.getX() + col.intersectionRect.w);
-			}	
+		else {
+			pos.setX(pos.getX() + col.intersectionRect.w / game->getMapOffset());// empujar hacia derecha
 		}
-	}
-	speed.setX(0);
 
-	updateAnim();
+	}
+	speed.setX(0.0f);
+
+
+
+	//updateAnim();
 
 	if(debugMode) debug();
 }
 
-//void Player::move(Collision col)
-//{
-//	int offset = game->getMapOffset();
-//
-//	// hacia la derecha
-//	if (dir.getX() == 1)
-//	{
-//		flipSprite = false;
-//		if (pos.getX() >= Game::WIN_WIDTH / 2)
-//		{
-//			// mueve el fondo
-//			if (game->getMapOffset() <= MAX_MAP_OFFSET) {
-//				game->setMapOffset(offset + BACKGROUND_SCROLL_SPEED);
-//			}
-//		}
-//		else {
-//			// mueve a mario
-//			pos.setX(pos.getX() + speed);
-//		}
-//
-//	}
-//	// hacia la izquierda
-//	else if (dir.getX() == -1) {
-//		flipSprite = true;
-//		if (pos.getX() > 0) {
-//			pos.setX(pos.getX() - speed);
-//		}
-//	}
-//}
 
 void Player::jump()
 {
-	//if (!jumping && onGround) 
-	//{
-	//	jumping = true;
-	//	onGround = false;
-	//	
-	//	dir.setY(1);
-
-	//	jumpVelocity = 15; 
-	//}
+	if (!jumping && onGround) 
+	{
+		jumping = true;
+		onGround = false;	
+		
+		speed.setY(15);
+	}
 }
 
 void Player::updateAnim()
@@ -350,9 +304,8 @@ void Player::debug()
 	cout << "Jumping: " << jumping << endl;
 	cout << "On Ground: " << onGround << endl;
 	//cout << "On Wall: " << onWall << endl;
-	//cout << "Dir Y: " << dir.getY() << endl;
-	//cout << "Dir X: " << dir.getX() << endl;
-	//cout << "Last X Dir: " << lastXDir << endl;
+	cout << "Speed Y: " << speed.getY() << endl;
+	//cout << "Speed X: " << speed.getX() << endl;
 	/*cout << "Aspect: " << actualAspect << endl;
 	cout << "Lives: " << lives << endl;*/
 

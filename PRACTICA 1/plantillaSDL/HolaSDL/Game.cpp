@@ -23,7 +23,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 };
 
 Game::Game()
- : seguir(true), mapOffset(0)
+ : seguir(true), mapOffset(1)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
