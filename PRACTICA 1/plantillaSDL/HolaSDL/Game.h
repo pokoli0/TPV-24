@@ -19,6 +19,7 @@
 #include "Block.h"
 #include "Goomba.h"
 #include "Koopa.h"
+#include "Mushroom.h"
 
 #include "Collision.h"
 
@@ -27,6 +28,7 @@ class Tilemap;
 class Player;
 class Goomba;
 class Koopa;
+class Mushroom;
 
 using uint = unsigned int;
 using namespace std;
@@ -61,6 +63,7 @@ public:
 		BLOCKS,
 		GOOMBA,
 		KOOPA,
+		MUSHROOM,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -88,6 +91,8 @@ private:
 	vector<Goomba*> goombaGroup;
 	Koopa* koopa = nullptr;
 	vector<Koopa*> koopaGroup;
+	Mushroom* mushroom;
+	vector<Mushroom*> mushroomGroup;
 
 	// 0: mario, 1: supermario
 	int marioState;
@@ -125,6 +130,9 @@ public:
 	~Game();
 
 	void loadObjectMap();
+
+	// spawnea mushroom encima del bloque 
+	void spawnMushroom(int x, int y);
 
 	/// GETTERS --------------------------------
 	int getMapOffset() { return mapOffset; }

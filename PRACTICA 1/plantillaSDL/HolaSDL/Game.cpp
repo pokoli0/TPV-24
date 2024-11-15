@@ -20,6 +20,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 				{"blocks.png", 6, 1},
 				{"goomba.png", 3, 1},
 				{"koopa.png", 4, 1},
+				{"mushroom.png", 1, 1},
 };
 
 Game::Game()
@@ -130,6 +131,12 @@ void Game::loadObjectMap()
 	}
 }
 
+void Game::spawnMushroom(int x, int y)
+{
+	mushroom = new Mushroom(this, x, y);
+	mushroomGroup.push_back(mushroom);
+}
+
 
 void Game::run()
 {
@@ -177,7 +184,10 @@ Game::render() const
 	{
 		koopaGroup[i]->render(renderer);
 	}
-
+	for (int i = 0; i < mushroomGroup.size(); i++)
+	{
+		mushroomGroup[i]->render(renderer);
+	}
 	// escena en pantalla 
 	SDL_RenderPresent(renderer);
 }
@@ -203,6 +213,10 @@ Game::update()
 	{
 		koopaGroup[i]->update();
 	}
+	for (int i = 0; i < mushroomGroup.size(); i++)
+	{
+		mushroomGroup[i]->update();
+	}
 }
 
 void
@@ -227,12 +241,19 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	//tilemap
-	col = tilemap->hit(rect, fromPlayer);
+	col = tilemap->hit(rect, fromPlayer, renderer);
 	if (col) return col;
 
+	// resto de objetos
 	for (int i = 0; i < blockGroup.size(); i++)
 	{
 		col = blockGroup[i]->hit(rect, fromPlayer);
+		if (col) return col;
+	}
+
+	for (int i = 0; i < mushroomGroup.size(); i++)
+	{
+		col = mushroomGroup[i]->hit(rect, fromPlayer);
 		if (col) return col;
 	}
 

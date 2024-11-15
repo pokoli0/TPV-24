@@ -16,7 +16,7 @@ Goomba::Goomba(Game* g, int x, int y)
 
 	frozen = true;
 
-	cout << "Goomba (" << x << ", " << y << ")" << endl;
+	//cout << "Goomba (" << x << ", " << y << ")" << endl;
 }
 
 void Goomba::render(SDL_Renderer* renderer)

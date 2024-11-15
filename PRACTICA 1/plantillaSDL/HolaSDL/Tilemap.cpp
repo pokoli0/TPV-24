@@ -111,7 +111,7 @@ void Tilemap::render(SDL_Renderer* renderer)
 	}
 }
 
-Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
+Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer, SDL_Renderer* renderer)
 {
 	Collision colision;
 

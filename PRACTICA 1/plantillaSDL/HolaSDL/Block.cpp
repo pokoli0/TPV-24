@@ -67,8 +67,6 @@ void Block::render(SDL_Renderer* renderer)
 
 	texture->renderFrame(rect, 0, frame);
 
-
-
 	if (DEBUG) {
 		SDL_SetRenderDrawColor(renderer, 255, 0, 128, 128);
 		SDL_RenderDrawRect(renderer, &rect);
@@ -78,7 +76,7 @@ void Block::render(SDL_Renderer* renderer)
 
 void Block::update()
 {
-
+	
 }
 
 Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
@@ -107,7 +105,8 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 			if (accionBloque == POTENCIADOR) 
 			{
 				// MUSHROOM
-				cout << "mush" << endl;
+				game->spawnMushroom(pos.getX(), pos.getY() - TILE_SIDE);
+
 			}
 			else 
 			{
