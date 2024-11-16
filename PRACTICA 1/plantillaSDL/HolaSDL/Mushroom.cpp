@@ -7,7 +7,7 @@ Mushroom::Mushroom()
 Mushroom::Mushroom(Game* g, int x, int y)
 {
 	game = g;
-	pos = Point2D<int>(500, 100);
+	pos = Point2D<int>(x, y);
 
 	xSpeed = 6;
 	speed = Point2D<int>(xSpeed, 0);
@@ -40,7 +40,7 @@ void Mushroom::update()
 
 	// Colisiones verticales
 	SDL_Rect verticalRect;
-	verticalRect.x = rect.x;
+	verticalRect.x = rect.x + game->getMapOffset();
 	verticalRect.y = rect.y + speed.getY();
 	verticalRect.h = rect.h;
 	verticalRect.w = rect.w;
@@ -55,13 +55,18 @@ void Mushroom::update()
 	}
 	else 
 	{
-		onGround = true;
+		if (speed.getY() > 0)
+		{
+			pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
+			onGround = true;
+
+		}
 		speed.setY(0);
 	}
 
 	// Colisiones horizontales
 	SDL_Rect horizontalRect;
-	horizontalRect.x = rect.x + speed.getX();
+	horizontalRect.x = rect.x + speed.getX() + game->getMapOffset();
 	horizontalRect.y = rect.y;
 	horizontalRect.h = rect.h;
 	horizontalRect.w = rect.w;
@@ -70,15 +75,7 @@ void Mushroom::update()
 
 	if(col) 
 	{
-		if (speed.getX() > 0)
-		{
-			pos.setX(pos.getX() - col.intersectionRect.w / game->getMapOffset() - 1);
-		}
-		else
-		{
-			pos.setX(pos.getX() + col.intersectionRect.w / game->getMapOffset() - 1);
-		}
-		speed.setX(speed.getY() * -1);
+		speed.setX(speed.getX() * -1);
 	}
 
 	pos.setX(pos.getX() + speed.getX());

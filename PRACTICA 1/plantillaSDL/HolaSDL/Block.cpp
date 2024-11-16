@@ -84,7 +84,7 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	SDL_Rect blockRect { 
-		pos.getX() - game->getMapOffset(), 
+		pos.getX(), // + velocidad - gameOffset (pero velocidad = gameOffset asiq se anula)
 		pos.getY(), 
 		TILE_SIDE, 
 		TILE_SIDE
@@ -104,9 +104,7 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 		{
 			if (accionBloque == POTENCIADOR) 
 			{
-				// MUSHROOM
-				game->spawnMushroom(pos.getX(), pos.getY() - TILE_SIDE);
-
+				game->spawnMushroom(pos.getX(), pos.getY());
 			}
 			else 
 			{

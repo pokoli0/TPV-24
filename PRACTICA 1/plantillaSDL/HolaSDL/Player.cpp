@@ -79,7 +79,7 @@ void Player::update()
 
 	// Colisiones verticales
 	SDL_Rect verticalRect;
-	verticalRect.x = rect.x;
+	verticalRect.x = rect.x + game->getMapOffset();
 	verticalRect.y = rect.y + speed.getY();
 	verticalRect.h = rect.h;
 	verticalRect.w = rect.w;
@@ -102,14 +102,14 @@ void Player::update()
 		{
 			pos.setY(pos.getY() + speed.getY() + col.intersectionRect.h);
 		}
-
+		cout << col.indice << endl;
 		jumping = false;
 		speed.setY(0);
 	}
 
 	// Colisiones horizontales
 	SDL_Rect horizontalRect;
-	horizontalRect.x = rect.x + speed.getX();
+	horizontalRect.x = pos.getX() + speed.getX() + game->getMapOffset();
 	horizontalRect.y = rect.y;
 	horizontalRect.h = rect.h;
 	horizontalRect.w = rect.w;
@@ -145,11 +145,11 @@ void Player::update()
 	{
 		if (speed.getX() > 0)
 		{
-			pos.setX(pos.getX() - col.intersectionRect.w / game->getMapOffset() - 1);// empujar hacia izquierda
+			pos.setX(pos.getX() + speed.getX() - col.intersectionRect.w);// empujar hacia izquierda
 		}
 		else 
 		{
-			pos.setX(pos.getX() + col.intersectionRect.w / game->getMapOffset() - 1);// empujar hacia derecha
+			pos.setX(pos.getX() + speed.getX() + col.intersectionRect.w);// empujar hacia derecha
 		}
 
 	}
