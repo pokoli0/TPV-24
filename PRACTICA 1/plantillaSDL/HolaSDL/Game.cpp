@@ -309,5 +309,11 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 		if (col) return col;
 	}
 
+	for (int i = 0; i < koopaGroup.size(); i++)
+	{
+		col = koopaGroup[i]->hit(rect, fromPlayer);
+		if (col) return col;
+	}
+
 	return col;
 }

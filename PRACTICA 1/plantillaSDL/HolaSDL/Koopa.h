@@ -11,24 +11,24 @@ class Koopa
 {
 private:
 	Point2D<int> pos;
+	Point2D<int> speed;
+	int xSpeed;
+
+	bool onGround;
 
 	SDL_Rect rect;
+	SDL_RendererFlip flip;
 
 	Texture* texture;
-	int frame;
 	Game* game;
 
+	int frame;
 	int frameCounter;
-
-	// -1 izda, 1 dcha
-	int dir;
-	// true izda, false dcha
-	bool flipSprite;
-	int speed;
-
-	bool frozen;
+	int koopaFrame;
 
 	bool isAlive;
+
+
 
 public:
 
@@ -37,11 +37,16 @@ public:
 
 	void render(SDL_Renderer* renderer);
 	void update();
+
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
-	void move();
+	void updateAnim();
+
+	// mira si se ha salido del mapa y pone isAlive a false en ese caso
+	void checkAlive();
 
 	// getters
 	bool getAlive() { return isAlive; }
+
 };
 
