@@ -9,10 +9,9 @@ Player::Player(Game* g, int posx, int posy)
 	game = g;
 
 	game->setMarioState(0);
-	state = game->getMarioState();
 
 	lives = 3;
-	
+
 	initPos = Point2D<int>(posx, posy);
 	pos = initPos;
 
@@ -22,16 +21,13 @@ Player::Player(Game* g, int posx, int posy)
 	onGround = false;
 	jumping = false;
 
-	texture = game->getTexture(Game::MARIO);
-	supertexture = game->getTexture(Game::SUPERMARIO);
-	
 	frame = 0;
 	walkFrame = 0;
 	frameCounter = 0;
 	flipSprite = true;
 
 	bgSpeed = 1;
-	
+
 	//cout << "Mario (" << posx << ", " << posy << ")" << endl;
 }
 
@@ -41,24 +37,28 @@ Player::~Player()
 	delete texture;
 }
 
-void Player::render(SDL_Renderer* renderer)
+void Player::render(int marioState, SDL_Renderer* renderer)
 {
 	rect.x = pos.getX();
 
 	// renderframe con flipeado
-	if (state == 0) 
+	if (marioState == 0)
 	{
+		texture = game->getTexture(Game::MARIO);
+
 		rect.y = pos.getY();
 		rect.w = TILE_SIDE;
 		rect.h = TILE_SIDE;
 		texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
-	else 
+	else
 	{
+		texture = game->getTexture(Game::SUPERMARIO);
+
 		rect.y = pos.getY() - TILE_SIDE; // si no se sale del suelo
-		rect.w = supertexture->getFrameWidth() * 2;
-		rect.h = supertexture->getFrameHeight() * 2;
-		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
+		rect.w = texture->getFrameWidth() * 2;
+		rect.h = texture->getFrameHeight() * 2;
+		texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
 
 	updateAnim();
@@ -96,7 +96,7 @@ void Player::update()
 		{
 			pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
 			onGround = true;
-			
+
 		}
 		else if (speed.getY() < 0)
 		{
@@ -115,7 +115,7 @@ void Player::update()
 
 	col = game->checkCollision(horizontalRect, true);
 
-	if (!col) 
+	if (!col)
 	{
 		if (speed.getX() > 0) // derecha
 		{
@@ -123,7 +123,7 @@ void Player::update()
 			if (pos.getX() >= Game::WIN_WIDTH / 2) // si pasa la mitad de la pantalla
 			{
 				// mueve el fondo
-				if (game->getMapOffset() <= MAX_MAP_OFFSET) 
+				if (game->getMapOffset() <= MAX_MAP_OFFSET)
 				{
 					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED * bgSpeed);
 				}
@@ -146,22 +146,22 @@ void Player::update()
 		{
 			pos.setX(pos.getX() + speed.getX() - col.intersectionRect.w);// empujar hacia izquierda
 		}
-		else 
+		else
 		{
 			pos.setX(pos.getX() + speed.getX() + col.intersectionRect.w);// empujar hacia derecha
 		}
 
 	}
 
-	if(debugMode) debug();
+	if (debugMode) debug();
 }
 
 
 void Player::jump()
 {
-	if (!jumping && onGround) 
+	if (!jumping && onGround)
 	{
-		onGround = false;	
+		onGround = false;
 		jumping = true;
 
 		speed.setY(-30);
@@ -174,7 +174,7 @@ void Player::updateAnim()
 	{
 		frameCounter++;
 		if (frameCounter >= 1)
-		{		
+		{
 			frameCounter = 0;
 			walkFrame = (walkFrame + 1) % 4; // para que se repita el ciclo
 
@@ -200,7 +200,6 @@ void Player::updateAnim()
 void Player::grow()
 {
 	game->setMarioState(1);
-	state = 1;
 }
 
 void Player::checkAlive()
@@ -268,7 +267,8 @@ void Player::handleEvents(const SDL_Event& event)
 
 		case SDLK_d:
 			if (!debugMode) debugMode = true;
-			else { debugMode = false; system("cls");
+			else {
+				debugMode = false; system("cls");
 			}
 			break;
 		}
@@ -298,12 +298,12 @@ void Player::hit()
 		lives--;
 		resetLevel();
 	}
-	else 
+	else
 	{
 		actualAspect = MARIO;
 		inmune = true;
 	}*/
-	
+
 
 
 
@@ -344,4 +344,12 @@ void Player::debug()
 		bgSpeed = 1;
 	}
 
+}
+void Player::checkc() {
+	if (game->getMarioState() == 1) {
+	game->setMarioState(0);
+	}
+	else if (game->getMarioState() == 0) {
+	isAlive = false;
+	}
 }

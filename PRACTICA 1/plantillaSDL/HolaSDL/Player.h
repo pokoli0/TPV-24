@@ -86,15 +86,15 @@ public:
 
 	/*
 	detecta colisiones y recibe daño
-	MARIO colisiona con un enemigo o caiga 
+	MARIO colisiona con un enemigo o caiga
 	-> lives--
 	-> volverá a su posición inicial en el nivel
-	  SUPERMARIO al chocar con un enemigo 
+	  SUPERMARIO al chocar con un enemigo
 	-> se convertirá en MARIO
 	-> permanecerá donde está
 	-> se mantendrá invulnerable durante un par de segundos
 	[ Cosas de Ruben ]
-	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect 
+	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect
 	con su caja de colisión y la que recibe para determinar si hay colisión.
 	*/
 	void hit();
@@ -102,7 +102,7 @@ public:
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
-
+	void checkc();
 	// d = true: para mostrar en consola debugs y poder usar fastMode
 	void debug();
 };
