@@ -43,7 +43,7 @@ public:
 	void update();
 
 	// detecta colisiones
-	Collision hit(const SDL_Rect& rect, bool fromPlayer, SDL_Renderer* renderer);
+	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
 };
 

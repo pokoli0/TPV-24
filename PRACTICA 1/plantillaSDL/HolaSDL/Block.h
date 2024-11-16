@@ -51,5 +51,8 @@ public:
 
 	// actualiza el frame de la textura
 	void updateAnim();
+
+	// getters
+	bool getAlive() { return isAlive; }
 };
 

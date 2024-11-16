@@ -199,23 +199,60 @@ Game::update()
 	tilemap->update();
 	player->update();
 
-	for (int i = 0; i < blockGroup.size(); i++)
+	// bloques
+	for (int i = blockGroup.size() - 1; i >= 0; --i)
 	{
-		blockGroup[i]->update();
+		if (blockGroup[i]->getAlive())
+		{
+			blockGroup[i]->update();
+		}
+		else
+		{
+			delete blockGroup[i];
+			blockGroup.erase(blockGroup.begin() + i);
+		}
 	}
 
-	for (int i = 0; i < goombaGroup.size(); i++)
+	// goombas
+	for (int i = goombaGroup.size() - 1; i >= 0; --i)
 	{
-		goombaGroup[i]->update();
+		if (goombaGroup[i]->getAlive())
+		{
+			goombaGroup[i]->update();
+		}
+		else
+		{
+			delete goombaGroup[i];
+			goombaGroup.erase(goombaGroup.begin() + i);
+		}
 	}
 
-	for (int i = 0; i < koopaGroup.size(); i++)
+	// koopas
+	for (int i = koopaGroup.size() - 1; i >= 0; --i)
 	{
-		koopaGroup[i]->update();
+		if (koopaGroup[i]->getAlive())
+		{
+			koopaGroup[i]->update();
+		}
+		else
+		{
+			delete koopaGroup[i];
+			koopaGroup.erase(koopaGroup.begin() + i);
+		}
 	}
-	for (int i = 0; i < mushroomGroup.size(); i++)
+
+	// mushrooms
+	for (int i = mushroomGroup.size() - 1; i >= 0; i--)
 	{
-		mushroomGroup[i]->update();
+		if (mushroomGroup[i]->getAlive())
+		{
+			mushroomGroup[i]->update();
+		}
+		else
+		{
+			delete mushroomGroup[i];
+			mushroomGroup.erase(mushroomGroup.begin() + i);
+		}
 	}
 }
 
@@ -241,7 +278,7 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	//tilemap
-	col = tilemap->hit(rect, fromPlayer, renderer);
+ 	col = tilemap->hit(rect, fromPlayer);
 	if (col) return col;
 
 	// resto de objetos

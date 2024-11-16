@@ -91,8 +91,8 @@ void Goomba::update()
 	{
 		speed.setX(speed.getX() * -1);
 	}
-
-	pos.setX(pos.getX() + speed.getX());
+	
+	//pos.setX(pos.getX() + speed.getX());
 
 }
 

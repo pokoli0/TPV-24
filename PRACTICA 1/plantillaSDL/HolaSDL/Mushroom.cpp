@@ -13,6 +13,7 @@ Mushroom::Mushroom(Game* g, int x, int y)
 	speed = Point2D<int>(xSpeed, 0);
 
 	onGround = false;
+	isAlive = true;
 
 	texture = game->getTexture(Game::MUSHROOM);
 }
@@ -86,30 +87,39 @@ Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
 
-	//SDL_Rect mushRect{
-	//	pos.getX() - game->getMapOffset(),
-	//	pos.getY(),
-	//	TILE_SIDE,
-	//	TILE_SIDE
-	//};
+	SDL_Rect mushRect{
+		pos.getX() + speed.getX(),
+		pos.getY(),
+		TILE_SIDE,
+		TILE_SIDE
+	};
 
-	//// si hay colision, devolvemos true
-	//if (SDL_IntersectRect(&rect, &mushRect, &col.intersectionRect))
-	//{
-	//	col.collides = true;
-	//}
+	// si hay colision, devolvemos true
+	if (SDL_IntersectRect(&rect, &mushRect, &col.intersectionRect) && fromPlayer)
+	{
+		col.collides = true;
+		//cout << "col";
+	}
 
-	//if (col && fromPlayer)// si la colision es del player
-	//{
-	//	cout << "mario col con mush" << endl;
-	//}
-
+	if (col.collides && fromPlayer) // si la colision es del player
+	{
+		if (game->getMarioState() == 0) 
+		{
+			game->setMarioState(1);
+			cout << "big";
+		}
+		isAlive = false; // el bloque se destruye
+	}
 
 
 	return col;
 }
 
-void Mushroom::move()
+void Mushroom::checkAlive()
 {
-	
+	if (pos.getY() >= MAX_HEIGHT) 
+	{
+		isAlive = false;
+	}
+
 }

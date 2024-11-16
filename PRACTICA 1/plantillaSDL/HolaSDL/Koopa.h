@@ -28,6 +28,8 @@ private:
 
 	bool frozen;
 
+	bool isAlive;
+
 public:
 
 	Koopa();
@@ -39,5 +41,7 @@ public:
 
 	void move();
 
+	// getters
+	bool getAlive() { return isAlive; }
 };
 

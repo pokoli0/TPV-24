@@ -38,7 +38,10 @@ public:
 
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
-	void move();
+	void checkAlive();
+
+	// getters
+	bool getAlive() { return isAlive; }
 
 };
 
