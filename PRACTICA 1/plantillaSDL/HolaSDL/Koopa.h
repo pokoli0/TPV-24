@@ -27,7 +27,7 @@ private:
 	int koopaFrame;
 
 	bool isAlive;
-
+	bool frozen;
 
 
 public:

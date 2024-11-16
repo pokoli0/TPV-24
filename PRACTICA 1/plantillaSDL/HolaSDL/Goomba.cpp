@@ -49,12 +49,12 @@ void Goomba::render(SDL_Renderer* renderer)
 
 void Goomba::update()
 {
-	
 	if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
 		frozen = false;
 	}
 	if (!frozen)
 	{
+
 		Alive();
 		// Caida por gravedad
 		speed.setY(speed.getY() + GRAVITY);
@@ -103,7 +103,6 @@ void Goomba::update()
 
 
 	}
-	
 }
 
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
@@ -112,7 +111,7 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	SDL_Rect GoombaRect{
 		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
-		pos.getY() - TILE_SIDE , // para q atraviese un poco el collider
+		pos.getY()  , // para q atraviese un poco el collider
 		TILE_SIDE,
 		TILE_SIDE
 	};
@@ -128,13 +127,15 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 		&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
 	{
 		isAlive = false;
+		cout << "mario col con kopa desde arriba" << endl;
 	}
 	else if (col.collides && fromPlayer)
 	{
-		col.damages = true;
-		// ?=??¿ quitar vida
-		//game->Mariohit();
 		cout << "mario col damage" << endl;
+		//col.damages = true;
+		// ?=??¿ quitar vida
+		game->Mariohit();
+		
 	}
 
 	return col;

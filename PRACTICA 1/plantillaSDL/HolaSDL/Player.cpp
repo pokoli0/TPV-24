@@ -215,8 +215,8 @@ void Player::checkAlive()
 
 	if (lives == 0) {
 		cout << "Game Lost" << endl;
-		lives = 3; // resetGame
 		isAlive = false;
+		SDL_Quit();
 	}
 
 	if (!isAlive) resetLevel();
@@ -350,6 +350,7 @@ void Player::checkc() {
 	game->setMarioState(0);
 	}
 	else if (game->getMarioState() == 0) {
-	isAlive = false;
+		lives--;
+		isAlive = false;
 	}
 }
