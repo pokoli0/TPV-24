@@ -216,7 +216,6 @@ Game::update()
 	// goombas
 	for (int i = goombaGroup.size() - 1; i >= 0; i--)
 	{
-<<<<<<< Updated upstream
 		if (goombaGroup[i]->getAlive())
 		{
 			goombaGroup[i]->update();
@@ -226,7 +225,6 @@ Game::update()
 			delete goombaGroup[i];
 			goombaGroup.erase(goombaGroup.begin() + i);
 		}
-=======
 		if (!goombaGroup[i]->isAlive)
 		{
 			delete goombaGroup[i];
@@ -235,7 +233,6 @@ Game::update()
 			goombaGroup[i]->update();
 		}
 	
->>>>>>> Stashed changes
 	}
 
 	// koopas

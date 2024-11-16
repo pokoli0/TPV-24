@@ -92,11 +92,6 @@ void Goomba::update()
 	{
 		speed.setX(speed.getX() * -1);
 	}
-<<<<<<< Updated upstream
-	
-=======
-
->>>>>>> Stashed changes
 	//pos.setX(pos.getX() + speed.getX());
 
 }
