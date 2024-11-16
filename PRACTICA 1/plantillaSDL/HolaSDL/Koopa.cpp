@@ -101,7 +101,7 @@ Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	SDL_Rect koopaRect{
 		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
-		pos.getY() - TILE_SIDE,
+		pos.getY() - TILE_SIDE/2, // para q atraviese un poco el collider
 		TILE_SIDE,
 		TILE_SIDE
 	};
@@ -114,9 +114,16 @@ Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	if (col.collides && fromPlayer // si la colision es del player
 		&& col.intersectionRect.y <= koopaRect.y // desde arriba
-		&& col.intersectionRect.w > TILE_SIDE / 4)
+		&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
 	{
 		cout << "mario col con kopa desde arriba" << endl;
+	}
+	else if (col.collides && fromPlayer)
+	{
+		col.damages = true;
+		// ?=??¿ quitar vida
+
+		cout << "mario col damage" << endl;
 	}
 
 	return col;
