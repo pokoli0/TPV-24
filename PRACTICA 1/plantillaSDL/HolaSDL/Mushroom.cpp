@@ -7,9 +7,9 @@ Mushroom::Mushroom()
 Mushroom::Mushroom(Game* g, int x, int y)
 {
 	game = g;
-	pos = Point2D<int>(x, y);
+	pos = Point2D<int>(x, y - TILE_SIDE);
 
-	xSpeed = 6;
+	xSpeed = -6;
 	speed = Point2D<int>(xSpeed, 0);
 
 	onGround = false;
@@ -88,7 +88,7 @@ Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	SDL_Rect mushRect{
-		pos.getX() + speed.getX(),
+		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
 		pos.getY(),
 		TILE_SIDE,
 		TILE_SIDE
@@ -98,7 +98,6 @@ Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
 	if (SDL_IntersectRect(&rect, &mushRect, &col.intersectionRect) && fromPlayer)
 	{
 		col.collides = true;
-		//cout << "col";
 	}
 
 	if (col.collides && fromPlayer) // si la colision es del player
@@ -106,11 +105,9 @@ Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
 		if (game->getMarioState() == 0) 
 		{
 			game->setMarioState(1);
-			cout << "big";
 		}
-		isAlive = false; // el bloque se destruye
+		isAlive = false;
 	}
-
 
 	return col;
 }

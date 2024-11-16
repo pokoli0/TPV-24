@@ -32,9 +32,6 @@ private:
 	int lives;
 	bool isAlive;
 
-	// 0 mario, 1 supermario
-	int state;
-
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
 	bool inmune;
 
@@ -66,7 +63,7 @@ public:
 	Player(Game* g, int x, int y);
 	~Player();
 
-	void render(SDL_Renderer* renderer);
+	void render(int marioState, SDL_Renderer* renderer);
 	void update();
 
 	// pone la direccion en y a 1 hasta que llega a cierta altura

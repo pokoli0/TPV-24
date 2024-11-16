@@ -168,7 +168,7 @@ Game::render() const
 
 	// Pinta los objetos del juego
 	tilemap->render(renderer);
-	player->render(renderer);
+	player->render(marioState, renderer);
 
 	for (int i = 0; i < blockGroup.size(); i++)
 	{
@@ -200,7 +200,7 @@ Game::update()
 	player->update();
 
 	// bloques
-	for (int i = blockGroup.size() - 1; i >= 0; --i)
+	for (int i = blockGroup.size() - 1; i >= 0; i--)
 	{
 		if (blockGroup[i]->getAlive())
 		{
@@ -214,7 +214,7 @@ Game::update()
 	}
 
 	// goombas
-	for (int i = goombaGroup.size() - 1; i >= 0; --i)
+	for (int i = goombaGroup.size() - 1; i >= 0; i--)
 	{
 		if (goombaGroup[i]->getAlive())
 		{
@@ -228,7 +228,7 @@ Game::update()
 	}
 
 	// koopas
-	for (int i = koopaGroup.size() - 1; i >= 0; --i)
+	for (int i = koopaGroup.size() - 1; i >= 0; i--)
 	{
 		if (koopaGroup[i]->getAlive())
 		{
