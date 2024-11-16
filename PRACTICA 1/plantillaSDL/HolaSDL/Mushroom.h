@@ -38,6 +38,7 @@ public:
 
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
+	// mira si se ha salido del mapa y pone isAlive a false en ese caso
 	void checkAlive();
 
 	// getters

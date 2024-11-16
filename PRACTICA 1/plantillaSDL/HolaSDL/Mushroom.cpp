@@ -36,6 +36,8 @@ void Mushroom::render(SDL_Renderer* renderer)
 
 void Mushroom::update()
 {
+	checkAlive();
+
 	// Caida por gravedad
 	speed.setY(speed.getY() + GRAVITY);
 
@@ -114,9 +116,8 @@ Collision Mushroom::hit(const SDL_Rect& rect, bool fromPlayer)
 
 void Mushroom::checkAlive()
 {
-	if (pos.getY() >= MAX_HEIGHT) 
+	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0) 
 	{
 		isAlive = false;
 	}
-
 }
