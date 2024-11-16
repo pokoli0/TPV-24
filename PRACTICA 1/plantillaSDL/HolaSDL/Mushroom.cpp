@@ -71,7 +71,7 @@ void Mushroom::update()
 	horizontalRect.h = rect.h;
 	horizontalRect.w = rect.w;
 
-	col = game->checkCollision(horizontalRect, true);
+	col = game->checkCollision(horizontalRect, false);
 
 	if(col) 
 	{

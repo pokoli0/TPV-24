@@ -102,7 +102,6 @@ void Player::update()
 		{
 			pos.setY(pos.getY() + speed.getY() + col.intersectionRect.h);
 		}
-		cout << col.indice << endl;
 		jumping = false;
 		speed.setY(0);
 	}
