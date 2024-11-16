@@ -119,11 +119,3 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 	//}
 	return col;
 }
-
-
-
-void Goomba::checkFrozen()
-{
-}
-
-

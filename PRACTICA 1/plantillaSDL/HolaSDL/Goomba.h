@@ -37,13 +37,8 @@ public:
 
 	void render(SDL_Renderer* renderer);
 	void update();
+
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
-
-	void move();
-
-	// compara con mapOffset para ver si el goomba aparece en pantalla
-	// y asi poner frozen a true
-	void checkFrozen();
 
 };
 
