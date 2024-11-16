@@ -99,24 +99,21 @@ void Goomba::update()
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
-	SDL_Rect arribarect{ pos.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE };
+	SDL_Rect arribarect{ pos.getX() + speed.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE};
 	col.collides = SDL_IntersectRect(&rect, &arribarect, &col.intersectionRect);
 	if (col.collides)
 	{
-		cout << "hiasdadtaa";
 		if (fromPlayer)
 		{
 			cout << "hitaa";
-			isAlive = false;
-			/*if (col.intersectionRect.y <= arribarect.y)
+			if (col.intersectionRect.y <= arribarect.y)
 			{
 				isAlive = false;
 			}
 			else {
-				col.damages = true;
-			}*/
+				
+			}
 		}
-		
 	}
 	return col;
 }

@@ -9,6 +9,7 @@ Player::Player(Game* g, int posx, int posy)
 	game = g;
 
 	game->setMarioState(0);
+	state = game->getMarioState();
 
 	lives = 3;
 	
@@ -20,6 +21,9 @@ Player::Player(Game* g, int posx, int posy)
 
 	onGround = false;
 	jumping = false;
+
+	texture = game->getTexture(Game::MARIO);
+	supertexture = game->getTexture(Game::SUPERMARIO);
 	
 	frame = 0;
 	walkFrame = 0;
@@ -37,15 +41,13 @@ Player::~Player()
 	delete texture;
 }
 
-void Player::render(int marioState, SDL_Renderer* renderer)
+void Player::render(SDL_Renderer* renderer)
 {
 	rect.x = pos.getX();
 
 	// renderframe con flipeado
-	if (marioState == 0) 
+	if (state == 0) 
 	{
-		texture = game->getTexture(Game::MARIO);
-
 		rect.y = pos.getY();
 		rect.w = TILE_SIDE;
 		rect.h = TILE_SIDE;
@@ -53,12 +55,10 @@ void Player::render(int marioState, SDL_Renderer* renderer)
 	}
 	else 
 	{
-		texture = game->getTexture(Game::SUPERMARIO);
-
 		rect.y = pos.getY() - TILE_SIDE; // si no se sale del suelo
-		rect.w = texture->getFrameWidth() * 2;
-		rect.h = texture->getFrameHeight() * 2;
-		texture->renderFrame(rect, 0, frame, 0, nullptr, flip);
+		rect.w = supertexture->getFrameWidth() * 2;
+		rect.h = supertexture->getFrameHeight() * 2;
+		supertexture->renderFrame(rect, 0, frame, 0, nullptr, flip);
 	}
 
 	updateAnim();
@@ -200,6 +200,7 @@ void Player::updateAnim()
 void Player::grow()
 {
 	game->setMarioState(1);
+	state = 1;
 }
 
 void Player::checkAlive()
