@@ -112,13 +112,11 @@ Collision Block::hit(const SDL_Rect& rect, bool fromPlayer)
 			}
 			tipoBloque = VACIO;
 		}
-		else if (tipoBloque == LADRILLO) 
+		else if (tipoBloque == LADRILLO && game->getMarioState(1)) 
 		{
 			isAlive = false; // el bloque se destruye
 		}
 	}
-
-
 
 	return col;
 }
