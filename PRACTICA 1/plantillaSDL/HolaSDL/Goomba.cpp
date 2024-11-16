@@ -5,7 +5,7 @@ Goomba::Goomba(Game* g, int x, int y)
 	game = g;
 	pos = Point2D<int>(x, y);
 
-	xSpeed = 6;
+	xSpeed = 2;
 	speed = Point2D<int>(xSpeed, 0);
 
 	onGround = false;
@@ -50,50 +50,58 @@ void Goomba::render(SDL_Renderer* renderer)
 void Goomba::update()
 {
 	Alive();
-	// Caida por gravedad
-	speed.setY(speed.getY() + GRAVITY);
-
-	// Colisiones verticales
-	SDL_Rect verticalRect;
-	verticalRect.x = rect.x + game->getMapOffset();
-	verticalRect.y = rect.y + speed.getY();
-	verticalRect.h = rect.h;
-	verticalRect.w = rect.w;
-
-	Collision col = game->checkCollision(verticalRect, false);
-
-
-	if (!col) // si no hay col, cae normal
-	{
-		pos.setY(pos.getY() + speed.getY());
-		onGround = false;
+	if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
+		frozen = false;
 	}
-	else
+	if (!frozen)
 	{
-		if (speed.getY() > 0)
+		
+		// Caida por gravedad
+		speed.setY(speed.getY() + GRAVITY);
+
+		// Colisiones verticales
+		SDL_Rect verticalRect;
+		verticalRect.x = rect.x + game->getMapOffset();
+		verticalRect.y = rect.y + speed.getY();
+		verticalRect.h = rect.h;
+		verticalRect.w = rect.w;
+
+		Collision col = game->checkCollision(verticalRect, false);
+
+
+		if (!col) // si no hay col, cae normal
 		{
-			pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
-			onGround = true;
-
+			pos.setY(pos.getY() + speed.getY());
+			onGround = false;
 		}
-		speed.setY(0);
+		else
+		{
+			if (speed.getY() > 0)
+			{
+				pos.setY(pos.getY() + speed.getY() - col.intersectionRect.h);
+				onGround = true;
+
+			}
+			speed.setY(0);
+		}
+
+		// Colisiones horizontales
+		SDL_Rect horizontalRect;
+		horizontalRect.x = rect.x + speed.getX() + game->getMapOffset();
+		horizontalRect.y = rect.y;
+		horizontalRect.h = rect.h;
+		horizontalRect.w = rect.w;
+
+		col = game->checkCollision(horizontalRect, false);
+
+		if (col)
+		{
+			speed.setX(speed.getX() * -1);
+		}
+		pos.setX(pos.getX() - speed.getX());
+
 	}
-
-	// Colisiones horizontales
-	SDL_Rect horizontalRect;
-	horizontalRect.x = rect.x + speed.getX() + game->getMapOffset();
-	horizontalRect.y = rect.y;
-	horizontalRect.h = rect.h;
-	horizontalRect.w = rect.w;
-
-	col = game->checkCollision(horizontalRect, false);
-
-	if (col)
-	{
-		speed.setX(speed.getX() * -1);
-	}
-	//pos.setX(pos.getX() + speed.getX());
-
+	
 }
 
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
@@ -105,25 +113,22 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 	{
 		if (fromPlayer)
 		{
-			cout << "hitaa";
+			cout << "asd" << endl;
 			if (col.intersectionRect.y <= arribarect.y)
 			{
 				isAlive = false;
 			}
 			else {
-				
+				col.collides = true;
+				game->Mariohit();
 			}
 		}
 	}
 	return col;
 }
 void Goomba::Alive() {
-	if (pos.getY() >= MAX_HEIGHT) {
-		isAlive = false;
-	}
-	if (pos.getX() <= game->getMapOffset() - TILE_SIDE)
+	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0)
 	{
-		cout << "fuera";
 		isAlive = false;
 	}
 }

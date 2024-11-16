@@ -11,7 +11,7 @@ class Goomba
 {
 private:
 	// para que no se muevan mientras no aparezcan en pantalla
-	bool frozen;
+	bool frozen = true;
 
 	Point2D<int> pos;
 	Point2D<int> speed;
@@ -40,7 +40,6 @@ public:
 	void Alive();
 
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
-
 	// getters
 	bool getAlive() { return isAlive; }
 };

@@ -140,7 +140,7 @@ public:
 
 	int getMarioState() { return marioState; }
 	void setMarioState(int s) { marioState = s; }
-	void setMariolives() {};
+	void Mariohit();
 
 	SDL_Renderer* getRender() { return renderer; }
 };

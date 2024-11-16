@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "Player.h"
 // Formato de la especificación de una textura
 struct TextureSpec
 {
@@ -225,13 +225,6 @@ Game::update()
 			delete goombaGroup[i];
 			goombaGroup.erase(goombaGroup.begin() + i);
 		}
-		if (!goombaGroup[i]->isAlive)
-		{
-			delete goombaGroup[i];
-		}
-		else {
-			goombaGroup[i]->update();
-		}
 	
 	}
 
@@ -311,3 +304,6 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 
 	return col;
 }
+void Game::Mariohit() {
+	player->checkc(); 
+};
