@@ -149,7 +149,7 @@ void Koopa::updateAnim()
 
 void Koopa::checkAlive()
 {
-	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0)
+	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0 ||pos.getX() >= MAX_MAP_OFFSET)
 	{
 		isAlive = false;
 	}

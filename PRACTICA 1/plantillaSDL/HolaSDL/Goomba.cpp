@@ -5,7 +5,7 @@ Goomba::Goomba(Game* g, int x, int y)
 	game = g;
 	pos = Point2D<int>(x, y);
 
-	xSpeed = 2;
+	xSpeed = -6;
 	speed = Point2D<int>(xSpeed, 0);
 
 	onGround = false;
@@ -49,13 +49,13 @@ void Goomba::render(SDL_Renderer* renderer)
 
 void Goomba::update()
 {
-	Alive();
+	
 	if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
 		frozen = false;
 	}
 	if (!frozen)
 	{
-		
+		Alive();
 		// Caida por gravedad
 		speed.setY(speed.getY() + GRAVITY);
 
@@ -98,7 +98,9 @@ void Goomba::update()
 		{
 			speed.setX(speed.getX() * -1);
 		}
-		pos.setX(pos.getX() - speed.getX());
+
+		pos.setX(pos.getX() + speed.getX());
+
 
 	}
 	
@@ -107,27 +109,38 @@ void Goomba::update()
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
-	SDL_Rect arribarect{ pos.getX() + speed.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE};
-	col.collides = SDL_IntersectRect(&rect, &arribarect, &col.intersectionRect);
-	if (col.collides)
+
+	SDL_Rect GoombaRect{
+		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
+		pos.getY() - TILE_SIDE , // para q atraviese un poco el collider
+		TILE_SIDE,
+		TILE_SIDE
+	};
+
+	// si hay colision, devolvemos true
+	if (SDL_IntersectRect(&rect, &GoombaRect, &col.intersectionRect) && fromPlayer)
 	{
-		if (fromPlayer)
-		{
-			cout << "asd" << endl;
-			if (col.intersectionRect.y <= arribarect.y)
-			{
-				isAlive = false;
-			}
-			else {
-				col.collides = true;
-				game->Mariohit();
-			}
-		}
+		col.collides = true;
 	}
+
+	if (col.collides && fromPlayer // si la colision es del player
+		&& col.intersectionRect.y <= GoombaRect.y // desde arriba
+		&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+	{
+		isAlive = false;
+	}
+	else if (col.collides && fromPlayer)
+	{
+		col.damages = true;
+		// ?=??¿ quitar vida
+		//game->Mariohit();
+		cout << "mario col damage" << endl;
+	}
+
 	return col;
 }
 void Goomba::Alive() {
-	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0)
+	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0 || pos.getX() >= MAX_MAP_OFFSET)
 	{
 		isAlive = false;
 	}
