@@ -49,6 +49,7 @@ void Goomba::render(SDL_Renderer* renderer)
 
 void Goomba::update()
 {
+	Alive();
 	// Caida por gravedad
 	speed.setY(speed.getY() + GRAVITY);
 
@@ -91,7 +92,11 @@ void Goomba::update()
 	{
 		speed.setX(speed.getX() * -1);
 	}
+<<<<<<< Updated upstream
 	
+=======
+
+>>>>>>> Stashed changes
 	//pos.setX(pos.getX() + speed.getX());
 
 }
@@ -99,23 +104,34 @@ void Goomba::update()
 Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
-	//SDL_Rect arribarect{ pos.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE };
-	//col.collides = SDL_IntersectRect(&rect, &arribarect, &col.intersectionRect);
-	//if (col)
-	//{
-	//	if (fromPlayer)
-	//	{
-	//		if (col.intersectionRect.y <= arribarect.y)
-	//		{
-	//			isAlive = false;
-	//		}
-	//		else {
-	//			col.damages = true;
-	//		}
-	//	}
-	//	/*else {
-	//		col.damages = true;
-	//	}*/
-	//}
+	SDL_Rect arribarect{ pos.getX(), pos.getY() - TILE_SIDE, TILE_SIDE, TILE_SIDE };
+	col.collides = SDL_IntersectRect(&rect, &arribarect, &col.intersectionRect);
+	if (col.collides)
+	{
+		cout << "hiasdadtaa";
+		if (fromPlayer)
+		{
+			cout << "hitaa";
+			isAlive = false;
+			/*if (col.intersectionRect.y <= arribarect.y)
+			{
+				isAlive = false;
+			}
+			else {
+				col.damages = true;
+			}*/
+		}
+		
+	}
 	return col;
+}
+void Goomba::Alive() {
+	if (pos.getY() >= MAX_HEIGHT) {
+		isAlive = false;
+	}
+	if (pos.getX() <= game->getMapOffset() - TILE_SIDE)
+	{
+		cout << "fuera";
+		isAlive = false;
+	}
 }

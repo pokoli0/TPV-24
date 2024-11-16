@@ -27,16 +27,17 @@ private:
 
 	int frameCounter;
 
-	bool isAlive;
+
 
 
 public:
-
+	bool isAlive;
 	Goomba();
 	Goomba(Game* g, int x, int y);
 
 	void render(SDL_Renderer* renderer);
 	void update();
+	void Alive();
 
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
