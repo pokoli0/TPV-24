@@ -3,6 +3,7 @@
 Goomba::Goomba(Game* g, int x, int y)
 {
 	game = g;
+	
 	pos = Point2D<int>(x, y);
 
 	xSpeed = -6;
@@ -121,22 +122,25 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 	{
 		col.collides = true;
 	}
+	if (!game->getMarioInmune())
+	{
+		if (col.collides && fromPlayer // si la colision es del player
+			&& col.intersectionRect.y <= GoombaRect.y // desde arriba
+			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+		{
+			isAlive = false;
+			cout << "mario col con kopa desde arriba" << endl;
+		}
+		else if (col.collides && fromPlayer)
+		{
+			cout << "mario col damage" << endl;
+			//col.damages = true;
+			// ?=??¿ quitar vida
+			game->Mariohit();
 
-	if (col.collides && fromPlayer // si la colision es del player
-		&& col.intersectionRect.y <= GoombaRect.y // desde arriba
-		&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
-	{
-		isAlive = false;
-		cout << "mario col con kopa desde arriba" << endl;
+		}
 	}
-	else if (col.collides && fromPlayer)
-	{
-		cout << "mario col damage" << endl;
-		//col.damages = true;
-		// ?=??¿ quitar vida
-		game->Mariohit();
-		
-	}
+	
 
 	return col;
 }

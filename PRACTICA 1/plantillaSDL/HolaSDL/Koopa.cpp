@@ -116,22 +116,23 @@ Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
 	{
 		col.collides = true;
 	}
-
-	if (col.collides && fromPlayer // si la colision es del player
-		&& col.intersectionRect.y <= koopaRect.y // desde arriba
-		&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+	if (!game->getMarioInmune())
 	{
-		isAlive = false;
-		cout << "mario col con kopa desde arriba" << endl;
+		if (col.collides && fromPlayer // si la colision es del player
+			&& col.intersectionRect.y <= koopaRect.y // desde arriba
+			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+		{
+			isAlive = false;
+			cout << "mario col con kopa desde arriba" << endl;
+		}
+		else if (col.collides && fromPlayer)
+		{
+			col.damages = true;
+			// ?=??¿ quitar vida
+			game->Mariohit();
+			cout << "mario col damage" << endl;
+		}
 	}
-	else if (col.collides && fromPlayer)
-	{
-		col.damages = true;
-		// ?=??¿ quitar vida
-		game->Mariohit();
-		cout << "mario col damage" << endl;
-	}
-
 	return col;
 }
 

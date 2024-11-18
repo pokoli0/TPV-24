@@ -313,3 +313,6 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 void Game::Mariohit() {
 	player->checkc(); 
 };
+bool Game::getMarioInmune() {
+	return player->getInmune();
+}

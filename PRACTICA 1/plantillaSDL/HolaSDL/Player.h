@@ -33,7 +33,9 @@ private:
 	bool isAlive;
 
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
-	bool inmune;
+	bool inmune = false;
+	int temp = 0;
+	int maxtemp = 30;
 
 	// --- para las animaciones
 	// textura actual de mario
@@ -102,6 +104,7 @@ public:
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
+	bool getInmune() const { return inmune; }
 	void checkc();
 	// d = true: para mostrar en consola debugs y poder usar fastMode
 	void debug();

@@ -4,9 +4,8 @@
 #include "Vector2D.h"
 #include "Texture.h"
 #include "Game.h"
-
+#include "Player.h"
 #include "Collision.h"
-
 class Koopa
 {
 private:
@@ -21,7 +20,6 @@ private:
 
 	Texture* texture;
 	Game* game;
-
 	int frame;
 	int frameCounter;
 	int koopaFrame;

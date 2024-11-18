@@ -4,7 +4,7 @@
 #include "Vector2D.h"
 #include "Texture.h"
 #include "Game.h"
-
+#include "Player.h"
 #include "Collision.h"
 
 class Goomba
@@ -24,7 +24,6 @@ private:
 	Texture* texture;
 	int frame;
 	Game* game;
-
 	int frameCounter;
 
 

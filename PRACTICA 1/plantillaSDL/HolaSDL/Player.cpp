@@ -154,6 +154,17 @@ void Player::update()
 	}
 
 	if (debugMode) debug();
+
+	if (inmune)
+	{
+		temp++;
+		if (temp >= maxtemp)
+		{
+			temp = 0;
+			inmune = false;
+		}
+	}
+	cout << inmune << endl;
 }
 
 
@@ -346,11 +357,13 @@ void Player::debug()
 
 }
 void Player::checkc() {
-	if (game->getMarioState() == 1) {
+	if (game->getMarioState() == 1 && !inmune) {
 	game->setMarioState(0);
+		inmune = true;
 	}
-	else if (game->getMarioState() == 0) {
+	else if (game->getMarioState() == 0 && !inmune) {
 		lives--;
 		isAlive = false;
+		inmune = true;
 	}
 }

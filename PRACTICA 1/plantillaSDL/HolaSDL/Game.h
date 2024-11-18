@@ -140,6 +140,7 @@ public:
 
 	int getMarioState() { return marioState; }
 	void setMarioState(int s) { marioState = s; }
+	bool getMarioInmune();
 	void Mariohit();
 
 	SDL_Renderer* getRender() { return renderer; }
