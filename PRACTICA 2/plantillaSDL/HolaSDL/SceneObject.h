@@ -16,41 +16,28 @@ protected:
     GameList<SceneObject>::anchor _anchor;
 
 public:
-    // Constructor
     SceneObject(Game* game, int x, int y, int width, int height)
         : GameObject(game), _position(x, y), _width(width), _height(height), _speed(0, 0) {}
 
-    // Destructor virtual
     virtual ~SceneObject() {}
 
-    // Métodos abstractos (deben implementarse en subclases)
+    // En clases hijas
     virtual Collision hit(const SDL_Rect& region, Collision::Target target) = 0;
 
-    // Métodos concretos
-    virtual SDL_Rect getCollisionRect() const {
-        return SDL_Rect{
-            _position.getX(),
-            _position.getY() - _height,  // Esquina superior izquierda de la caja
-            _width,
-            _height
-        };
-    }
+    // Getters virtuales
+    virtual SDL_Rect getCollisionRect() const;
 
-    virtual SDL_Rect getRenderRect() const {
-        return SDL_Rect{
-            _position.getX() - game->getMapOffset(),
-            _position.getY() - _height,
-            _width,
-            _height
-        };
-    }
+    virtual SDL_Rect getRenderRect() const;
 
+    // Cuando el objeto SceneObject se destruya, siguiendo la secuencia natural de 
+    // eliminación de los objetos, se destruirá su atributo anchor y esto implicará 
+    // automáticamente su eliminación de la lista
     void setListAnchor(GameList<SceneObject>::anchor&& anchor) {
         _anchor = std::move(anchor);
     }
 
 protected:
-    // Método para intentar mover el objeto y gestionar colisiones
+    // Intenta mover el objeto y gestiona colisiones
     Collision tryToMove(const Vector2D<int>& speed, Collision::Target target);
 };
 

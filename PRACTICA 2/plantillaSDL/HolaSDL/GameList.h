@@ -28,6 +28,10 @@ public:
     auto begin() { return _elements.begin(); }
     auto end() { return _elements.end(); }
 
+    // Métodos para iteradores (constantes)
+    auto begin() const { return _elements.cbegin(); }
+    auto end() const { return _elements.cend(); }
+
     // Verifica si la lista está vacía
     bool empty() const { return _elements.empty(); }
 

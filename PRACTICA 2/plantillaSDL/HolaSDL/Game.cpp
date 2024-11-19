@@ -111,24 +111,26 @@ void Game::loadObjectMap()
 		x = x * TILE_SIDE;
 		y = y * TILE_SIDE - TILE_SIDE;
 
-		//switch (tipo) {
-		//case 'M':
-		//	player = new Player(this, x, y); // 32, 32*13
-		//	break;
-		//case 'B':
-		//	block = new Block(this, x, y, atrib, accion);
-		//	blockGroup.push_back(block);
-		//	break;
-		//case 'G':
-		//	goomba = new Goomba(this, x, y);
-		//	goombaGroup.push_back(goomba);
-		//	break;
-		//case 'K':
-		//	koopa = new Koopa(this, x, y);
-		//	koopaGroup.push_back(koopa);
-		//	break;
+		SceneObject* newObject = nullptr;
 
-		//}
+		switch (tipo) {
+		case 'M':
+			//newObject = new Player(this, x, y);
+			break;
+		case 'B':
+			//newObject = new Block(this, x, y, atrib, accion);
+			break;
+		case 'G':
+			//newObject = new Goomba(this, x, y);
+			break;
+		case 'K':
+			//newObject = new Koopa(this, x, y);
+			break;
+		}
+
+		if (newObject) {
+			sceneObjects.push_back(newObject);
+		}
 	}
 }
 
@@ -168,27 +170,10 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
-	/*tilemap->render(renderer);
-	player->render(marioState, renderer);
-
-	for (int i = 0; i < blockGroup.size(); i++)
-	{
-		blockGroup[i]->render(renderer);
+	for (auto obj : sceneObjects) {
+		obj->render(renderer);
 	}
 
-	for (int i = 0; i < goombaGroup.size(); i++)
-	{
-		goombaGroup[i]->render(renderer);
-	}
-
-	for (int i = 0; i < koopaGroup.size(); i++)
-	{
-		koopaGroup[i]->render(renderer);
-	}
-	for (int i = 0; i < mushroomGroup.size(); i++)
-	{
-		mushroomGroup[i]->render(renderer);
-	}*/
 	// escena en pantalla 
 	SDL_RenderPresent(renderer);
 }
@@ -196,7 +181,9 @@ Game::render() const
 void
 Game::update()
 {
-
+	for (auto obj : sceneObjects) {
+		obj->update();
+	}
 }
 
 void
@@ -220,35 +207,10 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
 
-	////tilemap
-	//col = tilemap->hit(rect, fromPlayer);
-	//if (col) return col;
-
-	//// resto de objetos
-	//for (int i = 0; i < blockGroup.size(); i++)
-	//{
-	//	col = blockGroup[i]->hit(rect, fromPlayer);
-	//	if (col) return col;
-	//}
-
-	//for (int i = 0; i < mushroomGroup.size(); i++)
-	//{
-	//	col = mushroomGroup[i]->hit(rect, fromPlayer);
-	//	if (col) return col;
-	//}
-
-	//for (int i = 0; i < goombaGroup.size(); i++)
-	//{
-	//	col = goombaGroup[i]->hit(rect, fromPlayer);
-	//	if (col) return col;
-	//}
-
-	//for (int i = 0; i < koopaGroup.size(); i++)
-	//{
-	//	col = koopaGroup[i]->hit(rect, fromPlayer);
-	//	if (col) return col;
-	//}
-
+	for (auto obj : sceneObjects) {
+		col = obj->hit(rect, fromPlayer ? Collision::PLAYER : Collision::ENEMIES);
+		if (col) return col;
+	}
 	return col;
 }
 
@@ -260,4 +222,5 @@ void Game::playerHit()
 bool Game::getMarioImmunity()
 {
 	//return player->getImmune();
+	return false;
 }

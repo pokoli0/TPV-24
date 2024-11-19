@@ -16,6 +16,10 @@
 #include "Texture.h"
 #include "Collision.h"
 
+#include "GameList.h"
+#include "SceneObject.h"
+
+
 using uint = unsigned int;
 using namespace std;
 
@@ -67,9 +71,10 @@ private:
 	bool seguir;
 
 	// coordenada x del extremo izquierdo de la vista
-	double mapOffset;
+	int mapOffset;
 
 	// Objetos del juego
+	GameList<SceneObject> sceneObjects;
 	//Tilemap* tilemap = nullptr;
 	//Player* player = nullptr;
 	//Block* block = nullptr;
@@ -125,8 +130,8 @@ public:
 	void playerHit();
 
 	/// GETTERS --------------------------------
-	double getMapOffset() const { return mapOffset; }
-	void setMapOffset(double m) { mapOffset = m; }
+	int getMapOffset() const { return mapOffset; }
+	void setMapOffset(int m) { mapOffset = m; }
 
 	int getMarioState() const { return marioState; }
 	void setMarioState(int s) { marioState = s; }
