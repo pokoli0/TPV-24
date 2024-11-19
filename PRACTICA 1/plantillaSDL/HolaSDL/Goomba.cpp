@@ -6,7 +6,7 @@ Goomba::Goomba(Game* g, int x, int y)
 	
 	pos = Point2D<double>(x, y);
 
-	xSpeed = -6;
+	xSpeed = -4;
 	speed = Point2D<double>(xSpeed, 0);
 
 	onGround = false;
@@ -111,13 +111,11 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	SDL_Rect goombaRect{
-		pos.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
+		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
 		pos.getY(), // para q atraviese un poco el collider
 		TILE_SIDE,
 		TILE_SIDE
 	};
-
-	
 
 	if (!game->getMarioImmunity()) // si mario no es inmune
 	{
@@ -132,15 +130,12 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
 		{
 			isAlive = false;
-			cout << "mario col con goomba desde arriba" << endl;
 		}
 		else if (col.collides && fromPlayer)
 		{
-			cout << "mario col damage" << endl;
 			col.damages = true;
 
 			game->playerHit();
-
 		}
 	}
 	
@@ -152,6 +147,5 @@ void Goomba::checkAlive()
 	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0 || pos.getX() >= MAX_MAP_OFFSET)
 	{
 		isAlive = false;
-		cout << "dead" << endl;
 	}
 }

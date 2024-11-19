@@ -257,6 +257,8 @@ void Player::resetPlayer()
 
 	isAlive = true;
 	game->setMarioState(0);
+
+	cout << "Vidas: " << lives << endl;
 }
 
 void Player::handleEvents(const SDL_Event& event)
@@ -326,6 +328,7 @@ void Player::hitMario()
 	else if (game->getMarioState() == 0 && !immune)
 	{
 		lives--;
+
 		immune = true;
 		isAlive = false;
 		resetPlayer();
@@ -347,20 +350,20 @@ void Player::debug()
 	//cout << "Texture frame: " << frame << endl;
 	cout << "Jumping: " << jumping << endl;
 	cout << "On Ground: " << onGround << endl;
-	//cout << "On Wall: " << onWall << endl;
+
 	cout << "Speed Y: " << speed.getY() << endl;
 	cout << "Speed X: " << speed.getX() << endl;
 	/*cout << "Aspect: " << actualAspect << endl;
 	cout << "Lives: " << lives << endl;*/
 
-	//cout << "Map Offset: " << game->getMapOffset() << endl;
+	cout << "Map Offset: " << game->getMapOffset() << endl;
 
 	cout << endl;
 	cout << "Fast Mode: " << fastMode << endl;
 
 	if (fastMode) {
-		xSpeed = 15;
-		bgSpeed = 2;
+		xSpeed = 20;
+		bgSpeed = 3;
 	}
 	else {
 		xSpeed = 8;

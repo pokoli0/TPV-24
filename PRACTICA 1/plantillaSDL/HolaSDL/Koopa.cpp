@@ -5,7 +5,7 @@ Koopa::Koopa(Game* g, int x, int y)
 	game = g;
 	pos = Point2D<int>(x, y);
 
-	xSpeed = -6;
+	xSpeed = -4;
 	speed = Point2D<int>(xSpeed, 0);
 
 	if (speed.getX() > 0) flip = SDL_FLIP_HORIZONTAL;
@@ -124,14 +124,12 @@ Collision Koopa::hit(const SDL_Rect& rect, bool fromPlayer)
 			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
 		{
 			isAlive = false;
-			cout << "mario col con koopa desde arriba" << endl;
 		}
 		else if (col.collides && fromPlayer)
 		{
 			col.damages = true;
 
 			game->playerHit();
-			cout << "mario col damage" << endl;
 		}
 	}
 	return col;
