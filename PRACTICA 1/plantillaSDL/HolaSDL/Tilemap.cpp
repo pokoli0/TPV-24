@@ -122,6 +122,19 @@ Collision Tilemap::hit(const SDL_Rect& rect, bool fromPlayer)
 	int row1 = (rect.y + rect.h - 1) / TILE_SIDE;
 	int col1 = ((rect.x + rect.w - 1) / TILE_SIDE);
 
+	//if (row0 < 0 || row1 >= static_cast<int>(indices.size()) ||
+	//	col0 < 0 || col1 >= static_cast<int>(indices[0].size()))
+	//{
+	//	cout << "se sale" << endl;
+	//}
+
+	// ajuste para que no pete
+	row0 = max(0, row0);
+	row1 = min(static_cast<int>(indices.size()) - 1, row1);
+	col0 = max(0, col0);
+	col1 = min(static_cast<int>(indices[0].size()) - 1, col1);
+
+
 	for (int row = row0; row <= row1; ++row)
 	{
 		for (int col = col0; col <= col1; ++col) 

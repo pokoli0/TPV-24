@@ -13,8 +13,8 @@ private:
 	// para que no se muevan mientras no aparezcan en pantalla
 	bool frozen = true;
 
-	Point2D<int> pos;
-	Point2D<int> speed;
+	Point2D<double> pos;
+	Point2D<double> speed;
 	int xSpeed;
 
 	bool onGround;
@@ -26,19 +26,21 @@ private:
 	Game* game;
 	int frameCounter;
 
-
+	bool isAlive;
 
 
 public:
-	bool isAlive;
+
 	Goomba();
 	Goomba(Game* g, int x, int y);
 
 	void render(SDL_Renderer* renderer);
 	void update();
-	void Alive();
+
+	void checkAlive();
 
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
+
 	// getters
 	bool getAlive() { return isAlive; }
 };

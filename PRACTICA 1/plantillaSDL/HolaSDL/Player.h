@@ -33,7 +33,7 @@ private:
 	bool isAlive;
 
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
-	bool inmune = false;
+	bool immune = false;
 	int temp = 0;
 	int maxtemp = 30;
 
@@ -101,11 +101,14 @@ public:
 	*/
 	void hit();
 
+	void checkAlive();
+
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales
 	int getLives() const { return lives; }
-	bool getInmune() const { return inmune; }
-	void checkc();
+	bool getImmune() const { return immune; }
+
+
 	// d = true: para mostrar en consola debugs y poder usar fastMode
 	void debug();
 };

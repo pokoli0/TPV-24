@@ -24,7 +24,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 };
 
 Game::Game()
- : seguir(true), mapOffset(1)
+ : seguir(true), mapOffset(0)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -103,7 +103,8 @@ void Game::loadObjectMap()
 		stringstream lineStream(line);
 
 		char tipo, atrib, accion;
-		int x, y;
+		double x, y;
+
 		lineStream >> tipo >> x >> y >> atrib >> accion;
 		
 		// conversion
@@ -112,7 +113,7 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, 32, 300); // 32, 32*13
+			player = new Player(this, x, y); // 32, 32*13
 			break;
 		case 'B':
 			block = new Block(this, x, y, atrib, accion);
@@ -310,9 +311,13 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 
 	return col;
 }
-void Game::Mariohit() {
-	player->checkc(); 
-};
-bool Game::getMarioInmune() {
-	return player->getInmune();
+
+void Game::playerHit() 
+{
+	player->checkAlive(); 
+}
+
+bool Game::getMarioImmunity() 
+{
+	return player->getImmune();
 }

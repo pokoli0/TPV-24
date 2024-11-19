@@ -4,10 +4,10 @@ Goomba::Goomba(Game* g, int x, int y)
 {
 	game = g;
 	
-	pos = Point2D<int>(x, y);
+	pos = Point2D<double>(x, y);
 
 	xSpeed = -6;
-	speed = Point2D<int>(xSpeed, 0);
+	speed = Point2D<double>(xSpeed, 0);
 
 	onGround = false;
 
@@ -18,7 +18,7 @@ Goomba::Goomba(Game* g, int x, int y)
 
 	frozen = true;
 
-	//cout << "Goomba (" << x << ", " << y << ")" << endl;
+	cout << "Goomba (" << x << ", " << y << ")" << endl;
 }
 
 void Goomba::render(SDL_Renderer* renderer)
@@ -50,13 +50,15 @@ void Goomba::render(SDL_Renderer* renderer)
 
 void Goomba::update()
 {
-	if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
+	checkAlive();
+
+	if (pos.getX() - texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) 
+	{
 		frozen = false;
 	}
-	if (!frozen)
-	{
 
-		Alive();
+
+	if (!frozen) {
 		// Caida por gravedad
 		speed.setY(speed.getY() + GRAVITY);
 
@@ -101,8 +103,6 @@ void Goomba::update()
 		}
 
 		pos.setX(pos.getX() + speed.getX());
-
-
 	}
 }
 
@@ -110,43 +110,46 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	Collision col;
 
-	SDL_Rect GoombaRect{
+	SDL_Rect goombaRect{
 		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
-		pos.getY()  , // para q atraviese un poco el collider
+		pos.getY() + speed.getY(), // para q atraviese un poco el collider
 		TILE_SIDE,
 		TILE_SIDE
 	};
 
 	// si hay colision, devolvemos true
-	if (SDL_IntersectRect(&rect, &GoombaRect, &col.intersectionRect) && fromPlayer)
+	if (SDL_IntersectRect(&rect, &goombaRect, &col.intersectionRect) && fromPlayer)
 	{
 		col.collides = true;
 	}
-	if (!game->getMarioInmune())
+
+	if (!game->getMarioImmunity())
 	{
 		if (col.collides && fromPlayer // si la colision es del player
-			&& col.intersectionRect.y <= GoombaRect.y // desde arriba
+			&& col.intersectionRect.y <= goombaRect.y // desde arriba
 			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
 		{
 			isAlive = false;
-			cout << "mario col con kopa desde arriba" << endl;
+			cout << "mario col con goomba desde arriba" << endl;
 		}
 		else if (col.collides && fromPlayer)
 		{
 			cout << "mario col damage" << endl;
-			//col.damages = true;
-			// ?=??¿ quitar vida
-			game->Mariohit();
+			col.damages = true;
+
+			game->playerHit();
 
 		}
 	}
 	
-
 	return col;
 }
-void Goomba::Alive() {
+
+void Goomba::checkAlive() 
+{
 	if (pos.getY() >= MAX_HEIGHT || pos.getX() <= 0 || pos.getX() >= MAX_MAP_OFFSET)
 	{
 		isAlive = false;
+		cout << "dead" << endl;
 	}
 }

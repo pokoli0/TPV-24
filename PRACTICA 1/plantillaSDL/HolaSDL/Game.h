@@ -80,7 +80,7 @@ private:
 	bool seguir;
 
 	// coordenada x del extremo izquierdo de la vista
-	int mapOffset;
+	double mapOffset;
 
 	// Objetos del juego
 	Tilemap* tilemap = nullptr;
@@ -135,13 +135,13 @@ public:
 	void spawnMushroom(int x, int y);
 
 	/// GETTERS --------------------------------
-	int getMapOffset() { return mapOffset; }
-	void setMapOffset(int m) { mapOffset = m; }
+	double getMapOffset() { return mapOffset; }
+	void setMapOffset(double m) { mapOffset = m; }
 
 	int getMarioState() { return marioState; }
 	void setMarioState(int s) { marioState = s; }
-	bool getMarioInmune();
-	void Mariohit();
+	bool getMarioImmunity();
+	void playerHit();
 
 	SDL_Renderer* getRender() { return renderer; }
 };
