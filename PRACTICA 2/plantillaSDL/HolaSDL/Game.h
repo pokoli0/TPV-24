@@ -75,6 +75,7 @@ private:
 
 	// Objetos del juego
 	GameList<SceneObject> sceneObjects;
+
 	//Tilemap* tilemap = nullptr;
 	//Player* player = nullptr;
 	//Block* block = nullptr;

@@ -21,6 +21,9 @@ public:
 
     virtual ~SceneObject() {}
 
+    virtual void render(SDL_Renderer* renderer) const override {}
+    virtual void update() const override {}
+
     // En clases hijas
     virtual Collision hit(const SDL_Rect& region, Collision::Target target) = 0;
 
