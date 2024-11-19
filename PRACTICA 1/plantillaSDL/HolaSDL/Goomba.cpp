@@ -117,14 +117,16 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 		TILE_SIDE
 	};
 
-	// si hay colision, devolvemos true
-	if (SDL_IntersectRect(&rect, &goombaRect, &col.intersectionRect) && fromPlayer)
-	{
-		col.collides = true;
-	}
+	
 
 	if (!game->getMarioImmunity()) // si mario no es inmune
 	{
+		// si hay colision, devolvemos true
+		if (SDL_IntersectRect(&rect, &goombaRect, &col.intersectionRect) && fromPlayer)
+		{
+			col.collides = true;
+		}
+		
 		if (col.collides && fromPlayer // si la colision es del player
 			&& col.intersectionRect.y <= goombaRect.y // desde arriba
 			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado

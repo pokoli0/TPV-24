@@ -314,7 +314,7 @@ Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
 
 void Game::playerHit() 
 {
-	player->checkAlive(); 
+	player->hitMario(); 
 }
 
 bool Game::getMarioImmunity() 
