@@ -187,17 +187,37 @@ void Player::updateAnim()
 		if (frameCounter >= 1)
 		{
 			frameCounter = 0;
-			walkFrame = (walkFrame + 1) % 4; // para que se repita el ciclo
+			if (!immune) {
+				walkFrame = (walkFrame + 1) % 4; // para que se repita el ciclo
 
-			if (walkFrame == 0 || walkFrame == 3) {
-				frame = 2;
+				if (walkFrame == 0 || walkFrame == 3) {
+					frame = 2;
+				}
+				else if (walkFrame == 1) {
+					frame = 3;
+				}
+				else if (walkFrame == 2) {
+					frame = 4;
+				}
 			}
-			else if (walkFrame == 1) {
-				frame = 3;
+			else 
+			{
+				walkFrame = (walkFrame + 1) % 5; // para que se repita el ciclo
+
+				if (walkFrame == 0 || walkFrame == 4) {
+					frame = 2;
+				}
+				else if (walkFrame == 1) {
+					frame = 3;
+				}
+				else if (walkFrame == 2) {
+					frame = 4;
+				}
+				else if (walkFrame == 3) {
+					frame = -1;
+				}
 			}
-			else if (walkFrame == 2) {
-				frame = 4;
-			}
+
 		}
 	}
 	else if (!onGround) {
@@ -217,9 +237,6 @@ void Player::checkAlive()
 {
 	if (pos.getY() >= MAX_HEIGHT) {
 		lives--;
-
-		cout << "Caida" << endl;
-		cout << "Vidas: " << lives << endl;
 
 		isAlive = false;
 	}

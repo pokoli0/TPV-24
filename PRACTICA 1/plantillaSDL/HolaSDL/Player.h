@@ -35,7 +35,7 @@ private:
 	// cuando supermario sea golpeado inmune = true durante un par de segundos
 	bool immune = false;
 	int temp = 0;
-	int maxtemp = 30;
+	int maxtemp = 50;
 
 	// --- para las animaciones
 	// textura actual de mario

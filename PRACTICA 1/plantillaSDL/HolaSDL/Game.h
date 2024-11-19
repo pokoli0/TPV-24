@@ -47,7 +47,7 @@ static constexpr int OBSTACLE_THRESHOLD = 4;
 
 static constexpr int GRAVITY = 3;
 
-static constexpr bool DEBUG = true;
+static constexpr bool DEBUG = false;
 
 //
 // Clase que representa el juego y controla todos sus aspectos
