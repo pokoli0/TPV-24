@@ -230,14 +230,14 @@ void Player::checkAlive()
 		SDL_Quit();
 	}
 
-	if (!isAlive) resetLevel();
+	if (!isAlive) resetPlayer();
 }
 
-void Player::resetLevel()
+void Player::resetPlayer()
 {
-	cout << "Level Reset" << endl;
-	game->setMapOffset(1);
+	game->setMapOffset(0);
 	pos = initPos;
+
 	isAlive = true;
 	game->setMarioState(0);
 }
@@ -268,7 +268,7 @@ void Player::handleEvents(const SDL_Event& event)
 			break;
 
 		case SDLK_r:
-			resetLevel();
+			resetPlayer();
 			break;
 
 		case SDLK_PLUS:
@@ -299,25 +299,20 @@ void Player::handleEvents(const SDL_Event& event)
 	}
 }
 
-void Player::hit()
+void Player::hitMario()
 {
-	//	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect 
-	// con su caja de colisión y la que recibe para determinar si hay colisión.
-
-	/*if (m == MARIO)
+	if (game->getMarioState() == 1 && !immune)
+	{
+		game->setMarioState(0);
+		immune = true;
+	}
+	else if (game->getMarioState() == 0 && !immune)
 	{
 		lives--;
-		resetLevel();
+		immune = true;
+		isAlive = false;
+		resetPlayer();
 	}
-	else
-	{
-		actualAspect = MARIO;
-		inmune = true;
-	}*/
-
-
-
-
 }
 
 void Player::debug()
@@ -356,17 +351,4 @@ void Player::debug()
 	}
 }
 
-void Player::checkAlive() 
-{
-	if (game->getMarioState() == 1 && !immune) 
-	{
-		game->setMarioState(0);
-		immune = true;
-	}
-	else if (game->getMarioState() == 0 && !immune) 
-	{
-		lives--;
-		isAlive = false;
-		immune = true;
-	}
-}
+

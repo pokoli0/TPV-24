@@ -81,27 +81,14 @@ public:
 	void checkAlive();
 
 	// reinicia el nivel, poniendo la posicion inicial de mario y las vidas a 3
-	void resetLevel();
+	void resetPlayer();
 
 	// maneja eventos de teclado y determina el estado del movimiento
 	void handleEvents(const SDL_Event& event);
 
-	/*
-	detecta colisiones y recibe daño
-	MARIO colisiona con un enemigo o caiga
-	-> lives--
-	-> volverá a su posición inicial en el nivel
-	  SUPERMARIO al chocar con un enemigo
-	-> se convertirá en MARIO
-	-> permanecerá donde está
-	-> se mantendrá invulnerable durante un par de segundos
-	[ Cosas de Ruben ]
-	Utiliza los métodos SDL_HasIntersection o SDL_IntersectRect
-	con su caja de colisión y la que recibe para determinar si hay colisión.
-	*/
-	void hit();
 
-	void checkAlive();
+	// resta vidas a mario, lo vuelve pequeño si es el caso, pone inmunidad a true
+	void hitMario();
 
 	/// GETTERS --------------------------------
 	// devuelve el numero de vidas actuales

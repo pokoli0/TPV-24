@@ -134,14 +134,17 @@ public:
 	// spawnea mushroom encima del bloque 
 	void spawnMushroom(int x, int y);
 
+	//
+	void playerHit();
+
 	/// GETTERS --------------------------------
-	double getMapOffset() { return mapOffset; }
+	double getMapOffset() const { return mapOffset; }
 	void setMapOffset(double m) { mapOffset = m; }
 
-	int getMarioState() { return marioState; }
+	int getMarioState() const { return marioState; }
 	void setMarioState(int s) { marioState = s; }
+
 	bool getMarioImmunity();
-	void playerHit();
 
 	SDL_Renderer* getRender() { return renderer; }
 };

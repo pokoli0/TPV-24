@@ -111,8 +111,8 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 	Collision col;
 
 	SDL_Rect goombaRect{
-		pos.getX() + speed.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
-		pos.getY() + speed.getY(), // para q atraviese un poco el collider
+		pos.getX(), // se mueve en el mapa asiq ya se aplica el offset en el render
+		pos.getY(), // para q atraviese un poco el collider
 		TILE_SIDE,
 		TILE_SIDE
 	};
@@ -123,7 +123,7 @@ Collision Goomba::hit(const SDL_Rect& rect, bool fromPlayer)
 		col.collides = true;
 	}
 
-	if (!game->getMarioImmunity())
+	if (!game->getMarioImmunity()) // si mario no es inmune
 	{
 		if (col.collides && fromPlayer // si la colision es del player
 			&& col.intersectionRect.y <= goombaRect.y // desde arriba
