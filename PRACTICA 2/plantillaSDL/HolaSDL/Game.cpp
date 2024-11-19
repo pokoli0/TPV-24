@@ -48,7 +48,7 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	//tilemap = new Tilemap(this, "../assets/maps/world1.csv");
+	//TileMap tilemap = new SceneObject(this, "../assets/maps/world1.csv");
 
 	loadObjectMap();
 

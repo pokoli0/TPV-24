@@ -19,8 +19,6 @@ Tilemap::Tilemap(Game* g, string f)
 
 Tilemap::~Tilemap()
 {
-	delete texture;
-	delete background;
 }
 
 void Tilemap::loadTilemap(string fichero)

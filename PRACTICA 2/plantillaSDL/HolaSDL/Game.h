@@ -76,6 +76,10 @@ private:
 	// Objetos del juego
 	GameList<SceneObject> sceneObjects;
 
+	// Creación de los objetos del juego en el momento justo
+	std::vector<SceneObject*> objectQueue;
+	int nextObject;
+
 	//Tilemap* tilemap = nullptr;
 	//Player* player = nullptr;
 	//Block* block = nullptr;

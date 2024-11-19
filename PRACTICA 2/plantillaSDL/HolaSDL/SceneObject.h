@@ -4,6 +4,7 @@
 #include "GameList.h"
 #include "Vector2D.h"
 #include "Collision.h"
+#include "Texture.h"
 
 class SceneObject : public GameObject
 {
@@ -11,6 +12,9 @@ protected:
     Vector2D<int> _position;    // Coordenadas (x, y)
     Vector2D<int> _speed;       // Velocidad (vx, vy)
     int _width, _height;        // Tamaño del objeto
+
+    Texture* texture = nullptr;
+    SDL_Rect r;
 
     // Ancla a la lista de objetos del juego
     GameList<SceneObject>::anchor _anchor;
@@ -22,10 +26,14 @@ public:
     virtual ~SceneObject() {}
 
     virtual void render(SDL_Renderer* renderer) const override {}
-    virtual void update() const override {}
+    virtual void update() override {}
 
     // En clases hijas
     virtual Collision hit(const SDL_Rect& region, Collision::Target target) = 0;
+
+    // devuelva una copia del objeto sobre el que 
+    // se aplica (solo se aplicará sobre los objetos de objectQueue)
+    virtual SceneObject* clone() const = 0;
 
     // Getters virtuales
     virtual SDL_Rect getCollisionRect() const;

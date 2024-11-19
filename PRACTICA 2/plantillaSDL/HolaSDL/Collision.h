@@ -22,5 +22,10 @@ struct Collision
 	int horizontal = 0;   // profundidad de la colisión horizontal
 	int vertical = 0;     // profundidad de la colisión vertical
 
-	operator bool() const;
+	operator bool() const { 
+		bool c = false;
+		if (result != NONE) {
+			return true;
+		}
+	};
 };
