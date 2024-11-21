@@ -1,5 +1,6 @@
 ﻿#include "Game.h"
 
+
 // Formato de la especificación de una textura
 struct TextureSpec
 {
@@ -48,7 +49,8 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	//TileMap tilemap = new SceneObject(this, "../assets/maps/world1.csv");
+	tilemap = new TileMap(this, "../assets/maps/world1.csv");
+	sceneObjects.push_back(tilemap);
 
 	loadObjectMap();
 
@@ -58,7 +60,7 @@ Game::Game()
 Game::~Game()
 {
 	// Elimina los objetos del juego
-	//delete tilemap;
+	delete tilemap;
 	//delete player;
 	//for (int i = 0; i < blockGroup.size(); i++)
 	//{

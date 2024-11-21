@@ -19,6 +19,7 @@
 #include "GameList.h"
 #include "SceneObject.h"
 
+#include "TileMap.h"
 
 using uint = unsigned int;
 using namespace std;
@@ -80,7 +81,7 @@ private:
 	std::vector<SceneObject*> objectQueue;
 	int nextObject;
 
-	//Tilemap* tilemap = nullptr;
+	TileMap* tilemap = nullptr;
 	//Player* player = nullptr;
 	//Block* block = nullptr;
 	//vector<Block*> blockGroup;

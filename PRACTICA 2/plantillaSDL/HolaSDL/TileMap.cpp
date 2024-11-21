@@ -1,6 +1,57 @@
 ﻿#include "TileMap.h"
 #include "Game.h"
 
+TileMap::TileMap(Game* game, const string& mapFile, int x, int y)
+	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BACKGROUND))
+{
+	loadTilemap(mapFile);
+}
+
+void TileMap::loadTilemap(string fichero)
+{
+	ifstream f;
+	f.open(fichero);
+	if (!f.is_open()) {
+		throw string("fichero de mapa worldX.csv no encontrado");
+	}
+	else {
+		string linea;
+		vector<vector<int>> matriz;
+
+		while (getline(f, linea)) // lee linea del fichero f y lo guarda en string linea 
+		{
+			istringstream stream(linea); // para procesar la linea
+			string valor; // almacena temporalmente el valor extraido de la linea 
+
+			vector<int> fila; // para almacenar nums de la fila
+
+			// Leer cada valor separado por coma
+			while (getline(stream, valor, ',')) // lee cada valor de la linea (stream), separando los valores por comas
+			{
+				istringstream convertir(valor); // istringstream para la conversion de string a int
+
+				int num;
+				convertir >> num; // guardamos el int convertido en num
+
+				fila.push_back(num); // pushback del numero a la fila
+			}
+
+			matrix.push_back(fila); // Agregar la fila a la matriz
+		}
+
+		//para comprobar que se ha guardado bien: 
+		//for (const auto& row : indices) {
+		//	for (const auto& value : row) {
+		//		std::cout << value << " ";
+		//	}
+		//	std::cout << std::endl;
+		//}
+	}
+
+	f.close();
+}
+
+
 void TileMap::render(SDL_Renderer* renderer) const
 {
 	int offset = game->getMapOffset();  // atributo de Game
@@ -26,15 +77,15 @@ void TileMap::render(SDL_Renderer* renderer) const
 			// Si el �ndice es -1 no se pinta nada
 			if (indice != -1) {
 				// Separa n�mero de fila y de columna
-				int frameCol = indice % texture->getNumColumns();
-				int frameRow = indice / texture->getNumColumns();
+				int frameCol = indice % _texture->getNumColumns();
+				int frameRow = indice / _texture->getNumColumns();
 
 				rect.y = row * TILE_SIDE;
 
 				// Usa renderFrame para pintar la tesela
-				texture->renderFrame(rect, frameRow, frameCol);
+				_texture->renderFrame(rect, frameRow, frameCol);
 
-				if (DEBUG && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD)
+				if (DEBUG && indice % _texture->getNumColumns() < OBSTACLE_THRESHOLD)
 				{
 					SDL_SetRenderDrawColor(renderer, 0, 255, 0, 128); // green
 					SDL_RenderDrawRect(renderer, &rect);
@@ -47,6 +98,7 @@ void TileMap::render(SDL_Renderer* renderer) const
 
 void TileMap::update()
 {
+	//game->checkCollision(rect, false);
 }
 
 Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
@@ -54,12 +106,12 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 	Collision colision;
 
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
-	int row0 = rect.y / TILE_SIDE;
-	int col0 = (rect.x / TILE_SIDE);
+	int row0 = region.y / TILE_SIDE;
+	int col0 = (region.x / TILE_SIDE);
 
 	// Celda del nivel que contiene la esquina inferior derecha del rectángulo
-	int row1 = (rect.y + rect.h - 1) / TILE_SIDE;
-	int col1 = ((rect.x + rect.w - 1) / TILE_SIDE);
+	int row1 = (region.y + region.h - 1) / TILE_SIDE;
+	int col1 = ((region.x + region.w - 1) / TILE_SIDE);
 
 
 	// ajuste para que no pete
@@ -74,12 +126,10 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 		for (int col = col0; col <= col1; ++col)
 		{
 			int indice = matrix[row][col];
-			colision.indice = indice;
 
-
-			if (indice != -1 && indice % texture->getNumColumns() < OBSTACLE_THRESHOLD)
+			if (indice != -1 && indice % _texture->getNumColumns() < OBSTACLE_THRESHOLD)
 			{
-				colision.collides = true;
+				colision.result = Collision:: OBSTACLE;
 
 				SDL_Rect auxRect{
 					col * TILE_SIDE,
@@ -89,7 +139,7 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 				};
 
 				// Calculamos la interseccion
-				if (SDL_IntersectRect(&rect, &auxRect, &colision.intersectionRect))
+				if (SDL_IntersectRect(&region, &auxRect, &colision.intersectionRect))
 				{
 					return colision;
 				}
@@ -99,3 +149,9 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 
 	return colision;
 }
+
+SceneObject* TileMap::clone() const
+{
+	return nullptr;
+}
+

@@ -22,6 +22,8 @@ struct Collision
 	int horizontal = 0;   // profundidad de la colisión horizontal
 	int vertical = 0;     // profundidad de la colisión vertical
 
+	SDL_Rect intersectionRect;
+
 	operator bool() const { 
 		bool c = false;
 		if (result != NONE) {

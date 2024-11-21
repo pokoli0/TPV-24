@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "GameObject.h"
 #include "GameList.h"
 #include "Vector2D.h"
@@ -13,15 +14,18 @@ protected:
     Vector2D<int> _speed;       // Velocidad (vx, vy)
     int _width, _height;        // Tamaño del objeto
 
-    Texture* texture = nullptr;
+    Texture* _texture = nullptr;
     SDL_Rect r;
 
     // Ancla a la lista de objetos del juego
     GameList<SceneObject>::anchor _anchor;
 
 public:
-    SceneObject(Game* game, int x, int y, int width, int height)
-        : GameObject(game), _position(x, y), _width(width), _height(height), _speed(0, 0) {}
+    SceneObject(Game* game, int x, int y, int width, int height, Texture* texture)
+        : GameObject(game), _position(x, y), _width(width), _height(height), _speed(0, 0) , _texture(texture)
+    {
+    
+    }
 
     virtual ~SceneObject() {}
 
