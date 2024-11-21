@@ -13,6 +13,6 @@ public:
     virtual ~GameObject() {}
 
     // Metodos virtuales puros (implementados por las clases hijas)
-    virtual void render(SDL_Renderer* renderer) const = 0;
+    virtual void render(SDL_Renderer* renderer) = 0;
     virtual void update() = 0;
 };

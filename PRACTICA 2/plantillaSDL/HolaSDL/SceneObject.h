@@ -17,23 +17,29 @@ protected:
     Texture* _texture = nullptr;
     SDL_Rect _rect;
 
+    bool _isAlive;
+
     // Ancla a la lista de objetos del juego
     GameList<SceneObject>::anchor _anchor;
 
 public:
     SceneObject(Game* game, int x, int y, int width, int height, Texture* texture)
-        : GameObject(game), _position(x, y), _width(width), _height(height), _speed(0, 0) , _texture(texture)
+        : GameObject(game), _position(x, y), _width(width), _height(height),
+        _speed(0, 0), _texture(texture), _isAlive(true), _rect()
     {
-    
+
     }
 
     virtual ~SceneObject() {}
 
-    virtual void render(SDL_Renderer* renderer) const override {}
+    virtual void render(SDL_Renderer* renderer) override {}
     virtual void update() override {}
 
     // En clases hijas
     virtual Collision hit(const SDL_Rect& region, Collision::Target target) = 0;
+
+    // igual este metodo aqui no tiene mucho sentido por el tilemap
+    virtual void checkAlive() = 0;
 
     // devuelva una copia del objeto sobre el que 
     // se aplica (solo se aplicará sobre los objetos de objectQueue)

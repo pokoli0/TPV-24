@@ -127,10 +127,7 @@ void Game::loadObjectMap()
 		case 'K':
 			//newObject = new Koopa(this, x, y);
 			break;
-		}
-
-
-		
+		}		
 	}
 }
 
@@ -198,7 +195,7 @@ Game::handleEvents()
 			seguir = false;
 		}
 		else {
-			//player->handleEvents(evento);
+			player->handleEvent(evento);
 		}
 	}
 }

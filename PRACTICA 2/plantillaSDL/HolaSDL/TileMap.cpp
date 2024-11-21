@@ -52,7 +52,7 @@ void TileMap::loadTilemap(string fichero)
 }
 
 
-void TileMap::render(SDL_Renderer* renderer) const
+void TileMap::render(SDL_Renderer* renderer)
 {
 	int offset = game->getMapOffset();  // atributo de Game
 
