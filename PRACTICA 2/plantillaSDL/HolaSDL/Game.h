@@ -38,6 +38,7 @@ static constexpr int BACKGROUND_SCROLL_SPEED = 5;
 static constexpr int OBSTACLE_THRESHOLD = 4;
 
 static constexpr int GRAVITY = 3;
+static constexpr int SPEED_LIMIT = 10;
 
 static constexpr bool DEBUG = true;
 
@@ -110,7 +111,7 @@ public:
 
 	@return objeto colision con toda la informacion estructurada
 	*/
-	Collision checkCollision(const SDL_Rect& rect, bool fromPlayer);
+	Collision checkCollision(const SDL_Rect& rect, Collision::Target target);
 
 	void update();
 	void render() const;

@@ -130,7 +130,7 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 			if (indice != -1 && indice % _texture->getNumColumns() < OBSTACLE_THRESHOLD)
 			{
 				colision.result = Collision:: OBSTACLE;
-
+				//cout << "col";
 				SDL_Rect auxRect{
 					col * TILE_SIDE,
 					row * TILE_SIDE,

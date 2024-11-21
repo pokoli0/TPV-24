@@ -175,6 +175,17 @@ Game::render() const
 	SDL_RenderPresent(renderer);
 }
 
+Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
+{
+	Collision col;
+
+	for (auto obj : sceneObjects) {
+		col = obj->hit(rect, target);
+		if (col) return col;
+	}
+	return col;
+}
+
 void
 Game::update()
 {
@@ -198,17 +209,6 @@ Game::handleEvents()
 			player->handleEvent(evento);
 		}
 	}
-}
-
-Collision Game::checkCollision(const SDL_Rect& rect, bool fromPlayer)
-{
-	Collision col;
-
-	for (auto obj : sceneObjects) {
-		col = obj->hit(rect, fromPlayer ? Collision::PLAYER : Collision::ENEMIES);
-		if (col) return col;
-	}
-	return col;
 }
 
 void Game::playerHit()
