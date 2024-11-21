@@ -20,6 +20,7 @@
 #include "SceneObject.h"
 
 #include "TileMap.h"
+#include "Player.h"
 
 using uint = unsigned int;
 using namespace std;
@@ -82,7 +83,7 @@ private:
 	int nextObject;
 
 	TileMap* tilemap = nullptr;
-	//Player* player = nullptr;
+	Player* player = nullptr;
 	//Block* block = nullptr;
 	//vector<Block*> blockGroup;
 	//Goomba* goomba = nullptr;

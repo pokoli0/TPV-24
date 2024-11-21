@@ -15,7 +15,7 @@ protected:
     int _width, _height;        // Tamaño del objeto
 
     Texture* _texture = nullptr;
-    SDL_Rect r;
+    SDL_Rect _rect;
 
     // Ancla a la lista de objetos del juego
     GameList<SceneObject>::anchor _anchor;

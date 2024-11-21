@@ -113,11 +113,10 @@ void Game::loadObjectMap()
 		x = x * TILE_SIDE;
 		y = y * TILE_SIDE - TILE_SIDE;
 
-		SceneObject* newObject = nullptr;
-
 		switch (tipo) {
 		case 'M':
-			//newObject = new Player(this, x, y);
+			player = new Player(this, x, y);
+			sceneObjects.push_back(player);
 			break;
 		case 'B':
 			//newObject = new Block(this, x, y, atrib, accion);
@@ -130,9 +129,8 @@ void Game::loadObjectMap()
 			break;
 		}
 
-		if (newObject) {
-			sceneObjects.push_back(newObject);
-		}
+
+		
 	}
 }
 
