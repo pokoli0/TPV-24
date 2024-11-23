@@ -54,7 +54,7 @@ Game::Game()
 	//Crea los objetos del juego
 
 	sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
-	sceneObjects.push_back(new InfoBar(this));
+	//sceneObjects.push_back(new InfoBar(this));
 
 	loadObjectMap();
 

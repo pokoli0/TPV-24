@@ -33,6 +33,10 @@
 
 #include "Lift.h"
 
+#include "SDLError.h"
+#include "FileNotFoundError.h"
+#include "FileFormatError.h"
+
 using uint = unsigned int;
 using namespace std;
 
