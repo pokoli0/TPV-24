@@ -115,7 +115,7 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y);
+			player = new Player(this, x, y-200);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':

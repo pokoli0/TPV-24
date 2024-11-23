@@ -31,6 +31,7 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
     if (speed.getY() != 0) {
         rect.y += speed.getY();
         collision = game->checkCollision(rect, target);
+        
         int fix = collision.vertical * (speed.getY() > 0 ? 1 : -1);
         _position += {0, speed.getY() - fix};
     }

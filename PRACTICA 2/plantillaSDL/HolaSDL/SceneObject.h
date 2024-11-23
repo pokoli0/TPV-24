@@ -35,7 +35,7 @@ public:
     virtual void render(SDL_Renderer* renderer) override {}
     virtual void update() override {}
 
-    // En clases hijas
+    // Recibe rectangulo que se vera afectado y si viene del jugador
     virtual Collision hit(const SDL_Rect& region, Collision::Target target) = 0;
 
     // igual este metodo aqui no tiene mucho sentido por el tilemap
@@ -58,7 +58,14 @@ public:
     }
 
 protected:
-    // Intenta mover el objeto y gestiona colisiones
+    // El método protegido tryToMove concentra el código de la comprobación
+    // de las colisiones para todos los objetos del juego. Recibe un vector
+    // con el movimiento que se quiere aplicar al objeto, prueba el movimiento
+    // en cambos ejes y devuelve la información de tipo Collision.
+    // Target: a qué hace daño. 
+    // - Si lo usamos en goomba, target sera player.
+    // - Si lo usamos en caparazon, target sera both.
+    // - Si lo usamos en player, target sera none.
     Collision tryToMove(const Vector2D<int>& speed, Collision::Target target);
 };
 

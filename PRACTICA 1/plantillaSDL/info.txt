@@ -1,5 +1,5 @@
 PAULA SIERRA LUQUE
 MARCOS PANTOJA RAFAEL DE LA CRUZ
 
-Hemos implementado los bloques, los goombas y los koopas con sus movimientos.
-Nos faltan gran parte de las colisiones, solo tenemos las del Tilemap VERTICALES.
+Algunos errores que encontramos son en los hits.
+Nos puede dar fallos a veces en el hit del Tilemap porque se sale del vector. Pero hemos puesto una comprobación antes para evitarlo.
