@@ -62,6 +62,7 @@ public:
 		GOOMBA,
 		KOOPA,
 		MUSHROOM,
+		COIN,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -100,6 +101,7 @@ private:
 
 	// 0: mario, 1: supermario
 	int marioState;
+	int points;
 
 public:
 	// bucle principal del juego
@@ -118,7 +120,7 @@ public:
 	Collision checkCollision(const SDL_Rect& rect, Collision::Target target);
 
 	void update();
-	void render() const;
+	void render();
 	void handleEvents();
 
 	Texture* getTexture(TextureName name) const;
@@ -147,6 +149,9 @@ public:
 
 	int getMarioState() const { return marioState; }
 	void setMarioState(int s) { marioState = s; }
+
+	int getPoints() const { return points; }
+	void givePoints(int n) { points += n; }
 
 	bool getMarioImmunity();
 

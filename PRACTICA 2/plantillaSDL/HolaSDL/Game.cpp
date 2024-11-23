@@ -22,10 +22,11 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 				{"goomba.png", 3, 1},
 				{"koopa.png", 4, 1},
 				{"mushroom.png", 1, 1},
+				{"coin.png", 4, 1},
 };
 
 Game::Game()
-	: seguir(true), mapOffset(0)
+	: seguir(true), mapOffset(0), points(0)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -148,7 +149,7 @@ void Game::run()
 }
 
 void
-Game::render() const
+Game::render()
 {
 	// Cambia el color de fondo
 	SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);

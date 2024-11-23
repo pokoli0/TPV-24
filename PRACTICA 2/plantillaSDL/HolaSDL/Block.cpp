@@ -16,6 +16,7 @@ void Block::update()
 
 Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 {
+	
 	return Collision();
 }
 

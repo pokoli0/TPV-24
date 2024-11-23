@@ -62,6 +62,7 @@ Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 			&& col.intersectionRect.w > TILE_SIDE / 4) // para que no detecte col desde el lado
 		{
 			cout << "mario hace damage" << endl;
+			game->givePoints(100);
 			_isAlive = false;
 		}
 		else if (col.result == Collision::DAMAGE && target == Collision::PLAYER)
