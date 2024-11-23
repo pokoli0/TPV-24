@@ -19,12 +19,19 @@
 #include "GameList.h"
 #include "SceneObject.h"
 
+#include "InfoBar.h"
+
 #include "TileMap.h"
 #include "Player.h"
 
 #include "Goomba.h"
 #include "Koopa.h"
 #include "Block.h"
+
+#include "Mushroom.h"
+#include "Coin.h"
+
+#include "Lift.h"
 
 using uint = unsigned int;
 using namespace std;
@@ -63,6 +70,8 @@ public:
 		KOOPA,
 		MUSHROOM,
 		COIN,
+		LIFT,
+		NUMBERS,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -88,19 +97,13 @@ private:
 	std::vector<SceneObject*> objectQueue;
 	int nextObject;
 
-	TileMap* tilemap = nullptr;
 	Player* player = nullptr;
 
-	//vector<Block*> blockGroup;
-
-	vector<Goomba*> goombaGroup;
-
-	vector<Koopa*> koopaGroup;
-
-	//vector<Mushroom*> mushroomGroup;
+	InfoBar* infoBar = nullptr;
 
 	// 0: mario, 1: supermario
 	int marioState;
+
 	int points;
 
 public:
@@ -139,6 +142,7 @@ public:
 
 	// spawnea mushroom encima del bloque 
 	void spawnMushroom(int x, int y);
+	void spawnCoin(int x, int y);
 
 	//
 	void playerHit();

@@ -13,7 +13,14 @@ void Pickable::update()
 
 Collision Pickable::hit(const SDL_Rect& region, Collision::Target target)
 {
-	return Collision();
+	// Comprueba si hay colisión
+	SDL_Rect ownRect = getCollisionRect();
+
+	if (target == Collision::PLAYER && SDL_HasIntersection(&ownRect, &region)) {
+		triggerAction();
+	}
+
+	return Collision{}; // constante Collision{}
 }
 
 SceneObject* Pickable::clone() const

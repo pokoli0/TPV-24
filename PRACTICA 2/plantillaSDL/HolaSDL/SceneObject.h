@@ -1,11 +1,9 @@
 #pragma once
 
-#include <vector>
 #include "GameObject.h"
+
 #include "GameList.h"
-#include "Vector2D.h"
 #include "Collision.h"
-#include "Texture.h"
 
 class SceneObject : public GameObject
 {

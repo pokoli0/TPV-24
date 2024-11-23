@@ -16,8 +16,20 @@ void Block::update()
 
 Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 {
-	
-	return Collision();
+	// Calcula la intersección
+	SDL_Rect intersection;
+	SDL_Rect ownRect = getCollisionRect();
+	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &intersection);
+
+	if (hasIntersection) {
+		Collision collision{ Collision::OBSTACLE, intersection.w, intersection.h };
+
+		// [...] Manejo del efecto del bloque
+
+		return collision;
+	}
+
+	return Collision{};
 }
 
 SceneObject* Block::clone() const

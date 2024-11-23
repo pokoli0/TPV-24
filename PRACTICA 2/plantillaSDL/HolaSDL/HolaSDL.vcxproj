@@ -76,6 +76,7 @@
     <ClCompile Include="GameList.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Koopa.cpp" />
+    <ClCompile Include="Lift.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Pickable.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Koopa.h" />
+    <ClInclude Include="Lift.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Pickable.h" />
     <ClInclude Include="Player.h" />

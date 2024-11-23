@@ -23,6 +23,8 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 				{"koopa.png", 4, 1},
 				{"mushroom.png", 1, 1},
 				{"coin.png", 4, 1},
+				{"lift.png", 1, 1},
+				{"numbers.png", 10, 1},
 };
 
 Game::Game()
@@ -50,8 +52,9 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	tilemap = new TileMap(this, "../assets/maps/world1.csv");
-	sceneObjects.push_back(tilemap);
+
+	sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
+	sceneObjects.push_back(new InfoBar(this));
 
 	loadObjectMap();
 
@@ -95,9 +98,12 @@ void Game::loadObjectMap()
 		stringstream lineStream(line);
 
 		char tipo, atrib, accion;
-		int x, y;
+		int x, y, sp;
 
-		lineStream >> tipo >> x >> y >> atrib >> accion;
+		lineStream >> tipo >> x >> y;
+
+		if(tipo == 'B') lineStream >> atrib >> accion;
+		if(tipo == 'L') lineStream >> sp;
 
 		// conversion
 		x = x * TILE_SIDE;
@@ -117,14 +123,24 @@ void Game::loadObjectMap()
 		case 'K':
 			sceneObjects.push_back(new Koopa(this, x, y - TILE_SIDE));
 			break;
+		case 'L':
+			sceneObjects.push_back(new Lift(this, x, y, sp));
+			break;
+		case 'C':
+			sceneObjects.push_back(new Coin(this, x, y));
+			break;
 		}		
 	}
 }
 
 void Game::spawnMushroom(int x, int y)
 {
-	//mushroom = new Mushroom(this, x, y);
-	//mushroomGroup.push_back(mushroom);
+	sceneObjects.push_back(new Mushroom(this, x, y));
+}
+
+void Game::spawnCoin(int x, int y)
+{
+	sceneObjects.push_back(new Coin(this, x, y));
 }
 
 

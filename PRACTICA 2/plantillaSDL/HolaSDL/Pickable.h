@@ -14,9 +14,7 @@ public:
 	void checkAlive() override {};
 	virtual void updateAnim() override;
 
+protected:
 	// pone alive a false
 	virtual void triggerAction();
-
-private:
-
 };
