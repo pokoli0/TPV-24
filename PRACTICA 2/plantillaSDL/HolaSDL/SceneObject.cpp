@@ -1,6 +1,22 @@
 #include "SceneObject.h"
 #include "Game.h"
 
+void SceneObject::render(SDL_Renderer* renderer)
+{
+    _rect.x = _position.getX() - game->getMapOffset();
+    _rect.y = _position.getY();
+    _rect.w = _texture->getFrameWidth() * _scale;
+    _rect.h = _texture->getFrameHeight() * _scale;
+
+    _texture->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
+
+    if (DEBUG) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128);
+        SDL_RenderDrawRect(renderer, &_rect);
+        SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+    }
+}
+
 SDL_Rect SceneObject::getCollisionRect() const
 {
     return SDL_Rect{

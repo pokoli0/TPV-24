@@ -1,16 +1,14 @@
 #include "Block.h"
 #include "Game.h"
 
-Block::Block(Game* game, int x, int y)
+Block::Block(Game* game, int x, int y, char variant, char action)
 	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BLOCKS))
 {
+	setScale(2);
 
+	_flip = SDL_FLIP_NONE;
 }
 
-void Block::render(SDL_Renderer* renderer)
-{
-
-}
 
 void Block::update()
 {

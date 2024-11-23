@@ -24,6 +24,7 @@
 
 #include "Goomba.h"
 #include "Koopa.h"
+#include "Block.h"
 
 using uint = unsigned int;
 using namespace std;

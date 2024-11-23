@@ -6,6 +6,7 @@ Player::Player(Game* game, int x, int y)
 {
 	game->setMarioState(0);
 
+
 	lives = 3;
 
 	marioSpeed = 6;
@@ -19,37 +20,6 @@ Player::Player(Game* game, int x, int y)
 	bgSpeed = 1;
 
 	cout << "Mario (" << x << ", " << y << ")" << endl;
-}
-
-void Player::render(SDL_Renderer* renderer)
-{
-	_rect.x = _position.getX();
-
-	// renderframe con flipeado
-	if (game->getMarioState() == 0)
-	{
-		_rect.y = _position.getY();
-		_rect.w = TILE_SIDE;
-		_rect.h = TILE_SIDE;
-		_texture->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
-	}
-	else
-	{
-		Texture* t = game->getTexture(Game::SUPERMARIO);
-
-		_rect.y = _position.getY() - TILE_SIDE; // si no se sale del suelo
-		_rect.w = t->getFrameWidth() * 2;
-		_rect.h = t->getFrameHeight() * 2;
-		t->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
-	}
-
-	//updateAnim();
-
-	if (DEBUG) {
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 128); // red
-		SDL_RenderDrawRect(renderer, &_rect);
-		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
-	}
 }
 
 void Player::update()

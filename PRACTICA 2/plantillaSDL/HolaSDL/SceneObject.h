@@ -14,6 +14,8 @@ protected:
     Vector2D<int> _speed;       // Velocidad (vx, vy)
     int _width, _height;        // Tamaño del objeto
 
+    int _scale;
+
     Texture* _texture = nullptr;
     SDL_Rect _rect;
 
@@ -29,7 +31,7 @@ protected:
 
 public:
     SceneObject(Game* game, int x, int y, int width, int height, Texture* texture)
-        : GameObject(game), _position(x, y), _width(width), _height(height),
+        : GameObject(game), _position(x, y), _width(width), _height(height), _scale(1),
         _speed(0, 0), _texture(texture), _isAlive(true), _rect(),
         _frame(0), _frameCounter(0) 
     {
@@ -38,7 +40,7 @@ public:
 
     virtual ~SceneObject() {}
 
-    virtual void render(SDL_Renderer* renderer) override {}
+    virtual void render(SDL_Renderer* renderer) override;
     virtual void update() override {}
 
     // Recibe rectangulo que se vera afectado y si viene del jugador
@@ -74,6 +76,8 @@ protected:
     // - Si lo usamos en caparazon, target sera both.
     // - Si lo usamos en player, target sera none.
     Collision tryToMove(const Vector2D<int>& speed, Collision::Target target);
+
+    void setScale(int n) { _scale = n; }
 };
 
 

@@ -108,7 +108,7 @@ void Game::loadObjectMap()
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
-			//newObject = new Block(this, x, y, atrib, accion);
+			 sceneObjects.push_back(new Block(this, x, y, atrib, accion));
 			break;
 		case 'G':
 			sceneObjects.push_back(new Goomba(this, x, y));

@@ -4,9 +4,9 @@
 class Block : public SceneObject
 {
 public:
-	Block(Game* game, int x, int y);
+	Block(Game* game, int x, int y, char variant, char action);
 
-	void render(SDL_Renderer* renderer) override;
+
 	void update() override;
 
 	Collision hit(const SDL_Rect& region, Collision::Target target) override;
