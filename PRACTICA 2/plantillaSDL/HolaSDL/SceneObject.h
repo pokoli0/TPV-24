@@ -22,10 +22,16 @@ protected:
     // Ancla a la lista de objetos del juego
     GameList<SceneObject>::anchor _anchor;
 
+    int _frame;
+    int _frameCounter;
+    bool _flipSprite;
+    SDL_RendererFlip _flip;
+
 public:
     SceneObject(Game* game, int x, int y, int width, int height, Texture* texture)
         : GameObject(game), _position(x, y), _width(width), _height(height),
-        _speed(0, 0), _texture(texture), _isAlive(true), _rect()
+        _speed(0, 0), _texture(texture), _isAlive(true), _rect(),
+        _frame(0), _frameCounter(0) 
     {
 
     }
@@ -40,6 +46,7 @@ public:
 
     // igual este metodo aqui no tiene mucho sentido por el tilemap
     virtual void checkAlive() = 0;
+    virtual void updateAnim() = 0;
 
     // devuelva una copia del objeto sobre el que 
     // se aplica (solo se aplicará sobre los objetos de objectQueue)

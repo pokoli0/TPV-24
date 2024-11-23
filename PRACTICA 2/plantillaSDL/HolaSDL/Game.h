@@ -22,6 +22,9 @@
 #include "TileMap.h"
 #include "Player.h"
 
+#include "Goomba.h"
+#include "Koopa.h"
+
 using uint = unsigned int;
 using namespace std;
 
@@ -85,13 +88,13 @@ private:
 
 	TileMap* tilemap = nullptr;
 	Player* player = nullptr;
-	//Block* block = nullptr;
+
 	//vector<Block*> blockGroup;
-	//Goomba* goomba = nullptr;
-	//vector<Goomba*> goombaGroup;
-	//Koopa* koopa = nullptr;
-	//vector<Koopa*> koopaGroup;
-	//Mushroom* mushroom;
+
+	vector<Goomba*> goombaGroup;
+
+	vector<Koopa*> koopaGroup;
+
 	//vector<Mushroom*> mushroomGroup;
 
 	// 0: mario, 1: supermario

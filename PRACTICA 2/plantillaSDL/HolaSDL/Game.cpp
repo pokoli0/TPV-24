@@ -60,20 +60,9 @@ Game::Game()
 Game::~Game()
 {
 	// Elimina los objetos del juego
-	delete tilemap;
-	//delete player;
-	//for (int i = 0; i < blockGroup.size(); i++)
-	//{
-	//	delete blockGroup[i];
-	//}
-	//for (int i = 0; i < goombaGroup.size(); i++)
-	//{
-	//	delete goombaGroup[i];
-	//}
-	//for (int i = 0; i < koopaGroup.size(); i++)
-	//{
-	//	delete koopaGroup[i];
-	//}
+	for (auto obj : sceneObjects) {
+		delete obj;
+	}
 
 	// Elimina las texturas
 	for (Texture* texture : textures)
@@ -105,7 +94,7 @@ void Game::loadObjectMap()
 		stringstream lineStream(line);
 
 		char tipo, atrib, accion;
-		double x, y;
+		int x, y;
 
 		lineStream >> tipo >> x >> y >> atrib >> accion;
 
@@ -115,17 +104,17 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y-200);
+			player = new Player(this, x, y);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
 			//newObject = new Block(this, x, y, atrib, accion);
 			break;
 		case 'G':
-			//newObject = new Goomba(this, x, y);
+			sceneObjects.push_back(new Goomba(this, x, y));
 			break;
 		case 'K':
-			//newObject = new Koopa(this, x, y);
+			sceneObjects.push_back(new Koopa(this, x, y - TILE_SIDE));
 			break;
 		}		
 	}

@@ -13,7 +13,7 @@ public:
 	virtual SceneObject* clone() const override;
 
 	void checkAlive() override {};
-
+	virtual void updateAnim() override;
 
 private:
 

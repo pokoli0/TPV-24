@@ -16,7 +16,7 @@ public:
 	void checkAlive() override;
 
 	void resetPlayer();
-	void updateAnim();
+	void updateAnim() override;
 	void jump();
 
 	int getLives() { return lives; }
@@ -34,9 +34,8 @@ private:
 	int marioSpeed;
 	bool onGround, jumping;
 
-	int frame, walkFrame, frameCounter;
-	bool flipSprite;
-	SDL_RendererFlip flip;
+	int walkFrame;
+
 
 	// background speed multiplier para el debug mode
 	int bgSpeed;

@@ -12,11 +12,9 @@ Player::Player(Game* game, int x, int y)
 	onGround = false;
 	jumping = false;
 
-	frame = 0;
 	walkFrame = 0;
-	frameCounter = 0;
-	flipSprite = true;
-	flip = SDL_FLIP_HORIZONTAL;
+	_flipSprite = true;
+	_flip = SDL_FLIP_HORIZONTAL;
 
 	bgSpeed = 1;
 
@@ -33,7 +31,7 @@ void Player::render(SDL_Renderer* renderer)
 		_rect.y = _position.getY();
 		_rect.w = TILE_SIDE;
 		_rect.h = TILE_SIDE;
-		_texture->renderFrame(_rect, 0, frame, 0, nullptr, flip);
+		_texture->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
 	}
 	else
 	{
@@ -42,7 +40,7 @@ void Player::render(SDL_Renderer* renderer)
 		_rect.y = _position.getY() - TILE_SIDE; // si no se sale del suelo
 		_rect.w = t->getFrameWidth() * 2;
 		_rect.h = t->getFrameHeight() * 2;
-		t->renderFrame(_rect, 0, frame, 0, nullptr, flip);
+		t->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
 	}
 
 	//updateAnim();
@@ -82,7 +80,7 @@ void Player::update()
 	{
 		if (_speed.getX() > 0) // derecha
 		{
-			flip = SDL_FLIP_NONE;
+			_flip = SDL_FLIP_NONE;
 			if (_position.getX() >= Game::WIN_WIDTH / 2) // si pasa la mitad de la pantalla
 			{
 				// mueve el fondo
@@ -99,7 +97,7 @@ void Player::update()
 		}
 		else if (_speed.getX() < 0)  // izquierda
 		{
-			flip = SDL_FLIP_HORIZONTAL;
+			_flip = SDL_FLIP_HORIZONTAL;
 			if (_position.getX() > 0) _position.setX(_position.getX() + _speed.getX());
 		}
 	}
@@ -165,21 +163,21 @@ void Player::updateAnim()
 {
 	if (_speed.getX() != 0 && onGround) // si se esta moviendo EN HORIZONTAL
 	{
-		frameCounter++;
-		if (frameCounter >= 1)
+		_frameCounter++;
+		if (_frameCounter >= 1)
 		{
-			frameCounter = 0;
+			_frameCounter = 0;
 			if (!immune) {
 				walkFrame = (walkFrame + 1) % 4; // para que se repita el ciclo
 
 				if (walkFrame == 0 || walkFrame == 3) {
-					frame = 2;
+					_frame = 2;
 				}
 				else if (walkFrame == 1) {
-					frame = 3;
+					_frame = 3;
 				}
 				else if (walkFrame == 2) {
-					frame = 4;
+					_frame = 4;
 				}
 			}
 			else
@@ -187,25 +185,25 @@ void Player::updateAnim()
 				walkFrame = (walkFrame + 1) % 5; // para que se repita el ciclo
 
 				if (walkFrame == 0 || walkFrame == 4) {
-					frame = 2;
+					_frame = 2;
 				}
 				else if (walkFrame == 1) {
-					frame = 3;
+					_frame = 3;
 				}
 				else if (walkFrame == 2) {
-					frame = 4;
+					_frame = 4;
 				}
 				else if (walkFrame == 3) {
-					frame = -1;
+					_frame = -1;
 				}
 			}
 		}
 	}
 	else if (!onGround) {
-		frame = 6;
+		_frame = 6;
 	}
 	else {
-		frame = 0;
+		_frame = 0;
 	}
 }
 

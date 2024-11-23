@@ -17,6 +17,7 @@ public:
 	SceneObject* clone() const override;
 
 	void checkAlive() override {};
+	void updateAnim() override {};
 
 	void loadTilemap(string fichero);
 	
