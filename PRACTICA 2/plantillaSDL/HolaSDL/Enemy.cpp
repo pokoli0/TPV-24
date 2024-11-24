@@ -19,11 +19,10 @@ void Enemy::update()
 	if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
 
 	if (collision.vertical) _speed.setY(0);
-	if (collision.horizontal) _speed.setX(-_speed.getX());
+	if (collision.horizontal) _speed.setX(-_speed.getX()); // cambio de direccion
 
 	if (_speed.getX() > 0) _flip = SDL_FLIP_NONE;
 	else if (_speed.getX() < 0) _flip = SDL_FLIP_HORIZONTAL;
-
 }
 
 

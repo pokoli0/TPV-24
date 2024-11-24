@@ -18,8 +18,6 @@ Player::Player(Game* game, int x, int y)
 	_flipSprite = true;
 	_flip = SDL_FLIP_NONE;
 
-	bgSpeed = 1;
-
 	cout << "Mario (" << x << ", " << y << ")" << endl;
 }
 
@@ -54,12 +52,10 @@ void Player::update()
 		_flip = SDL_FLIP_NONE;
 
 		// Limites
-		if (_position.getX() - game->getMapOffset() >= Game::WIN_WIDTH / 2)
+		if (_position.getX() - game->getMapOffset() >= Game::WIN_WIDTH / 2 
+			&& game->getMapOffset() <= MAX_MAP_OFFSET)
 		{
-			if (game->getMapOffset() <= MAX_MAP_OFFSET) 
-			{
-				game->setMapOffset(game->getMapOffset() + _speed.getX() * bgSpeed);
-			}
+			game->setMapOffset(game->getMapOffset() + _speed.getX());
 		}
 		canMove = true;
 	}
@@ -167,19 +163,6 @@ void Player::handleEvent(SDL_Event e)
 		case SDLK_r:
 			resetPlayer();
 			break;
-
-		case SDLK_PLUS:
-			if (!fastMode) fastMode = true;
-			else { fastMode = false; }
-			break;
-
-		case SDLK_d:
-			if (!debugMode) debugMode = true;
-			else {
-				debugMode = false;
-				system("cls");
-			}
-			break;
 		}
 	}
 	else if (e.type == SDL_KEYUP) // soltar teclas
@@ -196,3 +179,4 @@ void Player::handleEvent(SDL_Event e)
 		}
 	}
 }
+

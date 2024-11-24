@@ -25,7 +25,6 @@ public:
 	void isSupermario();
 	void handleEvent(SDL_Event e);
 
-	void debug();
 
 private:
 	int lives;
@@ -36,9 +35,5 @@ private:
 
 	int walkFrame;
 
-
-	// background speed multiplier para el debug mode
-	int bgSpeed;
-	bool debugMode, fastMode;
 };
 
