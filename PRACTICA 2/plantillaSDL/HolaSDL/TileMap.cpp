@@ -114,7 +114,7 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 	int col1 = ((region.x + region.w - 1) / TILE_SIDE);
 
 
-	// ajuste para que no pete
+	//ajuste para que no pete
 	row0 = max(0, row0);
 	row1 = min(static_cast<int>(matrix.size()) - 1, row1);
 	col0 = max(0, col0);

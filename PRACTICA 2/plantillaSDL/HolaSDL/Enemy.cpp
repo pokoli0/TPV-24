@@ -5,6 +5,8 @@ Enemy::Enemy(Game* game, int x, int y, Texture* t)
 	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, t)
 {
 	setScale(2);
+
+	_speed.setX(-3);
 }
 
 
@@ -12,28 +14,16 @@ void Enemy::update()
 {
 	checkAlive();
 
-	if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) frozen = false;
-	
-	if (!frozen) 
-	{
-		// Acelera la velocidad con la gravedad
-		if (_speed.getY() < SPEED_LIMIT)
-			_speed += {0, GRAVITY};
+	collision = tryToMove(_speed, Collision::PLAYER);
 
-		// Velocidad en este ciclo (no siempre avanza lateralmente)
-		Vector2D<> realSpeed = _speed;
+	if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
 
-		// Intenta moverse
-		Collision collision = tryToMove(realSpeed, Collision::PLAYER);
+	if (collision.vertical) _speed.setY(0);
+	if (collision.horizontal) _speed.setX(-_speed.getX());
 
-		// Si toca un objeto en horizontal cambia de dirección
-		if (collision.horizontal)
-			_speed.setX(-_speed.getX());
+	if (_speed.getX() > 0) _flip = SDL_FLIP_NONE;
+	else if (_speed.getX() < 0) _flip = SDL_FLIP_HORIZONTAL;
 
-		// Si toca un objeto en vertical anula la velocidad (para que no se acumule la gravedad)
-		if (collision.vertical)
-			_speed.setY(0);
-	}
 }
 
 

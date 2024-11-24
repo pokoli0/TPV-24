@@ -15,6 +15,7 @@ void Goomba::render(SDL_Renderer* renderer)
 
 void Goomba::update()
 {
+	Enemy::update();
 }
 
 Collision Goomba::hit(const SDL_Rect& region, Collision::Target target)
@@ -30,12 +31,11 @@ SceneObject* Goomba::clone() const
 void Goomba::updateAnim()
 {
 	_frameCounter++;
-	if (_frameCounter == 5) {
+	if (_frameCounter >= 5)
+	{
 		_frameCounter = 0;
-		
-		_frame = 0;
-	}
-	else {
-		_frame = 1;
+		goombaFrame = (goombaFrame + 1) % 2;
+
+		_frame = (goombaFrame == 0 ? 0 : 1);
 	}
 }

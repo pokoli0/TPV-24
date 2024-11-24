@@ -111,7 +111,7 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y - 100);
+			player = new Player(this, x, y);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
@@ -121,7 +121,7 @@ void Game::loadObjectMap()
 			sceneObjects.push_back(new Goomba(this, x, y));
 			break;
 		case 'K':
-			sceneObjects.push_back(new Koopa(this, x-3300, y - TILE_SIDE));
+			sceneObjects.push_back(new Koopa(this, x, y));
 			break;
 		case 'L':
 			sceneObjects.push_back(new Lift(this, x, y, sp));

@@ -1,8 +1,9 @@
 #include "Block.h"
 #include "Game.h"
 
-Block::Block(Game* game, int x, int y, char variant, char action)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BLOCKS))
+Block::Block(Game* game, int x, int y, char v, char act)
+	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BLOCKS)), 
+	variant(v), action(act)
 {
 	setScale(2);
 
@@ -10,8 +11,31 @@ Block::Block(Game* game, int x, int y, char variant, char action)
 }
 
 
+void Block::render(SDL_Renderer* renderer)
+{
+	SceneObject::render(renderer);
+
+	switch (variant) {
+	case '?':
+		_frame = 0;
+		break;
+	case 'B':
+		_frame = 5;
+		break;
+	case 'H':
+		_frame = 7;
+		break;
+	}
+
+	if (variant == '?')
+	{
+		updateAnim();
+	}
+}
+
 void Block::update()
 {
+	game->checkCollision(_rect, Collision::PLAYER);
 }
 
 Collision Block::hit(const SDL_Rect& region, Collision::Target target)
@@ -23,13 +47,13 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 
 	if (hasIntersection) {
 		Collision collision{ Collision::OBSTACLE, intersection.w, intersection.h };
-
+		
 		// [...] Manejo del efecto del bloque
 
 		return collision;
 	}
 
-	return Collision{};
+	return Collision{ Collision::NONE };
 }
 
 SceneObject* Block::clone() const
@@ -39,4 +63,11 @@ SceneObject* Block::clone() const
 
 void Block::updateAnim()
 {
+	_frameCounter++;
+	if (_frameCounter >= 1) {
+		_frameCounter = 0;
+
+		surpriseFrame = (surpriseFrame + 1) % 4;
+		_frame = surpriseFrame;
+	}
 }

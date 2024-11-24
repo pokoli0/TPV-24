@@ -6,20 +6,31 @@ Koopa::Koopa(Game* game, int x, int y)
 {
 
 	_flip = SDL_FLIP_HORIZONTAL;
-
+	
 	cout << "Koopa (" << x << ", " << y << ")" << endl;
 }
 
 void Koopa::render(SDL_Renderer* renderer)
 {
-	SceneObject::render(renderer);
+	_rect.x = _position.getX() - game->getMapOffset();
+	_rect.y = _position.getY() - _height; // hago el render aqui porque el koopa tiene distinta altura
+	_rect.w = _texture->getFrameWidth() * _scale;
+	_rect.h = _texture->getFrameHeight() * _scale;
+
+	_texture->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
+
+	if (DEBUG) {
+		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128);
+		SDL_RenderDrawRect(renderer, &_rect);
+		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	}
+
 	updateAnim();
 }
 
 void Koopa::update()
 {
-	if (_speed.getX() > 0) _flip = SDL_FLIP_HORIZONTAL;
-	else _flip = SDL_FLIP_NONE;
+	Enemy::update();
 }
 
 Collision Koopa::hit(const SDL_Rect& region, Collision::Target target)
@@ -40,11 +51,6 @@ void Koopa::updateAnim()
 		_frameCounter = 0;
 		koopaFrame = (koopaFrame + 1) % 2; // Alterna entre 0 y 1
 
-		if (koopaFrame == 0) {
-			_frame = 0;
-		}
-		else if (koopaFrame == 1) {
-			_frame = 1;
-		}
+		_frame = (koopaFrame == 0 ? 0 : 1);
 	}
 }

@@ -15,6 +15,6 @@ public:
 	void updateAnim() override;
 
 private:
-
+	int goombaFrame;
 };
 

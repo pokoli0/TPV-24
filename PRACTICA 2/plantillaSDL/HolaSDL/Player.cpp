@@ -23,6 +23,12 @@ Player::Player(Game* game, int x, int y)
 	cout << "Mario (" << x << ", " << y << ")" << endl;
 }
 
+void Player::render(SDL_Renderer* renderer)
+{
+	SceneObject::render(renderer);
+	updateAnim();
+}
+
 void Player::update()
 {
 	checkAlive();
@@ -98,49 +104,36 @@ void Player::resetPlayer()
 
 void Player::updateAnim()
 {
-	if (_speed.getX() != 0 && onGround) // si se esta moviendo EN HORIZONTAL
+	if (_speed.getX() != 0 && onGround) 
 	{
 		_frameCounter++;
-		if (_frameCounter >= 1)
+		if (_frameCounter >= 1) 
 		{
 			_frameCounter = 0;
-			if (!immune) {
-				walkFrame = (walkFrame + 1) % 4; // para que se repita el ciclo
 
-				if (walkFrame == 0 || walkFrame == 3) {
-					_frame = 2;
-				}
-				else if (walkFrame == 1) {
-					_frame = 3;
-				}
-				else if (walkFrame == 2) {
-					_frame = 4;
-				}
+			int cycleLength = immune ? 4 : 5;
+			walkFrame = (walkFrame + 1) % cycleLength;
+
+			// Asigna el frame correspondiente
+			if (walkFrame == 0 || walkFrame == (cycleLength - 1)) {
+				_frame = 2;
 			}
-			else
-			{
-				walkFrame = (walkFrame + 1) % 5; // para que se repita el ciclo
-
-				if (walkFrame == 0 || walkFrame == 4) {
-					_frame = 2;
-				}
-				else if (walkFrame == 1) {
-					_frame = 3;
-				}
-				else if (walkFrame == 2) {
-					_frame = 4;
-				}
-				else if (walkFrame == 3) {
-					_frame = -1;
-				}
+			else if (walkFrame == 1) {
+				_frame = 3;
+			}
+			else if (walkFrame == 2) {
+				_frame = 4;
+			}
+			else if (immune && walkFrame == 3) {
+				_frame = -1;
 			}
 		}
 	}
 	else if (!onGround) {
-		_frame = 6;
+		_frame = 6; // Frame cuando está en el aire
 	}
 	else {
-		_frame = 0;
+		_frame = 0; // Frame cuando está en reposo
 	}
 }
 

@@ -1,6 +1,13 @@
 #include "SceneObject.h"
 #include "Game.h"
 
+SceneObject::SceneObject(Game* game, int x, int y, int width, int height, Texture* texture)
+    : GameObject(game), _position(x, y), _width(width), _height(height), _scale(1),
+    _speed(0, 0), _texture(texture), _isAlive(true), _rect(),
+    _frame(0), _frameCounter(0)
+{
+}
+
 void SceneObject::render(SDL_Renderer* renderer)
 {
     _rect.x = _position.getX() - game->getMapOffset();
@@ -21,7 +28,7 @@ SDL_Rect SceneObject::getCollisionRect() const
 {
     return SDL_Rect{
         _position.getX(),
-        _position.getY(),
+        _position.getY(), // - _height,
         _width,
         _height
     };
