@@ -4,14 +4,13 @@
 Koopa::Koopa(Game* game, int x, int y)
 	: Enemy(game, x, y, game->getTexture(Game::KOOPA))
 {
-
 	_flip = SDL_FLIP_HORIZONTAL;
-	
 	cout << "Koopa (" << x << ", " << y << ")" << endl;
 }
 
 void Koopa::render(SDL_Renderer* renderer)
 {
+	
 	_rect.x = _position.getX() - game->getMapOffset();
 	_rect.y = _position.getY() - _height; // hago el render aqui porque el koopa tiene distinta altura
 	_rect.w = _texture->getFrameWidth() * _scale;

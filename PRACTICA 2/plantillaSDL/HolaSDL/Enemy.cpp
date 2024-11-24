@@ -28,8 +28,8 @@ void Enemy::update()
 		if (collision.vertical) _speed.setY(0);
 		if (collision.horizontal) _speed.setX(-_speed.getX()); // cambio de direccion
 
-		if (_speed.getX() > 0) _flip = SDL_FLIP_NONE;
-		else if (_speed.getX() < 0) _flip = SDL_FLIP_HORIZONTAL;
+		if (_speed.getX() > 0) _flip = SDL_FLIP_HORIZONTAL;
+		else if (_speed.getX() < 0) _flip = SDL_FLIP_NONE;
 	}
 }
 
