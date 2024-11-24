@@ -21,7 +21,7 @@ SDL_Rect SceneObject::getCollisionRect() const
 {
     return SDL_Rect{
         _position.getX(),
-        _position.getY() - _height,  // Esquina superior izquierda de la caja
+        _position.getY(),
         _width,
         _height
     };
@@ -48,17 +48,28 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
         rect.y += speed.getY();
         collision = game->checkCollision(rect, target);
         
+        // Cantidad que se ha entrado en el obstáculo (lo que hay que deshacer)
         int fix = collision.vertical * (speed.getY() > 0 ? 1 : -1);
         _position += {0, speed.getY() - fix};
+
+        rect.y -= fix; // recoloca la caja para la siguiente colisión
     }
 
-    // Movimiento horizontal
+    collision.horizontal = 0;
+
+    // Intenta moverse en horizontal
+    // (podría ser conveniente comprobar colisiones incluso aunque el objeto estuviera parado)
     if (speed.getX() != 0) {
         rect.x += speed.getX();
+
         Collision partial = game->checkCollision(rect, target);
+
+        // Copia la información de esta colisión a la que se devolverá
         collision.horizontal = partial.horizontal;
+
         if (partial.result == Collision::DAMAGE)
             collision.result = Collision::DAMAGE;
+
         _position += {speed.getX() - collision.horizontal * (speed.getX() > 0 ? 1 : -1), 0};
     }
 

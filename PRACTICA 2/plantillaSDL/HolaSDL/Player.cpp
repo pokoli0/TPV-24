@@ -6,6 +6,7 @@ Player::Player(Game* game, int x, int y)
 {
 	game->setMarioState(0);
 
+	setScale(2);
 
 	lives = 3;
 
@@ -15,7 +16,7 @@ Player::Player(Game* game, int x, int y)
 
 	walkFrame = 0;
 	_flipSprite = true;
-	_flip = SDL_FLIP_HORIZONTAL;
+	_flip = SDL_FLIP_NONE;
 
 	bgSpeed = 1;
 
@@ -26,76 +27,41 @@ void Player::update()
 {
 	checkAlive();
 
-	
 	_speed.setY(_speed.getY() + GRAVITY);
 
 	// Acelera la velocidad con la gravedad
 	//if (_speed.getY() < SPEED_LIMIT)
 	//	_speed += {0, GRAVITY};
 
-	// Intenta moverse
 	Collision collision = tryToMove(_speed, Collision::ENEMIES);
 
-	// Si toca un objeto en horizontal
-	if (collision.horizontal) {
-
-		if (_speed.getX() > 0) {
-			_position.setX(_position.getX() + _speed.getX() - collision.intersectionRect.w);
-		}
-		else {
-			_position.setX(_position.getX() + _speed.getX() + collision.intersectionRect.w);
-		}
-	}
-	else 
+	if (collision.vertical) 
 	{
-		if (_speed.getX() > 0) // derecha
-		{
-			_flip = SDL_FLIP_NONE;
-			if (_position.getX() >= Game::WIN_WIDTH / 2) // si pasa la mitad de la pantalla
-			{
-				// mueve el fondo
-				if (game->getMapOffset() <= MAX_MAP_OFFSET)
-				{
-					game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED * bgSpeed);
-				}
-			}
-			else // mueve a mario
-			{
-				_position.setX(_position.getX() + _speed.getX());
-			}
-
-		}
-		else if (_speed.getX() < 0)  // izquierda
-		{
-			_flip = SDL_FLIP_HORIZONTAL;
-			if (_position.getX() > 0) _position.setX(_position.getX() + _speed.getX());
-		}
-	}
-
-
-	// Si toca un objeto en vertical anula la velocidad (para que no se acumule la gravedad)
-	if (collision.vertical) { // si collision.vertical != 0
-		cout << collision.result;
-		if (_speed.getY() > 0)
-		{
-			_position.setY(_position.getY() + _speed.getY() - collision.intersectionRect.h);
-			onGround = true;
-
-		}
-		else if (_speed.getY() < 0)
-		{
-			_position.setY(_position.getY() + _speed.getY() + collision.intersectionRect.h);
-		}
-		jumping = false;
 		_speed.setY(0);
+		onGround = true;
+		jumping = false;
 	}
-	else 
+
+	if (_speed.getX() > 0) 
 	{
-		_position.setY(_position.getY() + _speed.getY());
+		_flip = SDL_FLIP_NONE;
+
+		if (_position.getX() >= Game::WIN_WIDTH / 2) 
+		{
+			if (game->getMapOffset() <= MAX_MAP_OFFSET) 
+			{
+				game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED * bgSpeed);
+			}
+		}
+		else 
+		{
+			
+		}
 	}
-		
-
-
+	else if (_speed.getX() < 0)
+	{
+		_flip = SDL_FLIP_HORIZONTAL;
+	}
 }
 
 Collision Player::hit(const SDL_Rect& region, Collision::Target target)

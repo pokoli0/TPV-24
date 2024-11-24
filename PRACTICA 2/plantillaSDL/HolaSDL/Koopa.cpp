@@ -12,7 +12,7 @@ Koopa::Koopa(Game* game, int x, int y)
 
 void Koopa::render(SDL_Renderer* renderer)
 {
-	Enemy::render(renderer);
+	SceneObject::render(renderer);
 	updateAnim();
 }
 

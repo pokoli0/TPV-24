@@ -142,6 +142,8 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 				if (SDL_IntersectRect(&region, &auxRect, &colision.intersectionRect))
 				{
 					colision.result = Collision::OBSTACLE; // el resultado sera obstacle porque el tilemap no hace damage
+					colision.horizontal = colision.intersectionRect.w;
+					colision.vertical = colision.intersectionRect.h;
 					return colision;
 				}
 			}

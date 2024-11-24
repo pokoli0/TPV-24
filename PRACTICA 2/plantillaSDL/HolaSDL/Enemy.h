@@ -6,6 +6,7 @@ class Enemy : public SceneObject
 public:
 	Enemy(Game* game, int x, int y, Texture* t);
 
+	//void render(SDL_Renderer* renderer) override {};
 	void update() override;
 
 	virtual Collision hit(const SDL_Rect& region, Collision::Target target) override;

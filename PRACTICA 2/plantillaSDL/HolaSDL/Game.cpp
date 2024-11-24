@@ -111,17 +111,17 @@ void Game::loadObjectMap()
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y);
+			player = new Player(this, x, y - 100);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
-			 sceneObjects.push_back(new Block(this, x, y, atrib, accion));
+			sceneObjects.push_back(new Block(this, x, y, atrib, accion));
 			break;
 		case 'G':
 			sceneObjects.push_back(new Goomba(this, x, y));
 			break;
 		case 'K':
-			sceneObjects.push_back(new Koopa(this, x, y - TILE_SIDE));
+			sceneObjects.push_back(new Koopa(this, x-3300, y - TILE_SIDE));
 			break;
 		case 'L':
 			sceneObjects.push_back(new Lift(this, x, y, sp));
@@ -181,16 +181,17 @@ Game::render()
 	SDL_RenderPresent(renderer);
 }
 
-Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
-{
-	Collision col;
-
-	for (auto obj : sceneObjects) {
-		col = obj->hit(rect, target);
-		if (col) return col;
+Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target) {
+	Collision collision;
+	for (SceneObject* obj : sceneObjects) {
+		collision = obj->hit(rect, target);
+		if (collision.result != Collision::NONE) {
+			return { collision.result, collision.horizontal, collision.vertical };
+		}
 	}
-	return col;
+	return { collision.NONE, 0, 0 };
 }
+
 
 void
 Game::update()
