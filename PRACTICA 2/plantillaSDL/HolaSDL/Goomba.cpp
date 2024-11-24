@@ -13,15 +13,6 @@ void Goomba::render(SDL_Renderer* renderer)
 	updateAnim();
 }
 
-void Goomba::update()
-{
-	Enemy::update();
-}
-
-Collision Goomba::hit(const SDL_Rect& region, Collision::Target target)
-{
-	return Collision();
-}
 
 SceneObject* Goomba::clone() const
 {
