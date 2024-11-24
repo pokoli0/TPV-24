@@ -9,7 +9,7 @@ Player::Player(Game* game, int x, int y)
 	setScale(2);
 
 	lives = 3;
-
+	canMove = true;
 	marioSpeed = 6;
 	onGround = false;
 	jumping = false;
@@ -27,40 +27,41 @@ void Player::update()
 {
 	checkAlive();
 
-	_speed.setY(_speed.getY() + GRAVITY);
+	if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
 
-	// Acelera la velocidad con la gravedad
-	//if (_speed.getY() < SPEED_LIMIT)
-	//	_speed += {0, GRAVITY};
-
-	Collision collision = tryToMove(_speed, Collision::ENEMIES);
+	if(canMove)	collision = tryToMove(_speed, Collision::ENEMIES);
+	else if(!canMove && _speed.getY() != 0) collision = tryToMove({0, _speed.getY()}, Collision::ENEMIES);
 
 	if (collision.vertical) 
 	{
-		_speed.setY(0);
-		onGround = true;
-		jumping = false;
+		if (_speed.getY() > 0) 
+		{
+			onGround = true;
+			jumping = false;
+		}
+
+		_speed.setY(0); // importante !!! @ marcos 
 	}
 
 	if (_speed.getX() > 0) 
 	{
 		_flip = SDL_FLIP_NONE;
 
-		if (_position.getX() >= Game::WIN_WIDTH / 2) 
+		// Limites
+		if (_position.getX() - game->getMapOffset() >= Game::WIN_WIDTH / 2)
 		{
 			if (game->getMapOffset() <= MAX_MAP_OFFSET) 
 			{
-				game->setMapOffset(game->getMapOffset() + BACKGROUND_SCROLL_SPEED * bgSpeed);
+				game->setMapOffset(game->getMapOffset() + _speed.getX() * bgSpeed);
 			}
 		}
-		else 
-		{
-			
-		}
+		canMove = true;
 	}
 	else if (_speed.getX() < 0)
 	{
 		_flip = SDL_FLIP_HORIZONTAL;
+
+		if (_position.getX() - game->getMapOffset() < TILE_SIDE) canMove = false;
 	}
 }
 

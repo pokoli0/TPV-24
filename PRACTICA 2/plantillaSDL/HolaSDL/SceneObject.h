@@ -19,6 +19,9 @@ protected:
 
     bool _isAlive;
 
+    Collision collision;
+    bool canMove;
+
     // Ancla a la lista de objetos del juego
     GameList<SceneObject>::anchor _anchor;
 
