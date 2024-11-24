@@ -14,15 +14,23 @@ void Enemy::update()
 {
 	checkAlive();
 
-	collision = tryToMove(_speed, Collision::PLAYER);
+	if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset())
+	{
+		frozen = false;
+	}
 
-	if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
+	if (!frozen) 
+	{
+		collision = tryToMove(_speed, Collision::PLAYER);
 
-	if (collision.vertical) _speed.setY(0);
-	if (collision.horizontal) _speed.setX(-_speed.getX()); // cambio de direccion
+		if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
 
-	if (_speed.getX() > 0) _flip = SDL_FLIP_NONE;
-	else if (_speed.getX() < 0) _flip = SDL_FLIP_HORIZONTAL;
+		if (collision.vertical) _speed.setY(0);
+		if (collision.horizontal) _speed.setX(-_speed.getX()); // cambio de direccion
+
+		if (_speed.getX() > 0) _flip = SDL_FLIP_NONE;
+		else if (_speed.getX() < 0) _flip = SDL_FLIP_HORIZONTAL;
+	}
 }
 
 
@@ -49,5 +57,16 @@ Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 SceneObject* Enemy::clone() const
 {
 	return nullptr;
+}
+
+void Enemy::checkAlive()
+{
+	if (_position.getY() >= MAX_HEIGHT || _position.getX() <= 0 || _position.getX() >= MAX_MAP_OFFSET)
+	{
+		cout << "borra";
+		//delete this; // peta?¿?
+
+		_isAlive = false;
+	}
 }
 
