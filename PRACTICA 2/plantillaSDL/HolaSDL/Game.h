@@ -91,6 +91,9 @@ private:
 	// Interruptor para terminar el juego
 	bool seguir;
 
+	// colores del fondo
+	int r, g, b;
+
 	// coordenada x del extremo izquierdo de la vista
 	int mapOffset;
 
@@ -142,7 +145,7 @@ public:
 	Game();
 	~Game();
 
-	void loadObjectMap();
+	void loadObjectMap(const string& mapFile);
 
 	// spawnea mushroom encima del bloque 
 	void spawnMushroom(int x, int y);

@@ -2,7 +2,7 @@
 #include "Game.h"
 
 Lift::Lift(Game* game, int x, int y, int speed)
-	: SceneObject(game, x, y, _texture->getFrameWidth(), _texture->getFrameHeight(), game->getTexture(Game::LIFT))
+	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::LIFT))
 {
 	setScale(2);
 	_speed.setY(speed);

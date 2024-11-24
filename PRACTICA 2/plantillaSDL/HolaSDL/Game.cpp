@@ -53,10 +53,13 @@ Game::Game()
 
 	//Crea los objetos del juego
 
-	sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
+	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
+	sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
+
 	//sceneObjects.push_back(new InfoBar(this));
 
-	loadObjectMap();
+	//loadObjectMap("../assets/maps/world1.txt");
+	loadObjectMap("../assets/maps/world2.txt");
 
 	marioState = 0; // empieza mario chiquito
 }
@@ -78,12 +81,10 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::loadObjectMap()
+void Game::loadObjectMap(const string& mapFile)
 {
-	const char* DEFAULT_MAP = "../assets/maps/world1.txt";
-
 	// Carga el mapa
-	ifstream file(DEFAULT_MAP);
+	ifstream file(mapFile);
 
 	if (!file.is_open()) {
 		throw string("fichero de mapa worldX.txt no encontrado");
@@ -93,8 +94,15 @@ void Game::loadObjectMap()
 	// y permitir extensiones del formato
 	string line;
 
-	while (getline(file, line)) {
-		// Usamos un stringstream para leer la l�nea como si fuera un flujo
+	getline(file, line); // lectura primera linea
+
+	// Usamos un stringstream para leer la l�nea como si fuera un flujo
+	stringstream lineStream(line);
+
+	lineStream >> r >> g >> b;
+
+	while (getline(file, line)) 
+	{
 		stringstream lineStream(line);
 
 		char tipo, atrib, accion;
@@ -168,7 +176,7 @@ void
 Game::render()
 {
 	// Cambia el color de fondo
-	SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
 	SDL_RenderClear(renderer);
 

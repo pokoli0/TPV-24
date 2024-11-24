@@ -29,21 +29,21 @@ void Enemy::update()
 Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 {
 	Collision col;
-	// Calcula la intersección
-	SDL_Rect intersection;
-	SDL_Rect ownRect = getCollisionRect();
-	SDL_IntersectRect(&ownRect, &region, &intersection);
-	
-	col = { Collision::NONE, intersection.w, intersection.h };
+	//// Calcula la intersección
+	//SDL_Rect intersection;
+	//SDL_Rect ownRect = getCollisionRect();
+	//SDL_IntersectRect(&ownRect, &region, &intersection);
+	//
+	//col = { Collision::NONE, intersection.w, intersection.h };
 
-	if (target == Collision::ENEMIES && col.horizontal > 0) 
-	{
-		cout << "damage";
-		return { Collision::DAMAGE, col.horizontal, col.vertical };
-	}
+	//if (target == Collision::ENEMIES && col.horizontal > 0) 
+	//{
+	//	cout << "damage";
+	//	return { Collision::DAMAGE, col.horizontal, col.vertical };
+	//}
 
 
-	return { Collision::NONE, col.horizontal, col.vertical};
+	return { Collision::NONE, col.horizontal, col.vertical };
 }
 
 SceneObject* Enemy::clone() const
