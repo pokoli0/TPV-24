@@ -8,7 +8,7 @@ public:
 
 	void render(SDL_Renderer* renderer) override;
 
-	//Collision hit(const SDL_Rect& region, Collision::Target target) override;
+	Collision hit(const SDL_Rect& region, Collision::Target target) override;
 	SceneObject* clone() const override;
 
 	void updateAnim() override;

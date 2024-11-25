@@ -27,6 +27,11 @@ void Koopa::render(SDL_Renderer* renderer)
 	updateAnim();
 }
 
+Collision Koopa::hit(const SDL_Rect& region, Collision::Target target)
+{
+	return Enemy::hit(region, target);
+}
+
 SceneObject* Koopa::clone() const
 {
 	return nullptr;

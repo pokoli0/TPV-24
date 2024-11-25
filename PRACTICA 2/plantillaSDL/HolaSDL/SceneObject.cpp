@@ -33,6 +33,10 @@ SDL_Rect SceneObject::getCollisionRect() const
         _height
     };
 }
+bool SceneObject::getAlive() const
+{
+    return _isAlive;
+}
 
 SDL_Rect SceneObject::getRenderRect() const
 {

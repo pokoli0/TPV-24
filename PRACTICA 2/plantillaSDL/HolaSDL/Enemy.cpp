@@ -36,7 +36,7 @@ void Enemy::update()
 
 Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 {
-	Collision col;
+	//Collision col;
 	//// Calcula la intersección
 	//SDL_Rect intersection;
 	//SDL_Rect ownRect = getCollisionRect();
@@ -51,7 +51,35 @@ Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 	//}
 
 
-	return { Collision::NONE, col.horizontal, col.vertical };
+	//return { Collision::NONE, col.horizontal, col.vertical };
+	// Calcula la intersección
+	SDL_Rect intersection;
+	SDL_Rect ownRect = getCollisionRect();
+	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &intersection);
+
+	if (hasIntersection) {
+		Collision collision{ Collision::DAMAGE, intersection.w, intersection.h };
+		if (target == Collision::ENEMIES) {
+			if (!game->getMarioImmunity()) // si mario no es inmune
+			{
+
+				if (intersection.y <= ownRect.y // desde arriba
+					&& intersection.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+				{
+					_isAlive = false;
+				}
+				else if (target == Collision::PLAYER)
+				{
+					game->playerHit();
+				}
+			}
+
+			return collision;
+		}
+
+	}
+
+	return Collision{ Collision::NONE }; // constante Collision{}
 }
 
 SceneObject* Enemy::clone() const

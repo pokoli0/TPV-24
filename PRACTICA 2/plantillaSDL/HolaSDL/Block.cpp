@@ -35,6 +35,9 @@ void Block::render(SDL_Renderer* renderer)
 	case 'H':
 		_frame = 7;
 		break;
+	case 'N':
+		_frame = 4;
+		break;
 	}
 
 	if (variant == '?')
@@ -57,22 +60,25 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 
 	if (hasIntersection ) {
 		Collision collision{ Collision::OBSTACLE, intersection.w, intersection.h };
-		if (target == Collision::PLAYER && (region.y >= (intersection.y + intersection.h)))
+		if (target == Collision::ENEMIES && (region.y) >= (_rect.y + _rect.h) - 8)
 		{
 				if (_frame == surpriseFrame || _frame == 7)
 				{
 					if (accionBloque == POTENCIADOR)
 					{
-						game->spawnMushroom(_position.getX(), _position.getY());
+						game->spawnMushroom(_position.getX(), _position.getY() - TILE_SIDE);
+						
 					}
 					else
 					{
-						game->spawnCoin(_position.getX(), _position.getY());
+						game->spawnCoin(_position.getX(), _position.getY() - TILE_SIDE);
 					}
-					_frame = 4;
+					variant = 'N';
+					accionBloque = NADA;
 				}
 				else if (_frame = 5 && game->getMarioState() == 1)
 				{
+					cout << "roto";
 					_isAlive = false;// el bloque se destruye
 				}
 		}
@@ -91,11 +97,15 @@ SceneObject* Block::clone() const
 
 void Block::updateAnim()
 {
-	_frameCounter++;
-	if (_frameCounter >= 1) {
-		_frameCounter = 0;
+	if (accionBloque !=  NADA)
+	{
+		_frameCounter++;
+		if (_frameCounter >= 1) {
+			_frameCounter = 0;
 
-		surpriseFrame = (surpriseFrame + 1) % 4;
-		_frame = surpriseFrame;
+			surpriseFrame = (surpriseFrame + 1) % 4;
+			_frame = surpriseFrame;
+		}
 	}
+	
 }

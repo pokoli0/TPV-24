@@ -45,6 +45,7 @@ public:
 
     // igual este metodo aqui no tiene mucho sentido por el tilemap
     virtual void checkAlive() = 0;
+
     virtual void updateAnim() = 0;
 
     // devuelva una copia del objeto sobre el que 
@@ -53,9 +54,8 @@ public:
 
     // Getters virtuales
     virtual SDL_Rect getCollisionRect() const;
-
+    virtual  bool getAlive() const;
     virtual SDL_Rect getRenderRect() const;
-
     // Cuando el objeto SceneObject se destruya, siguiendo la secuencia natural de 
     // eliminación de los objetos, se destruirá su atributo anchor y esto implicará 
     // automáticamente su eliminación de la lista
