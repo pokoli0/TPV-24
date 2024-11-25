@@ -18,7 +18,12 @@ public:
 private:
 	char variant;
 	char action;
-
+	enum AccionBloque {
+		POTENCIADOR,
+		MONEDA,
+		NADA,
+	};
+	AccionBloque accionBloque;
 	int surpriseFrame;
 };
 
