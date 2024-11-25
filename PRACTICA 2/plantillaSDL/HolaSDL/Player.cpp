@@ -23,8 +23,8 @@ Player::Player(Game* game, int x, int y)
 
 void Player::render(SDL_Renderer* renderer)
 {
-	SceneObject::render(renderer);
-	updateAnim();
+		SceneObject::render(renderer);
+		updateAnim();
 }
 
 void Player::update()

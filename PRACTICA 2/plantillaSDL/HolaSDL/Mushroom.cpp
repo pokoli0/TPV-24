@@ -13,11 +13,12 @@ void Mushroom::render(SDL_Renderer* renderer)
 
 void Mushroom::update()
 {
+
 }
 
 Collision Mushroom::hit(const SDL_Rect& region, Collision::Target target)
 {
-	return Collision();
+	return Pickable::hit(region,target);
 }
 
 SceneObject* Mushroom::clone() const
@@ -28,6 +29,7 @@ SceneObject* Mushroom::clone() const
 void Mushroom::triggerAction()
 {
 	Pickable::triggerAction();
+	cout << "mario ahora grande";
 	game->setMarioState(1);
 	game->givePoints(1000);
 }

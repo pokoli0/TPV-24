@@ -16,7 +16,7 @@ Collision Pickable::hit(const SDL_Rect& region, Collision::Target target)
 	// Comprueba si hay colisión
 	SDL_Rect ownRect = getCollisionRect();
 
-	if (target == Collision::PLAYER && SDL_HasIntersection(&ownRect, &region)) {
+	if (target == Collision::ENEMIES && SDL_HasIntersection(&ownRect, &region)) {
 		triggerAction();
 	}
 

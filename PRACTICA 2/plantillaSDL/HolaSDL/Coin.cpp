@@ -18,7 +18,7 @@ void Coin::update()
 
 Collision Coin::hit(const SDL_Rect& region, Collision::Target target)
 {
-	return Collision();
+	return Pickable::hit(region,target);
 }
 
 SceneObject* Coin::clone() const
