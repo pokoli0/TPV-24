@@ -57,7 +57,7 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 
 	if (hasIntersection ) {
 		Collision collision{ Collision::OBSTACLE, intersection.w, intersection.h };
-		if (target == Collision::PLAYER && (region.y + region.h <= ownRect.y))
+		if (target == Collision::PLAYER && (region.y >= (intersection.y + intersection.h)))
 		{
 				if (_frame == surpriseFrame || _frame == 7)
 				{
