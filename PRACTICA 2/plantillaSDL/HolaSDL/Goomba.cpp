@@ -17,33 +17,33 @@ void Goomba::render(SDL_Renderer* renderer)
 Collision Goomba::hit(const SDL_Rect& region, Collision::Target target)
 {
 	// Calcula la intersección
-	//SDL_Rect intersection;
-	//SDL_Rect ownRect = getCollisionRect();
-	//bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &intersection);
+	SDL_Rect intersection;
+	SDL_Rect ownRect = getCollisionRect();
+	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &intersection);
 
-	//if (hasIntersection) {
-	//	Collision collision{ Collision::DAMAGE, intersection.w, intersection.h };
-	//	if (target == Collision::PLAYER){
-	//		if (!game->getMarioImmunity()) // si mario no es inmune
-	//		{
+	if (hasIntersection) {
+		Collision collision{ Collision::DAMAGE, intersection.w, intersection.h };
+		if (target == Collision::PLAYER){
+			if (!game->getMarioImmunity()) // si mario no es inmune
+			{
 
-	//			if ( intersection.y <= ownRect.y // desde arriba
-	//				&& intersection.w > TILE_SIDE / 4) // para que no detecte col desde el lado
-	//			{
-	//				_isAlive = false;
-	//			}
-	//			else if (target == Collision::PLAYER)
-	//			{
-	//				game->playerHit();
-	//			}
-	//		}
+				if ( intersection.y <= ownRect.y // desde arriba
+					&& intersection.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+				{
+					_isAlive = false;
+				}
+				else if (target == Collision::PLAYER)
+				{
+					game->playerHit();
+				}
+			}
 
-	//		return collision;
-	//	}
-	//	
-	//}
+			return collision;
+		}
+		
+	}
 
-	//return Collision{ Collision::NONE }; // constante Collision{}
+	return Collision{ Collision::NONE }; // constante Collision{}
 }
 
 SceneObject* Goomba::clone() const
