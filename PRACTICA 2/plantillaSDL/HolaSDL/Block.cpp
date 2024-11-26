@@ -7,17 +7,7 @@ Block::Block(Game* game, int x, int y, char v, char act)
 {
 	setScale(2);
 
-	_flip = SDL_FLIP_NONE; switch (action) {
-	case 'C':
-		accionBloque = MONEDA;
-		break;
-	case 'P':
-		accionBloque = POTENCIADOR;
-		break;
-	default:
-		accionBloque = NADA;
-		break;
-	}
+	_flip = SDL_FLIP_NONE;
 }
 
 
@@ -26,16 +16,16 @@ void Block::render(SDL_Renderer* renderer)
 	SceneObject::render(renderer);
 
 	switch (variant) {
-	case '?':
+	case '?':				// bloque ?
 		_frame = 0;
 		break;
-	case 'B':
+	case 'B':				// bloque LADRILLOS
 		_frame = 5;
 		break;
-	case 'H':
+	case 'H':				// bloque OCULTO
 		_frame = 7;
 		break;
-	case 'N':
+	case 'N':				// bloque VACIO
 		_frame = 4;
 		break;
 	}
@@ -58,29 +48,30 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 	SDL_Rect ownRect = getCollisionRect();
 	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &intersection);
 
-	if (hasIntersection ) {
+	if (hasIntersection) 
+	{
 		Collision collision{ Collision::OBSTACLE, intersection.w, intersection.h };
+
 		if (target == Collision::ENEMIES && (region.y) >= (_rect.y + _rect.h) - 8)
 		{
-				if (_frame == surpriseFrame || _frame == 7)
+			if (variant == '?')
+			{
+				if (action == 'P') // Power Up
 				{
-					if (accionBloque == POTENCIADOR)
-					{
-						game->spawnMushroom(_position.getX(), _position.getY() - TILE_SIDE);
-						
-					}
-					else
-					{
-						game->spawnCoin(_position.getX(), _position.getY() - TILE_SIDE);
-					}
-					variant = 'N';
-					accionBloque = NADA;
+					game->spawnMushroom(_position.getX(), _position.getY() - TILE_SIDE);
 				}
-				else if (_frame = 5 && game->getMarioState() == 1)
+				else // Coin 'C'
 				{
-					cout << "roto";
-					_isAlive = false;// el bloque se destruye
+					game->spawnCoin(_position.getX(), _position.getY() - TILE_SIDE);
 				}
+
+				variant = 'N';
+			}
+			else if (variant == 'B' && game->getMarioState() == 1)
+			{
+				cout << "roto" << endl;
+				_isAlive = false; // el bloque se destruye
+			}
 		}
 		
 
@@ -95,17 +86,14 @@ SceneObject* Block::clone() const
 	return nullptr;
 }
 
-void Block::updateAnim()
+void Block::updateAnim() // solo se llama para el '?' en el render
 {
-	if (accionBloque !=  NADA)
+	_frameCounter++;
+	if (_frameCounter >= 1) 
 	{
-		_frameCounter++;
-		if (_frameCounter >= 1) {
-			_frameCounter = 0;
+		_frameCounter = 0;
 
-			surpriseFrame = (surpriseFrame + 1) % 4;
-			_frame = surpriseFrame;
-		}
+		surpriseFrame = (surpriseFrame + 1) % 4;
+		_frame = surpriseFrame;
 	}
-	
 }

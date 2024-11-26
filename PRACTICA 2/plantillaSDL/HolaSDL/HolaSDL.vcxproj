@@ -111,6 +111,19 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\maps\world1.csv" />
+    <None Include="..\assets\maps\world2.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\assets\maps\world1.png" />
+    <Image Include="..\assets\maps\world2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\assets\maps\world1.txt" />
+    <Text Include="..\assets\maps\world2.txt" />
+    <Text Include="..\assets\maps\worldTest.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

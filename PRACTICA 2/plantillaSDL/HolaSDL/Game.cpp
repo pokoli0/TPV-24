@@ -53,13 +53,13 @@ Game::Game()
 
 	//Crea los objetos del juego
 
-	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
-	sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
+	sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
+	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
 	//sceneObjects.push_back(new InfoBar(this));
 
-	//loadObjectMap("../assets/maps/world1.txt");
-	loadObjectMap("../assets/maps/world2.txt");
+	loadObjectMap("../assets/maps/world1.txt");
+	//loadObjectMap("../assets/maps/world2.txt");
 
 	marioState = 0; // empieza mario chiquito
 }
@@ -115,7 +115,7 @@ void Game::loadObjectMap(const string& mapFile)
 
 		// conversion
 		x = x * TILE_SIDE;
-		y = y * TILE_SIDE - TILE_SIDE;
+		y = y * TILE_SIDE;
 
 		switch (tipo) {
 		case 'M':

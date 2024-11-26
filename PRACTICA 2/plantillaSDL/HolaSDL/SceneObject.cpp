@@ -11,7 +11,7 @@ SceneObject::SceneObject(Game* game, int x, int y, int width, int height, Textur
 void SceneObject::render(SDL_Renderer* renderer)
 {
     _rect.x = _position.getX() - game->getMapOffset();
-    _rect.y = _position.getY();
+    _rect.y = _position.getY() - _height;
     _rect.w = _texture->getFrameWidth() * _scale;
     _rect.h = _texture->getFrameHeight() * _scale;
 
@@ -28,11 +28,12 @@ SDL_Rect SceneObject::getCollisionRect() const
 {
     return SDL_Rect{
         _position.getX(),
-        _position.getY(), // - _height,
+        _position.getY() - _height,
         _width,
         _height
     };
 }
+
 bool SceneObject::getAlive() const
 {
     return _isAlive;

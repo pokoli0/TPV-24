@@ -44,7 +44,7 @@ void Player::update()
 			jumping = false;
 		}
 
-		_speed.setY(0); // importante !!! @ marcos 
+		_speed.setY(0);
 	}
 
 	if (_speed.getX() > 0) 
