@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "InfoBar.h"
 
 InfoBar::InfoBar(Game* game, Texture* t)

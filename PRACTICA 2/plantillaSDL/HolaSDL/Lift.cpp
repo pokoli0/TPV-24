@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "Lift.h"
 #include "Game.h"
 
@@ -49,5 +51,5 @@ Collision Lift::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Lift::clone() const
 {
-	return nullptr;
+	return new Lift(*this);
 }

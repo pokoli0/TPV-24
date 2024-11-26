@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "Coin.h"
 #include "Game.h"
 
@@ -23,7 +25,7 @@ Collision Coin::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Coin::clone() const
 {
-	return nullptr;
+	return new Coin(*this);
 }
 
 void Coin::updateAnim()

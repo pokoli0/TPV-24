@@ -128,7 +128,7 @@ void Player::hit()
 
 SceneObject* Player::clone() const
 {
-	return nullptr;
+	return new Player(*this);
 }
 
 void Player::checkAlive()

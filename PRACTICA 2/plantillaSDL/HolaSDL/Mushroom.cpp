@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "Mushroom.h"
 #include "Game.h"
 
@@ -23,7 +25,7 @@ Collision Mushroom::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Mushroom::clone() const
 {
-	return nullptr;
+	return new Mushroom(*this);
 }
 
 void Mushroom::triggerAction()

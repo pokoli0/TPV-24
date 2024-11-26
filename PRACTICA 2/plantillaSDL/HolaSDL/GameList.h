@@ -8,6 +8,7 @@
 
 #ifndef GAME_LIST_H
 #define GAME_LIST_H
+#include "checkML.h"
 
 #include <cassert>
 #include <compare>

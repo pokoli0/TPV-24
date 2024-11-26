@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "Koopa.h"
 #include "Game.h"
 
@@ -34,7 +36,7 @@ Collision Koopa::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Koopa::clone() const
 {
-	return nullptr;
+	return new Koopa(*this);
 }
 
 void Koopa::updateAnim()

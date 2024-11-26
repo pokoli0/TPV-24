@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "Block.h"
 #include "Game.h"
 
@@ -83,7 +85,7 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Block::clone() const
 {
-	return new Block(game, _position.getX(), _position.getY(), variant, action); // ?¿¿?¿ No se si es asi
+	return new Block(*this);
 }
 
 void Block::updateAnim() // solo se llama para el '?' en el render

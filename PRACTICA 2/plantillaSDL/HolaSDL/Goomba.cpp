@@ -1,3 +1,5 @@
+#include "checkML.h"
+
 #include "Goomba.h"
 #include "Game.h"
 
@@ -22,7 +24,7 @@ Collision Goomba::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Goomba::clone() const
 {
-	return nullptr;
+	return new Goomba(*this);
 }
 
 void Goomba::updateAnim()

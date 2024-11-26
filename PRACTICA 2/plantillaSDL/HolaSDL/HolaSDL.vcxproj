@@ -73,7 +73,6 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameList.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="InfoBar.cpp" />
     <ClCompile Include="Koopa.cpp" />

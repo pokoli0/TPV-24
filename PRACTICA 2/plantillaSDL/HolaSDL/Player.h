@@ -1,9 +1,10 @@
 #pragma once
+#include "checkML.h"
+
 #include "SceneObject.h"
 
 class Player : public SceneObject
 {
-
 public:
 	Player(Game* game, int x, int y);
 

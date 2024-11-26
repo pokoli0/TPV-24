@@ -1,4 +1,5 @@
 #pragma once
+#include "checkML.h"
 
 #include "GameObject.h"
 
@@ -35,6 +36,24 @@ protected:
 public:
     SceneObject(Game* game, int x, int y, int width, int height, Texture* texture);
 
+    SceneObject(const SceneObject& other)
+        : GameObject(other),
+        _position(other._position),
+        _speed(other._speed),
+        _width(other._width),
+        _height(other._height),
+        _scale(other._scale),
+        _texture(other._texture),
+        _rect(other._rect),
+        _isAlive(other._isAlive),
+        collision(other.collision),
+        canMove(other.canMove),
+        _frame(other._frame),
+        _frameCounter(other._frameCounter),
+        _flipSprite(other._flipSprite),
+        _flip(other._flip)
+    {}
+
     virtual ~SceneObject() {}
 
     virtual void render(SDL_Renderer* renderer) override;
@@ -42,6 +61,8 @@ public:
 
     // Recibe rectangulo que se vera afectado y si viene del jugador
     virtual Collision hit(const SDL_Rect& region, Collision::Target target) = 0;
+
+    //virtual void onLevelReload() = 0;
 
     // igual este metodo aqui no tiene mucho sentido por el tilemap
     virtual void checkAlive() = 0;
@@ -56,6 +77,7 @@ public:
     virtual SDL_Rect getCollisionRect() const;
     virtual  bool getAlive() const;
     virtual SDL_Rect getRenderRect() const;
+
     // Cuando el objeto SceneObject se destruya, siguiendo la secuencia natural de 
     // eliminación de los objetos, se destruirá su atributo anchor y esto implicará 
     // automáticamente su eliminación de la lista

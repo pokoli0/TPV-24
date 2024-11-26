@@ -1,4 +1,6 @@
-﻿#include "TileMap.h"
+﻿#include "checkML.h"
+
+#include "TileMap.h"
 #include "Game.h"
 
 TileMap::TileMap(Game* game, const string& mapFile, int x, int y)
@@ -155,6 +157,6 @@ Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* TileMap::clone() const
 {
-	return nullptr;
+	return new TileMap(*this);
 }
 
