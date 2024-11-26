@@ -2,7 +2,7 @@
 #include "Game.h"
 
 Enemy::Enemy(Game* game, int x, int y, Texture* t)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, t)
+	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, t), frozen(false)
 {
 	setScale(2);
 
@@ -14,10 +14,10 @@ void Enemy::update()
 {
 	checkAlive();
 
-	if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset())
-	{
-		frozen = false;
-	}
+	//if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset())
+	//{
+	//	frozen = false;
+	//}
 
 	if (!frozen) 
 	{
@@ -74,12 +74,11 @@ SceneObject* Enemy::clone() const
 
 void Enemy::checkAlive()
 {
-	if (_position.getY() >= MAX_HEIGHT || _position.getX() <= 0 || _position.getX() >= MAX_MAP_OFFSET)
+	if (_position.getY() >= MAX_HEIGHT || _position.getX() <= 0 )
 	{
-		cout << "borra";
-		//delete this; // peta?¿?
-
-		_isAlive = false;
+		delete this; // peta?¿?
+		cout << "byebe" << endl;
+		//_isAlive = false;
 	}
 }
 

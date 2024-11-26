@@ -7,6 +7,7 @@ Block::Block(Game* game, int x, int y, char v, char act)
 {
 	setScale(2);
 
+	surpriseFrame = 0;
 	_flip = SDL_FLIP_NONE;
 }
 

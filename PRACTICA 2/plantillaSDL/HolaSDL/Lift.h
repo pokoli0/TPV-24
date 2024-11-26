@@ -16,6 +16,7 @@ public:
 	void updateAnim() override {};
 
 private:
-
+	// el lift ira de A a B en Y
+	int a, b;
 };
 

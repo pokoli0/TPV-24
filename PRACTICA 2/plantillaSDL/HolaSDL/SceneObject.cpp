@@ -62,8 +62,7 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
         
         // Cantidad que se ha entrado en el obstáculo (lo que hay que deshacer)
         int fix = collision.vertical * (speed.getY() > 0 ? 1 : -1);
-        _position.setY(_position.getY() - fix);
-
+        _position.setY(_position.getY() + speed.getY() - fix);
 
         rect.y -= fix; // recoloca la caja para la siguiente colisión
     }

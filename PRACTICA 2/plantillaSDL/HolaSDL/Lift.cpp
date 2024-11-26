@@ -4,17 +4,47 @@
 Lift::Lift(Game* game, int x, int y, int speed)
 	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::LIFT))
 {
-	setScale(2);
+	setScale(1);
 	_speed.setY(speed);
+
+	a = WINDOW_HEIGHT * TILE_SIDE + TILE_SIDE;
+	b = 0;
 }
 
 void Lift::update()
 {
+	// Movimiento vertical constante
+	_position.setY(_position.getY() + _speed.getY());
+
+	//cuando llegue arriba vuelve a aparecer abajo
+
+	if (_speed.getY() < 0 && _position.getY() <= b) {
+		_position.setY(a);
+	}
+	else if (_speed.getY() > 0 && _position.getY() >= a)
+	{
+		_position.setY(b);
+	}
+
 }
 
 Collision Lift::hit(const SDL_Rect& region, Collision::Target target)
 {
-	return Collision();
+	Collision colision;
+
+	// Calcula la intersección
+	SDL_Rect ownRect = getCollisionRect();
+	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &colision.intersectionRect);
+
+	if (hasIntersection)
+	{
+		colision.result = Collision::OBSTACLE;
+		colision.horizontal = colision.intersectionRect.w;
+		colision.vertical = colision.intersectionRect.h - _speed.getY(); // raro
+		return colision;
+	}
+
+	return Collision{ Collision::NONE };
 }
 
 SceneObject* Lift::clone() const

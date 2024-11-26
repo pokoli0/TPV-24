@@ -225,6 +225,10 @@ void Player::handleEvent(SDL_Event e)
 		case SDLK_r:
 			resetPlayer();
 			break;
+		case SDLK_i:
+			cout << "MARIO POS (" << _position.getX() << ", " << _position.getY() << ")" << endl;
+			cout << "MAP OFFSET (" << game->getMapOffset() << ")" << endl;
+			break;
 		}
 	}
 	else if (e.type == SDL_KEYUP) // soltar teclas
