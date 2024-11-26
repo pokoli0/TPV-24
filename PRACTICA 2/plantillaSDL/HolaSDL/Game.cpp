@@ -189,14 +189,20 @@ Game::render()
 	SDL_RenderPresent(renderer);
 }
 
-Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target) {
+Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target) 
+{
 	Collision collision;
-	for (SceneObject* obj : sceneObjects) {
+
+	for (SceneObject* obj : sceneObjects) 
+	{
 		collision = obj->hit(rect, target);
-		if (collision.result != Collision::NONE) {
+
+		if (collision.result != Collision::NONE) 
+		{
 			return { collision.result, collision.horizontal, collision.vertical };
 		}
 	}
+
 	return { collision.NONE, 0, 0 };
 }
 
@@ -228,11 +234,11 @@ Game::handleEvents()
 
 void Game::playerHit()
 {
-	//player->checkAlive();
+	cout << "plauerhit" << endl;
+	player->hit();
 }
 
 bool Game::getMarioImmunity()
 {
-	//return player->getImmune();
-	return false;
+	return player->getImmunity();
 }

@@ -52,9 +52,10 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 	{
 		Collision collision{ Collision::OBSTACLE, intersection.w, intersection.h };
 
-		if (target == Collision::ENEMIES && (region.y) >= (_rect.y + _rect.h) - 8)
+		if (target == Collision::ENEMIES && 
+			region.y >= (_rect.y + _rect.h) - 8) // 8?¿
 		{
-			if (variant == '?')
+			if (variant == '?' || variant == 'H')
 			{
 				if (action == 'P') // Power Up
 				{
@@ -69,11 +70,9 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 			}
 			else if (variant == 'B' && game->getMarioState() == 1)
 			{
-				cout << "roto" << endl;
-				_isAlive = false; // el bloque se destruye
+				delete this; // miedo
 			}
 		}
-		
 
 		return collision;
 	}
@@ -83,7 +82,7 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 
 SceneObject* Block::clone() const
 {
-	return nullptr;
+	return new Block(game, _position.getX(), _position.getY(), variant, action); // ?¿¿?¿ No se si es asi
 }
 
 void Block::updateAnim() // solo se llama para el '?' en el render

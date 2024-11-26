@@ -51,6 +51,7 @@ void Coin::updateAnim()
 
 void Coin::triggerAction()
 {
-	Pickable::triggerAction();
 	game->givePoints(200);
+	cout << "Points: " << game->getPoints() << endl;
+	delete this;
 }

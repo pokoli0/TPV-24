@@ -17,6 +17,7 @@ void Goomba::render(SDL_Renderer* renderer)
 Collision Goomba::hit(const SDL_Rect& region, Collision::Target target)
 {
 	return Enemy::hit(region, target);
+
 }
 
 SceneObject* Goomba::clone() const

@@ -28,8 +28,8 @@ SceneObject* Mushroom::clone() const
 
 void Mushroom::triggerAction()
 {
-	Pickable::triggerAction();
-	cout << "mario ahora grande";
 	game->setMarioState(1);
 	game->givePoints(1000);
+	cout << "Points: " << game->getPoints() << endl;
+	delete this;
 }

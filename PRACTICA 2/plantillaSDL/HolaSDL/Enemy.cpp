@@ -36,47 +36,32 @@ void Enemy::update()
 
 Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 {
-	//Collision col;
-	//// Calcula la intersección
-	//SDL_Rect intersection;
-	//SDL_Rect ownRect = getCollisionRect();
-	//SDL_IntersectRect(&ownRect, &region, &intersection);
-	//
-	//col = { Collision::NONE, intersection.w, intersection.h };
-
-	//if (target == Collision::ENEMIES && col.horizontal > 0) 
-	//{
-	//	cout << "damage";
-	//	return { Collision::DAMAGE, col.horizontal, col.vertical };
-	//}
-
-
-	//return { Collision::NONE, col.horizontal, col.vertical };
-	// Calcula la intersección
+	// Calcula la interseccion
 	SDL_Rect intersection;
 	SDL_Rect ownRect = getCollisionRect();
 	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &intersection);
 
-	if (hasIntersection) {
+	if (hasIntersection) 
+	{
 		Collision collision{ Collision::DAMAGE, intersection.w, intersection.h };
-		if (target == Collision::ENEMIES) {
-			if (!game->getMarioImmunity()) // si mario no es inmune
-			{
 
-				if (intersection.y <= ownRect.y // desde arriba
-					&& intersection.w > TILE_SIDE / 4) // para que no detecte col desde el lado
-				{
-					_isAlive = false;
-				}
-				else if (target == Collision::PLAYER)
-				{
-					game->playerHit();
-				}
+
+		if (target == Collision::ENEMIES && !game->getMarioImmunity()) // si mario no es inmune
+		{
+			if (intersection.y <= ownRect.y // desde arriba
+				&& intersection.w > TILE_SIDE / 4) // para que no detecte col desde el lado
+			{
+				delete this;
+			}
+			else // no entra siempre
+			{
+				cout << "col player" << endl;
+				cout << game->getMarioImmunity() << endl;
+				game->playerHit();
 			}
 
 			return collision;
 		}
-
 	}
 
 	return Collision{ Collision::NONE }; // constante Collision{}

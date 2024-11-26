@@ -6,9 +6,13 @@ Player::Player(Game* game, int x, int y)
 {
 	game->setMarioState(0);
 
+	initPos = Point2D<int>(x, y);
+
 	setScale(2);
 
 	lives = 3;
+	immune = false;
+
 	canMove = true;
 	marioSpeed = 6;
 	onGround = false;
@@ -23,8 +27,31 @@ Player::Player(Game* game, int x, int y)
 
 void Player::render(SDL_Renderer* renderer)
 {
-		SceneObject::render(renderer);
-		updateAnim();
+	_texture = game->getMarioState() == 0 ? game->getTexture(Game::MARIO) : game->getTexture(Game::SUPERMARIO);
+
+	_rect.x = _position.getX() - game->getMapOffset();
+	
+	if (_texture == game->getTexture(Game::SUPERMARIO))
+	{
+		_rect.y = _position.getY() - _height * _scale; // el rect.y de mario grande empieza mas abajo!
+	}
+	else
+	{
+		_rect.y = _position.getY() - _height;
+	}
+
+	_rect.h = _texture->getFrameHeight() * _scale;
+	_rect.w = _texture->getFrameWidth() * _scale;
+
+	_texture->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
+
+	if (DEBUG) {
+		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128);
+		SDL_RenderDrawRect(renderer, &_rect);
+		SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
+	}
+
+	updateAnim();
 }
 
 void Player::update()
@@ -65,11 +92,38 @@ void Player::update()
 
 		if (_position.getX() - game->getMapOffset() < TILE_SIDE) canMove = false;
 	}
+
+	if (immune)
+	{
+		temp++;
+		if (temp >= immuneTime)
+		{
+			temp = 0;
+			immune = false;
+		}
+	}
 }
 
 Collision Player::hit(const SDL_Rect& region, Collision::Target target)
 {
-	return Collision();
+	return Collision{};
+}
+
+void Player::hit()
+{
+	if (game->getMarioState() == 1 && !immune)
+	{
+		game->setMarioState(0);
+		immune = true;
+	}
+	else if (game->getMarioState() == 0 && !immune)
+	{
+		lives--;
+
+		immune = true;
+		_isAlive = false;
+		resetPlayer();
+	}
 }
 
 SceneObject* Player::clone() const
@@ -79,8 +133,8 @@ SceneObject* Player::clone() const
 
 void Player::checkAlive()
 {
-	if (_position.getY() >= MAX_HEIGHT && _isAlive) {
-		cout << "sale por abajo" << endl;
+	if (_position.getY() >= MAX_HEIGHT && _isAlive) 
+	{
 		lives--;
 		_isAlive = false;
 	}
@@ -88,14 +142,22 @@ void Player::checkAlive()
 	if (lives == 0) {
 		cout << "Game Lost" << endl;
 		_isAlive = false;
+		lives = 3;
 	}
 
-	//if (!_isAlive) resetPlayer();
+	if (!_isAlive) resetPlayer();
 }
 
 
 void Player::resetPlayer()
 {
+	game->setMapOffset(0);
+	_position = initPos;
+
+	_isAlive = true;
+	game->setMarioState(0);
+
+	cout << "Vidas: " << lives << endl;
 }
 
 void Player::updateAnim()

@@ -15,6 +15,7 @@ public:
 	virtual void updateAnim() override;
 
 protected:
-	// pone alive a false
-	virtual void triggerAction();
+	
+	// llama a delete this , y hace accion correspondiente
+	virtual void triggerAction() = 0;
 };
