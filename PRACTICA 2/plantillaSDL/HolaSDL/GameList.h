@@ -8,7 +8,6 @@
 
 #ifndef GAME_LIST_H
 #define GAME_LIST_H
-#include "checkML.h"
 
 #include <cassert>
 #include <compare>
@@ -218,8 +217,8 @@ public:
 		iterator(Node* node)
 			: node(node)
 		{
-			node->addref();
 			skip();
+			node->addref();
 		}
 
 		void
@@ -249,12 +248,12 @@ public:
 		{
 			Node* prev = node;
 			node = node->*pivot;
+			// Salta los nodos pendientes de eliminación
+			skip();
 			// Añade una referencia al nodo al que llegamos
 			node->addref();
 			// Elimina una referencia al nodo del que nos vamos
 			prev->unref();
-			// Salta los nodos pendientes de eliminación
-			skip();
 
 			return *this;
 		}

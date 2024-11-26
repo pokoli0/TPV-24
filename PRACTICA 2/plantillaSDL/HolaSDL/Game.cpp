@@ -54,8 +54,9 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
+	tilemap = new TileMap(this, "../assets/maps/world1.csv");
+	sceneObjects.push_back(tilemap);
 
-	objectQueue.push_back(new TileMap(this, "../assets/maps/world1.csv"));
 	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
 	//sceneObjects.push_back(new InfoBar(this));
@@ -128,22 +129,22 @@ void Game::loadObjectMap(const string& mapFile)
 		switch (tipo) {
 		case 'M':
 			player = new Player(this, x, y);
-			objectQueue.push_back(player);
+			sceneObjects.push_back(player);
 			break;
 		case 'B':
-			objectQueue.push_back(new Block(this, x, y, atrib, accion));
+			sceneObjects.push_back(new Block(this, x, y, atrib, accion));
 			break;
 		case 'G':
-			objectQueue.push_back(new Goomba(this, x, y));
+			sceneObjects.push_back(new Goomba(this, x, y));
 			break;
 		case 'K':
-			objectQueue.push_back(new Koopa(this, x, y));
+			sceneObjects.push_back(new Koopa(this, x, y));
 			break;
 		case 'L':
-			objectQueue.push_back(new Lift(this, x, y, sp));
+			sceneObjects.push_back(new Lift(this, x, y, sp));
 			break;
 		case 'C':
-			objectQueue.push_back(new Coin(this, x, y));
+			sceneObjects.push_back(new Coin(this, x, y));
 			break;
 		}		
 	}
@@ -151,24 +152,27 @@ void Game::loadObjectMap(const string& mapFile)
 
 void Game::spawnMushroom(int x, int y)
 {
-	objectQueue.push_back(new Mushroom(this, x, y));
+	sceneObjects.push_back(new Mushroom(this, x, y));
 }
 
 void Game::spawnCoin(int x, int y)
 {
-	objectQueue.push_back(new Coin(this, x, y));
+	sceneObjects.push_back(new Coin(this, x, y));
 }
 
 void Game::resetLevel()
 {
-	for (auto it = sceneObjects.begin(); it != sceneObjects.end(); ) {
-		if (*it == player || dynamic_cast<TileMap*>(*it)) {
+	auto it = sceneObjects.begin();
+
+	while (it != sceneObjects.end()) {
+		SceneObject* obj = *it;
+
+		if (obj == player || obj == tilemap) {
 			++it;
 		}
 		else {
-			auto anchor = (*it)->getListAnchor();
-			delete* it;
-			it = sceneObjects.erase(it);
+			delete obj; // Eliminar el objeto
+			//it = sceneObjects.erase(it); // Eliminar de la lista y avanzar el iterador
 		}
 	}
 
@@ -238,19 +242,19 @@ Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
 void
 Game::update()
 {
-	if (nextObject < objectQueue.size()) 
-	{
-		SceneObject* obj = objectQueue[nextObject];
-		SDL_Rect objRect = obj->getRenderRect();
+	//if (nextObject < objectQueue.size()) 
+	//{
+	//	SceneObject* obj = objectQueue[nextObject];
+	//	SDL_Rect objRect = obj->getRenderRect();
 
-		// si aparece en pantalla clonar
-		if (objRect.x + objRect.w > mapOffset && objRect.x < mapOffset + WIN_WIDTH && 
-			objRect.y + objRect.h > 0 && objRect.y < WIN_HEIGHT) 
-		{
-			sceneObjects.push_back(obj->clone());
-			nextObject++;
-		}
-	}
+	//	// si aparece en pantalla clonar
+	//	if (objRect.x + objRect.w > mapOffset && objRect.x < mapOffset + WIN_WIDTH && 
+	//		objRect.y + objRect.h > 0 && objRect.y < WIN_HEIGHT) 
+	//	{
+	//		sceneObjects.push_back(obj->clone());
+	//		nextObject++;
+	//	}
+	//}
 
 	for (auto obj : sceneObjects) {
 		obj->update();
@@ -276,7 +280,6 @@ Game::handleEvents()
 
 void Game::playerHit()
 {
-	cout << "plauerhit" << endl;
 	player->hit();
 }
 

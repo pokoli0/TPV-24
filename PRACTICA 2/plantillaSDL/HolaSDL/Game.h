@@ -105,6 +105,7 @@ private:
 	int nextObject;
 
 	Player* player = nullptr;
+	TileMap* tilemap = nullptr;
 
 	InfoBar* infoBar = nullptr;
 
