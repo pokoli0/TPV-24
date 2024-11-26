@@ -151,6 +151,8 @@ public:
 	void spawnMushroom(int x, int y);
 	void spawnCoin(int x, int y);
 
+	void resetLevel();
+
 	//
 	void playerHit();
 

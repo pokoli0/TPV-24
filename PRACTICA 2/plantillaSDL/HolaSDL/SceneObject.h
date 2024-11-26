@@ -84,6 +84,9 @@ public:
     void setListAnchor(GameList<SceneObject>::anchor&& anchor) {
         _anchor = std::move(anchor);
     }
+    GameList<SceneObject>::anchor& getListAnchor() {
+        return _anchor;
+    }
 
 protected:
     // El método protegido tryToMove concentra el código de la comprobación

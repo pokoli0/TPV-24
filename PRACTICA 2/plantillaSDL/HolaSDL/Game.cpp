@@ -161,31 +161,19 @@ void Game::spawnCoin(int x, int y)
 
 void Game::resetLevel()
 {
-	vector<SceneObject*> toKeep;
-	vector<SceneObject*> toDelete;
-
-	for (SceneObject* obj : sceneObjects) {
-		if (obj == player || dynamic_cast<TileMap*>(obj)) {
-			toKeep.push_back(obj);
+	for (auto it = sceneObjects.begin(); it != sceneObjects.end(); ) {
+		if (*it == player || dynamic_cast<TileMap*>(*it)) {
+			++it;
 		}
 		else {
-			toDelete.push_back(obj);
+			auto anchor = (*it)->getListAnchor();
+			delete* it;
+			it = sceneObjects.erase(it);
 		}
 	}
 
-	for (SceneObject* obj : toDelete) {
-		delete obj;
-	}
-
-	sceneObjects.clear();
-	for (SceneObject* obj : toKeep) {
-		sceneObjects.push_back(obj);
-	}
-
-	// Reiniciar contador nextObject
 	nextObject = 0;
 
-	// Restaurar objetos
 	for (SceneObject* obj : objectQueue) {
 		sceneObjects.push_back(obj->clone());
 	}
