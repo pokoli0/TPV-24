@@ -27,8 +27,8 @@ void SceneObject::render(SDL_Renderer* renderer)
 SDL_Rect SceneObject::getCollisionRect() const
 {
     return SDL_Rect{
-        _position.getX(),
-        _position.getY() - _height,
+        (int)_position.getX(),
+        (int)_position.getY() - _height,
         _width,
         _height
     };
@@ -42,8 +42,8 @@ bool SceneObject::getAlive() const
 SDL_Rect SceneObject::getRenderRect() const
 {
     return SDL_Rect{
-        _position.getX() - game->getMapOffset(),
-        _position.getY() - _height,
+        (int)_position.getX() - game->getMapOffset(),
+        (int)_position.getY() - _height,
         _width,
         _height
     };
@@ -62,7 +62,8 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
         
         // Cantidad que se ha entrado en el obstáculo (lo que hay que deshacer)
         int fix = collision.vertical * (speed.getY() > 0 ? 1 : -1);
-        _position += {0, speed.getY() - fix};
+        _position.setY(_position.getY() - fix);
+
 
         rect.y -= fix; // recoloca la caja para la siguiente colisión
     }
@@ -82,7 +83,7 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
         if (partial.result == Collision::DAMAGE)
             collision.result = Collision::DAMAGE;
 
-        _position += {speed.getX() - collision.horizontal * (speed.getX() > 0 ? 1 : -1), 0};
+        _position.setX(_position.getX() + speed.getX() - collision.horizontal * (speed.getX() > 0 ? 1 : -1));
     }
 
     return collision;

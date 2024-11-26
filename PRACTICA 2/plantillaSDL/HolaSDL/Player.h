@@ -41,7 +41,7 @@ private:
 
 	int walkFrame;
 
-	Point2D<int> initPos;
+	Point2D<double> initPos;
 
 };
 

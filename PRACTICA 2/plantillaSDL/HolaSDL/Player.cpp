@@ -6,7 +6,7 @@ Player::Player(Game* game, int x, int y)
 {
 	game->setMarioState(0);
 
-	initPos = Point2D<int>(x, y);
+	initPos = Point2D<double>(x, y);
 
 	setScale(2);
 

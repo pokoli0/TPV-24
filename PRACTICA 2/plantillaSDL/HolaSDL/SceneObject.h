@@ -8,7 +8,7 @@
 class SceneObject : public GameObject
 {
 protected:
-    Vector2D<int> _position;    // Coordenadas (x, y)
+    Vector2D<double> _position;    // Coordenadas (x, y)
     Vector2D<int> _speed;       // Velocidad (vx, vy)
     int _width, _height;        // Tamaño del objeto
 

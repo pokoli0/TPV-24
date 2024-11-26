@@ -106,7 +106,7 @@ void Game::loadObjectMap(const string& mapFile)
 		stringstream lineStream(line);
 
 		char tipo, atrib, accion;
-		int x, y, sp;
+		double x, y, sp;
 
 		lineStream >> tipo >> x >> y;
 
