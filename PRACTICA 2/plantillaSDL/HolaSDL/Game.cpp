@@ -55,7 +55,7 @@ Game::Game()
 
 	//Crea los objetos del juego
 
-	sceneObjects.push_back(new TileMap(this, "../assets/maps/world1.csv"));
+	objectQueue.push_back(new TileMap(this, "../assets/maps/world1.csv"));
 	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
 	//sceneObjects.push_back(new InfoBar(this));
@@ -72,6 +72,12 @@ Game::~Game()
 	for (auto obj : sceneObjects) {
 		delete obj;
 	}
+
+	// Elimina los objetos de la cola de objetos
+	for (auto obj : objectQueue) {
+		delete obj;
+	}
+	objectQueue.clear();
 
 	// Elimina las texturas
 	for (Texture* texture : textures)
@@ -122,22 +128,22 @@ void Game::loadObjectMap(const string& mapFile)
 		switch (tipo) {
 		case 'M':
 			player = new Player(this, x, y);
-			sceneObjects.push_back(player);
+			objectQueue.push_back(player);
 			break;
 		case 'B':
-			sceneObjects.push_back(new Block(this, x, y, atrib, accion));
+			objectQueue.push_back(new Block(this, x, y, atrib, accion));
 			break;
 		case 'G':
-			sceneObjects.push_back(new Goomba(this, x, y));
+			objectQueue.push_back(new Goomba(this, x, y));
 			break;
 		case 'K':
-			sceneObjects.push_back(new Koopa(this, x, y));
+			objectQueue.push_back(new Koopa(this, x, y));
 			break;
 		case 'L':
-			sceneObjects.push_back(new Lift(this, x, y, sp));
+			objectQueue.push_back(new Lift(this, x, y, sp));
 			break;
 		case 'C':
-			sceneObjects.push_back(new Coin(this, x, y));
+			objectQueue.push_back(new Coin(this, x, y));
 			break;
 		}		
 	}
@@ -145,12 +151,44 @@ void Game::loadObjectMap(const string& mapFile)
 
 void Game::spawnMushroom(int x, int y)
 {
-	sceneObjects.push_back(new Mushroom(this, x, y));
+	objectQueue.push_back(new Mushroom(this, x, y));
 }
 
 void Game::spawnCoin(int x, int y)
 {
-	sceneObjects.push_back(new Coin(this, x, y));
+	objectQueue.push_back(new Coin(this, x, y));
+}
+
+void Game::resetLevel()
+{
+	vector<SceneObject*> toKeep;
+	vector<SceneObject*> toDelete;
+
+	for (SceneObject* obj : sceneObjects) {
+		if (obj == player || dynamic_cast<TileMap*>(obj)) {
+			toKeep.push_back(obj);
+		}
+		else {
+			toDelete.push_back(obj);
+		}
+	}
+
+	for (SceneObject* obj : toDelete) {
+		delete obj;
+	}
+
+	sceneObjects.clear();
+	for (SceneObject* obj : toKeep) {
+		sceneObjects.push_back(obj);
+	}
+
+	// Reiniciar contador nextObject
+	nextObject = 0;
+
+	// Restaurar objetos
+	for (SceneObject* obj : objectQueue) {
+		sceneObjects.push_back(obj->clone());
+	}
 }
 
 
@@ -212,6 +250,20 @@ Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
 void
 Game::update()
 {
+	if (nextObject < objectQueue.size()) 
+	{
+		SceneObject* obj = objectQueue[nextObject];
+		SDL_Rect objRect = obj->getRenderRect();
+
+		// si aparece en pantalla clonar
+		if (objRect.x + objRect.w > mapOffset && objRect.x < mapOffset + WIN_WIDTH && 
+			objRect.y + objRect.h > 0 && objRect.y < WIN_HEIGHT) 
+		{
+			sceneObjects.push_back(obj->clone());
+			nextObject++;
+		}
+	}
+
 	for (auto obj : sceneObjects) {
 		obj->update();
 	}
