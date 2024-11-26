@@ -1,0 +1,9 @@
+Marcos Pantoja Rafael de la Cruz
+Paula Sierra Luque
+
+Practica 2:
+no hemos implementado ningún opcional.
+Nos falta hacer el cambio de niveles con la bandera.
+Lift esta implementado y cumple su funcionamiento pero al colisionar con Mario
+no funciona del todo bien.
+El frozen de los enemies no esta implementado debido a una excepción(esta comentado)
