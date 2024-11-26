@@ -33,7 +33,8 @@ void Player::render(SDL_Renderer* renderer)
 	
 	if (_texture == game->getTexture(Game::SUPERMARIO))
 	{
-		_rect.y = _position.getY() - _height * _scale; // el rect.y de mario grande empieza mas abajo!
+		
+		_rect.y = _position.getY() - (_height * _scale); // el rect.y de mario grande empieza mas abajo!
 	}
 	else
 	{

@@ -16,10 +16,9 @@ void Enemy::update()
 {
 	checkAlive();
 
-	//if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset())
-	//{
-	//	frozen = false;
-	//}
+		//if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
+			//frozen = false;
+		//}
 
 	if (!frozen) 
 	{

@@ -12,7 +12,7 @@ Koopa::Koopa(Game* game, int x, int y)
 
 void Koopa::render(SDL_Renderer* renderer)
 {
-	
+	_height = 64;
 	_rect.x = _position.getX() - game->getMapOffset();
 	_rect.y = _position.getY() - _height; // hago el render aqui porque el koopa tiene distinta altura
 	_rect.w = _texture->getFrameWidth() * _scale;

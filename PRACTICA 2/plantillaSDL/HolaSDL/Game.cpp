@@ -54,14 +54,14 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	tilemap = new TileMap(this, "../assets/maps/world1.csv");
+	tilemap = new TileMap(this, "../assets/maps/world2.csv");
 	sceneObjects.push_back(tilemap);
 
 	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
 	//sceneObjects.push_back(new InfoBar(this));
 
-	loadObjectMap("../assets/maps/world1.txt");
+	loadObjectMap("../assets/maps/world2.txt");
 	//loadObjectMap("../assets/maps/world2.txt");
 
 	marioState = 0; // empieza mario chiquito

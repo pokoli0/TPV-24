@@ -55,7 +55,7 @@ static constexpr int OBSTACLE_THRESHOLD = 4;
 static constexpr int GRAVITY = 3;
 static constexpr int SPEED_LIMIT = 10;
 
-static constexpr bool DEBUG = true;
+static constexpr bool DEBUG = false;
 
 
 //
