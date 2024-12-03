@@ -54,14 +54,14 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	tilemap = new TileMap(this, "../assets/maps/world2.csv");
-	sceneObjects.push_back(tilemap);
+	tilemap = new TileMap(this, "../assets/maps/world1.csv");
+	//sceneObjects.push_back(tilemap);
 
 	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
 	//sceneObjects.push_back(new InfoBar(this));
 
-	loadObjectMap("../assets/maps/world2.txt");
+	loadObjectMap("../assets/maps/world1.txt");
 	//loadObjectMap("../assets/maps/world2.txt");
 
 	marioState = 0; // empieza mario chiquito
@@ -212,6 +212,8 @@ Game::render()
 
 	SDL_RenderClear(renderer);
 
+	tilemap->render(renderer);
+
 	// Pinta los objetos del juego
 	for (auto obj : sceneObjects) {
 		obj->render(renderer);
@@ -231,8 +233,15 @@ Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
 
 		if (collision.result != Collision::NONE) 
 		{
-			return { collision.result, collision.horizontal, collision.vertical };
+			return collision;
 		}
+	}
+
+	collision = tilemap->hit(rect, target);
+
+	if (collision.result != Collision::NONE) 
+	{
+		return collision;
 	}
 
 	return { collision.NONE, 0, 0 };
@@ -259,6 +268,8 @@ Game::update()
 	for (auto obj : sceneObjects) {
 		obj->update();
 	}
+
+	//tilemap->update();
 }
 
 void

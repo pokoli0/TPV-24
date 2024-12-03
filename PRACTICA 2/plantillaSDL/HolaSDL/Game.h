@@ -107,7 +107,7 @@ private:
 	Player* player = nullptr;
 	TileMap* tilemap = nullptr;
 
-	InfoBar* infoBar = nullptr;
+	//InfoBar* infoBar = nullptr;
 
 	// 0: mario, 1: supermario
 	int marioState;
@@ -154,7 +154,7 @@ public:
 
 	void resetLevel();
 
-	//
+	// llama al hit del mario
 	void playerHit();
 
 	/// GETTERS --------------------------------

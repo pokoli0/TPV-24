@@ -17,6 +17,8 @@ public:
 	void updateAnim() override {};
 
 	void triggerAction() override;
+
+	void checkAlive();
 private:
 
 };
