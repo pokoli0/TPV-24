@@ -53,7 +53,7 @@ static constexpr int BACKGROUND_SCROLL_SPEED = 5;
 static constexpr int OBSTACLE_THRESHOLD = 4;
 
 static constexpr int GRAVITY = 3;
-static constexpr int SPEED_LIMIT = 10;
+constexpr int SPEED_LIMIT = 10;
 
 static constexpr bool DEBUG = false;
 
@@ -63,6 +63,9 @@ static constexpr bool DEBUG = false;
 //
 class Game
 {
+
+	// constantes estaticas aqui
+
 public:
 	// Identificadores de las texturas
 	enum TextureName {

@@ -32,7 +32,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 Game::Game()
 	: seguir(true), 
 	mapOffset(0), 
-	//mapOffset(4080), // para probar el lift
+	//mapOffset(4080), // para probar el lift en level 2
 	points(0)
 {
 	// Inicializa la SDL
@@ -58,7 +58,7 @@ Game::Game()
 
 	//Crea los objetos del juego
 	tilemap = new TileMap(this, "../assets/maps/world2.csv");
-	//sceneObjects.push_back(tilemap);
+	//sceneObjects.push_back(tilemap); // se supone q si lo metemos primero funcionan las colisiones bien
 
 	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 

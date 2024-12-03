@@ -25,7 +25,6 @@ struct Collision
 	SDL_Rect intersectionRect;
 
 	operator bool() const { 
-		bool c = false;
 		if (result != NONE) {
 			return true;
 		}
