@@ -30,7 +30,10 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 };
 
 Game::Game()
-	: seguir(true), mapOffset(4080), points(0)
+	: seguir(true), 
+	mapOffset(0), 
+	//mapOffset(4080), // para probar el lift
+	points(0)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -128,7 +131,8 @@ void Game::loadObjectMap(const string& mapFile)
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, 4366, 300);
+			//player = new Player(this, 4366, 300); // para probar el lift
+			player = new Player(this, x, y);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
