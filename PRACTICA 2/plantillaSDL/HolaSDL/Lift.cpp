@@ -4,7 +4,8 @@
 #include "Game.h"
 
 Lift::Lift(Game* game, int x, int y, int speed)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::LIFT))
+	: SceneObject(game, x, y, game->getTexture(Game::LIFT)->getFrameWidth(), 
+		game->getTexture(Game::LIFT)->getFrameHeight(), game->getTexture(Game::LIFT))
 {
 	setScale(1);
 	_speed.setY(speed);
@@ -38,11 +39,13 @@ Collision Lift::hit(const SDL_Rect& region, Collision::Target target)
 	SDL_Rect ownRect = getCollisionRect();
 	bool hasIntersection = SDL_IntersectRect(&ownRect, &region, &colision.intersectionRect);
 
+
 	if (hasIntersection)
 	{
 		colision.result = Collision::OBSTACLE;
 		colision.horizontal = colision.intersectionRect.w;
-		colision.vertical = colision.intersectionRect.h - _speed.getY(); // raro
+		colision.vertical = colision.intersectionRect.h; // raro
+
 		return colision;
 	}
 

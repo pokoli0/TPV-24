@@ -94,6 +94,16 @@ void Player::update()
 		if (_position.getX() - game->getMapOffset() < TILE_SIDE) canMove = false;
 	}
 
+	if (!onGround) 
+	{
+		SDL_Rect r = getCollisionRect();
+		r.y += 1;
+		if (game->checkCollision(r, Collision::ENEMIES).result == Collision::OBSTACLE) {
+			_speed.setY(0);
+			onGround = true;
+		}
+	}
+
 	if (immune)
 	{
 		temp++;

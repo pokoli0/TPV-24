@@ -30,7 +30,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 };
 
 Game::Game()
-	: seguir(true), mapOffset(0), points(0)
+	: seguir(true), mapOffset(4080), points(0)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -54,14 +54,14 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	//Crea los objetos del juego
-	tilemap = new TileMap(this, "../assets/maps/world1.csv");
+	tilemap = new TileMap(this, "../assets/maps/world2.csv");
 	//sceneObjects.push_back(tilemap);
 
 	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
 	//sceneObjects.push_back(new InfoBar(this));
 
-	loadObjectMap("../assets/maps/world1.txt");
+	loadObjectMap("../assets/maps/world2.txt");
 	//loadObjectMap("../assets/maps/world2.txt");
 
 	marioState = 0; // empieza mario chiquito
@@ -128,7 +128,7 @@ void Game::loadObjectMap(const string& mapFile)
 
 		switch (tipo) {
 		case 'M':
-			player = new Player(this, x, y);
+			player = new Player(this, 4366, 300);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
