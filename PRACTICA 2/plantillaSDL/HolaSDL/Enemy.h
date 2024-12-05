@@ -20,7 +20,6 @@ public:
 	virtual void updateAnim() {};
 
 private:
-	bool frozen = true;
 
 };
 
