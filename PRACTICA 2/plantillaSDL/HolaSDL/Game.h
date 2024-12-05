@@ -86,38 +86,46 @@ public:
 	};
 
 private:
+	/// ===== SDL =====
+
 	// Ventana de la SDL (se destruirá en el destructor)
 	SDL_Window* window = nullptr;
 	// Renderizador de la SDL (para dibujar)
 	SDL_Renderer* renderer = nullptr;
 
-	// Array con todas las texturas del juego
-	std::array<Texture*, NUM_TEXTURES> textures;
+
+	/// ===== Juego =====
 
 	// Interruptor para terminar el juego
 	bool seguir;
 
-	// colores del fondo
+	// Array con todas las texturas del juego
+	std::array<Texture*, NUM_TEXTURES> textures;
+
+	// colores del fondo del nivel
 	int r, g, b;
 
 	// coordenada x del extremo izquierdo de la vista
 	int mapOffset;
 
+	/// --- SceneObjects ---
+
+	Player* player = nullptr;
+	SceneObject* tilemap = nullptr;
+
 	// Objetos del juego
 	GameList<SceneObject> sceneObjects;
 
-	// Creación de los objetos del juego en el momento justo
+	// vamos extrayendo objetos de la cola segun vaya avanzando el nivel
 	std::vector<SceneObject*> objectQueue;
-	int nextObject;
 
-	Player* player = nullptr;
-	TileMap* tilemap = nullptr;
+	// indice para indicar el siguiente objeto a instanciar
+	int nextObject; 
 
-	//InfoBar* infoBar = nullptr;
 
-	// 0: mario, 1: supermario
-	int marioState;
-
+	/// ===== Otros =====
+	
+	int marioState; // 0: mario, 1: supermario
 	int points;
 
 public:
@@ -143,23 +151,29 @@ public:
 	Texture* getTexture(TextureName name) const;
 	array<Texture*, NUM_TEXTURES> getTexturesArray() const { return textures; }
 
-
 	// aqui se cargan las texturas y se guardan en el array textures
 	Game();
 	~Game();
 
-	void loadObjectMap(const string& mapFile);
+	/// ===== Creacion del nivel =====
+
+	void loadLevel(int level); // Carga el nivel
+
+	void loadObjectMap(const string& mapFile); // Carga los objs del nivel
+
+	void resetLevel();
+
+	/// ===== Gestion del juego =====
 
 	// spawnea mushroom encima del bloque 
 	void spawnMushroom(int x, int y);
 	void spawnCoin(int x, int y);
 
-	void resetLevel();
-
 	// llama al hit del mario
 	void playerHit();
 
-	/// GETTERS --------------------------------
+	/// ===== Getters y Setters =====
+
 	int getMapOffset() const { return mapOffset; }
 	void setMapOffset(int m) { mapOffset = m; }
 

@@ -33,9 +33,11 @@ Game::Game()
 	: seguir(true), 
 	mapOffset(0), 
 	//mapOffset(4080), // para probar el lift en level 2
-	points(0)
+	points(0),
+	nextObject(0),
+	marioState(0)
 {
-	// Inicializa la SDL
+	/// ===== Ventana de SDL =====
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window = SDL_CreateWindow("Super Mario",
 		SDL_WINDOWPOS_CENTERED,
@@ -49,6 +51,9 @@ Game::Game()
 	if (window == nullptr || renderer == nullptr)
 		throw "Error cargando SDL"s;
 
+
+	/// ===== Inicializacion del juego =====
+
 	// Carga las texturas
 	for (int i = 0; i < NUM_TEXTURES; ++i)
 		textures[i] = new Texture(renderer,
@@ -56,18 +61,10 @@ Game::Game()
 			textureSpec[i].numRows,
 			textureSpec[i].numColumns);
 
-	//Crea los objetos del juego
-	tilemap = new TileMap(this, "../assets/maps/world2.csv");
-	//sceneObjects.push_back(tilemap); // se supone q si lo metemos primero funcionan las colisiones bien
+	// Carga el tilemap y los objetos segun el nivel
+	loadLevel(1);
 
-	//sceneObjects.push_back(new TileMap(this, "../assets/maps/world2.csv"));
 
-	//sceneObjects.push_back(new InfoBar(this));
-
-	loadObjectMap("../assets/maps/world2.txt");
-	//loadObjectMap("../assets/maps/world2.txt");
-
-	marioState = 0; // empieza mario chiquito
 }
 
 Game::~Game()
@@ -91,6 +88,17 @@ Game::~Game()
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+}
+
+void Game::loadLevel(int level)
+{
+	cout << "Load level " << level << endl;
+
+	string root = "../assets/maps/world" + to_string(level) + ".csv";
+
+	tilemap = new TileMap(this, root);
+
+	loadObjectMap("../assets/maps/world" + to_string(level) + ".txt");
 }
 
 void Game::loadObjectMap(const string& mapFile)
@@ -136,19 +144,19 @@ void Game::loadObjectMap(const string& mapFile)
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
-			sceneObjects.push_back(new Block(this, x, y, atrib, accion));
+			objectQueue.push_back(new Block(this, x, y, atrib, accion));
 			break;
 		case 'G':
-			sceneObjects.push_back(new Goomba(this, x, y));
+			objectQueue.push_back(new Goomba(this, x, y));
 			break;
 		case 'K':
-			sceneObjects.push_back(new Koopa(this, x, y));
+			objectQueue.push_back(new Koopa(this, x, y));
 			break;
 		case 'L':
-			sceneObjects.push_back(new Lift(this, x, y, sp));
+			objectQueue.push_back(new Lift(this, x, y, sp));
 			break;
 		case 'C':
-			sceneObjects.push_back(new Coin(this, x, y));
+			objectQueue.push_back(new Coin(this, x, y));
 			break;
 		}		
 	}
@@ -255,19 +263,12 @@ Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
 void
 Game::update()
 {
-	//if (nextObject < objectQueue.size()) 
-	//{
-	//	SceneObject* obj = objectQueue[nextObject];
-	//	SDL_Rect objRect = obj->getRenderRect();
-
-	//	// si aparece en pantalla clonar
-	//	if (objRect.x + objRect.w > mapOffset && objRect.x < mapOffset + WIN_WIDTH && 
-	//		objRect.y + objRect.h > 0 && objRect.y < WIN_HEIGHT) 
-	//	{
-	//		sceneObjects.push_back(obj->clone());
-	//		nextObject++;
-	//	}
-	//}
+	// Instancia objetos segun su posicion en X
+	while (nextObject < objectQueue.size() && 
+		objectQueue[nextObject]->getXPos() < mapOffset + WIN_WIDTH + TILE_SIDE)
+	{
+		sceneObjects.push_back(objectQueue[nextObject++]->clone());
+	}
 
 	for (auto obj : sceneObjects) {
 		obj->update();

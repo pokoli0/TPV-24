@@ -6,6 +6,8 @@
 
 #include "Game.h"
 
+using namespace std;
+
 int main(int argc, char* argv[])
 {
     try {
@@ -14,19 +16,23 @@ int main(int argc, char* argv[])
     }
     catch (const FileNotFoundError& fileError)
     {
-        std::cerr << "File not found: " << fileError.what() << std::endl;
+        cerr << "File not found: " << fileError.what() << endl;
     }
     catch (const SDLError& sdlError)
     {
-        std::cerr << "SDL error: " << sdlError.what() << std::endl;
+        cerr << "SDL error: " << sdlError.what() << endl;
     }
     catch (const FileFormatError& formatError)
     {
-        std::cerr << "File format error: " << formatError.what() << std::endl;
+        cerr << "File format error: " << formatError.what() << endl;
+    }
+    catch (const exception& e)
+    {
+        cerr << "Exception: " << e.what() << endl;
     }
     catch (const std::string& error)
     {
-        std::cerr << "Unexpected exception: " << error << std::endl;
+        cerr << "Unexpected exception: " << error << endl;
     }
 
     SDL_Quit();

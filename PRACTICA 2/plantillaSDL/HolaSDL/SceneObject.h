@@ -9,8 +9,8 @@
 class SceneObject : public GameObject
 {
 protected:
-    Vector2D<double> _position;    // Coordenadas (x, y)
-    Vector2D<int> _speed;       // Velocidad (vx, vy)
+    Point2D<double> _position;    // Coordenadas (x, y)
+    Point2D<int> _speed;       // Velocidad (vx, vy)
     int _width, _height;        // Tamaño del objeto
 
     int _scale;
@@ -77,6 +77,9 @@ public:
     virtual SDL_Rect getCollisionRect() const;
     virtual  bool getAlive() const;
     virtual SDL_Rect getRenderRect() const;
+
+    // para el "frozen"
+    double getXPos() { return _position.getX(); }
 
     // Cuando el objeto SceneObject se destruya, siguiendo la secuencia natural de 
     // eliminación de los objetos, se destruirá su atributo anchor y esto implicará 
