@@ -31,8 +31,8 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 
 Game::Game()
 	: seguir(true), 
-	//mapOffset(0), 
-	mapOffset(5880), // para probar cambio de nivel
+	mapOffset(0), 
+	//mapOffset(5880), // para probar cambio de nivel
 	//mapOffset(4080), // para probar el lift en level 2
 	points(0),
 	nextObject(0),
@@ -144,8 +144,8 @@ void Game::loadObjectMap(const string& mapFile)
 		switch (tipo) {
 		case 'M':
 			//player = new Player(this, 4366, 300); // para probar el lift
-			player = new Player(this, 6166, 448); // para probar bandera
-			//player = new Player(this, x, y);
+			//player = new Player(this, 6166, 448); // para probar bandera
+			player = new Player(this, x, y);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':

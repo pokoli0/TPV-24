@@ -70,9 +70,8 @@ void Enemy::checkAlive()
 {
 	if (_position.getY() >= MAX_HEIGHT || _position.getX() <= 0 )
 	{
-		delete this; // peta?¿?
-		cout << "byebe" << endl;
-		//_isAlive = false;
+		delete this; // PETA
+		cout << "Byebye" << endl;
 	}
 }
 
