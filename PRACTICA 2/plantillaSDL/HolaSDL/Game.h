@@ -41,21 +41,21 @@ using uint = unsigned int;
 using namespace std;
 
 
-static constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
-static constexpr int WINDOW_WIDTH = 18;
-static constexpr int WINDOW_HEIGHT = 16;
+constexpr int TILE_SIDE = 32;  // constantes estáticas en Game
+constexpr int WINDOW_WIDTH = 18;
+constexpr int WINDOW_HEIGHT = 16;
 
-static constexpr int MAX_MAP_OFFSET = 6150;
-static constexpr int MAX_HEIGHT = 475 + 32;
+constexpr int MAX_MAP_OFFSET = 6150;
+constexpr int MAX_HEIGHT = 475 + 32;
 
-static constexpr int BACKGROUND_SCROLL_SPEED = 5;
+constexpr int BACKGROUND_SCROLL_SPEED = 5;
 
-static constexpr int OBSTACLE_THRESHOLD = 4;
+constexpr int OBSTACLE_THRESHOLD = 4;
 
-static constexpr int GRAVITY = 3;
+constexpr int GRAVITY = 3;
 constexpr int SPEED_LIMIT = 10;
 
-static constexpr bool DEBUG = false;
+constexpr bool DEBUG = false;
 
 
 //
@@ -63,10 +63,13 @@ static constexpr bool DEBUG = false;
 //
 class Game
 {
-
-	// constantes estaticas aqui
-
 public:
+
+	// Constante globales
+	static constexpr uint WIN_WIDTH = TILE_SIDE * WINDOW_WIDTH;
+	static constexpr uint WIN_HEIGHT = TILE_SIDE * WINDOW_HEIGHT;
+	static constexpr uint FRAME_RATE = 50;
+
 	// Identificadores de las texturas
 	enum TextureName {
 		BACKGROUND,
@@ -140,10 +143,6 @@ public:
 	Texture* getTexture(TextureName name) const;
 	array<Texture*, NUM_TEXTURES> getTexturesArray() const { return textures; }
 
-	// Constante globales
-	static constexpr uint WIN_WIDTH = TILE_SIDE * WINDOW_WIDTH;
-	static constexpr uint WIN_HEIGHT = TILE_SIDE * WINDOW_HEIGHT;
-	static constexpr uint FRAME_RATE = 50;
 
 	// aqui se cargan las texturas y se guardan en el array textures
 	Game();

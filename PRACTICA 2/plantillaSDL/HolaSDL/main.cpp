@@ -6,36 +6,30 @@
 
 #include "Game.h"
 
-#include "checkML.h"
-
-
-using namespace std;
-
-using uint = unsigned int;
-
 int main(int argc, char* argv[])
 {
-	try {
-		Game* game = new Game();
-		game->run();
-		delete game;
-	}
-	catch (FileNotFoundError& fileError)
-	{
-		std::cout << fileError.what() << std::endl;
-	}
-	catch (SDLError& SDLError)
-	{
-		std::cout << SDLError.what() << std::endl;
-	}
-	catch (FileFormatError& fileError)
-	{
-		std::cout << fileError.what() << std::endl;
-	}
-	catch (const string Error) {
-		cout << "exception: " << Error;
-		SDL_Quit();
-	}
+    try {
+        Game game;
+        game.run();
+    }
+    catch (const FileNotFoundError& fileError)
+    {
+        std::cerr << "File not found: " << fileError.what() << std::endl;
+    }
+    catch (const SDLError& sdlError)
+    {
+        std::cerr << "SDL error: " << sdlError.what() << std::endl;
+    }
+    catch (const FileFormatError& formatError)
+    {
+        std::cerr << "File format error: " << formatError.what() << std::endl;
+    }
+    catch (const std::string& error)
+    {
+        std::cerr << "Unexpected exception: " << error << std::endl;
+    }
 
-	return 0;
+    SDL_Quit();
+
+    return 0;
 }
