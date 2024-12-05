@@ -108,6 +108,14 @@ private:
 	// coordenada x del extremo izquierdo de la vista
 	int mapOffset;
 
+	// nivel actual del juego
+	int level;
+
+	// ultimo nivel
+	int lastLevel;
+
+	bool gameWon;
+
 	/// --- SceneObjects ---
 
 	Player* player = nullptr;
@@ -132,18 +140,6 @@ public:
 	// bucle principal del juego
 	void run();
 
-	/*
-	Lo llama cada objeto en su update y su caja de colision.
-	Itera sobre los objetos del juego llamando a sus metodos hit.
-	Si ha habido una colision (detectada por hit), interrumpe la busqueda y la devuelve.
-
-	@param rect: objeto que se va a mover y del que queremos comprobar colisiones
-	@param fromPlayer: origen de colision es mario (true) o un enemigo (false)
-
-	@return objeto colision con toda la informacion estructurada
-	*/
-	Collision checkCollision(const SDL_Rect& rect, Collision::Target target);
-
 	void update();
 	void render();
 	void handleEvents();
@@ -151,11 +147,11 @@ public:
 	Texture* getTexture(TextureName name) const;
 	array<Texture*, NUM_TEXTURES> getTexturesArray() const { return textures; }
 
-	// aqui se cargan las texturas y se guardan en el array textures
 	Game();
 	~Game();
 
-	/// ===== Creacion del nivel =====
+
+	/// ===== Gestion del nivel =====
 
 	void loadLevel(int level); // Carga el nivel
 
@@ -163,7 +159,14 @@ public:
 
 	void resetLevel();
 
+	void endGame();
+
 	/// ===== Gestion del juego =====
+
+	// Lo llama cada objeto en su update y su caja de colision.
+	// Itera sobre los objetos del juego llamando a sus metodos hit.
+	// Si ha habido una colision(detectada por hit), interrumpe la busqueda y la devuelve.
+	Collision checkCollision(const SDL_Rect& rect, Collision::Target target);
 
 	// spawnea mushroom encima del bloque 
 	void spawnMushroom(int x, int y);
@@ -171,6 +174,7 @@ public:
 
 	// llama al hit del mario
 	void playerHit();
+
 
 	/// ===== Getters y Setters =====
 
@@ -186,6 +190,13 @@ public:
 	bool getMarioImmunity();
 
 	SDL_Renderer* getRender() { return renderer; }
+
+	int getLastLevel() const { return lastLevel; }
+
+	int getLevel() { return level; }
+	void setLevel(int n) { level = n; }
+
+	void setGameWon(bool w) { gameWon = w; }
 };
 
 inline Texture*

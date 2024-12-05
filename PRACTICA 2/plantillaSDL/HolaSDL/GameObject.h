@@ -15,7 +15,7 @@ protected:
 
 public:
     GameObject(Game* game) : game(game) {}
-    virtual ~GameObject() {}
+    virtual ~GameObject() {};
 
     // Metodos virtuales puros (implementados por las clases hijas)
     virtual void render(SDL_Renderer* renderer) = 0;

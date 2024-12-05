@@ -14,26 +14,38 @@ public:
 	Collision hit(const SDL_Rect& region, Collision::Target target) override;
 	SceneObject* clone() const override;
 
+	// resta vidas y cambia el estado de mario
 	void hit();
 
+	// comprueba si se ha caido, resta vidas si es el caso
 	void checkAlive() override;
 
-	void resetPlayer();
 	void updateAnim() override;
+
+	// recoloca al principio del nivel actual
+	void resetPlayer();
+
+	// comprueba si se ha llegado a la posicion de la bandera
+	void finishLevel();
+
+	/// ===== Gestion de movimiento =====
+
+	void handleEvent(SDL_Event e);
 	void jump();
+	
+
+	/// ===== Getters y Setters =====
 
 	int getLives() { return lives; }
 	void setLives(int n) { lives = n; }
-
-	void handleEvent(SDL_Event e);
 
 	bool getImmunity() { return immune; }
 
 
 private:
 	int lives;
-	bool immune;
 
+	bool immune;
 	int temp = 0;
 	int immuneTime = 50;
 
@@ -44,5 +56,7 @@ private:
 
 	Point2D<double> initPos;
 
+	// posicion de la bandera (peruvian)
+	double winPosition = 6306;
 };
 

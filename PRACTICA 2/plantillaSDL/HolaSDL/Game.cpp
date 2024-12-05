@@ -31,11 +31,15 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 
 Game::Game()
 	: seguir(true), 
-	mapOffset(0), 
+	//mapOffset(0), 
+	mapOffset(5880), // para probar cambio de nivel
 	//mapOffset(4080), // para probar el lift en level 2
 	points(0),
 	nextObject(0),
-	marioState(0)
+	marioState(0),
+	level(1),
+	lastLevel(2),
+	gameWon(false)
 {
 	/// ===== Ventana de SDL =====
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -62,7 +66,7 @@ Game::Game()
 			textureSpec[i].numColumns);
 
 	// Carga el tilemap y los objetos segun el nivel
-	loadLevel(1);
+	loadLevel(level);
 
 
 }
@@ -90,15 +94,15 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::loadLevel(int level)
+void Game::loadLevel(int l)
 {
-	cout << "Load level " << level << endl;
+	cout << "Load level " << l << endl;
 
-	string root = "../assets/maps/world" + to_string(level) + ".csv";
+	string root = "../assets/maps/world" + to_string(l) + ".csv";
 
 	tilemap = new TileMap(this, root);
 
-	loadObjectMap("../assets/maps/world" + to_string(level) + ".txt");
+	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
 }
 
 void Game::loadObjectMap(const string& mapFile)
@@ -140,7 +144,8 @@ void Game::loadObjectMap(const string& mapFile)
 		switch (tipo) {
 		case 'M':
 			//player = new Player(this, 4366, 300); // para probar el lift
-			player = new Player(this, x, y);
+			player = new Player(this, 6166, 448); // para probar bandera
+			//player = new Player(this, x, y);
 			sceneObjects.push_back(player);
 			break;
 		case 'B':
@@ -160,6 +165,14 @@ void Game::loadObjectMap(const string& mapFile)
 			break;
 		}		
 	}
+
+	file.close();
+
+	if (gameWon)
+	{
+		mapOffset = 0;
+		nextObject = 0;
+	}
 }
 
 void Game::spawnMushroom(int x, int y)
@@ -174,25 +187,24 @@ void Game::spawnCoin(int x, int y)
 
 void Game::resetLevel()
 {
-	auto it = sceneObjects.begin();
-
-	while (it != sceneObjects.end()) {
-		SceneObject* obj = *it;
-
-		if (obj == player || obj == tilemap) {
-			++it;
-		}
-		else {
-			delete obj; // Eliminar el objeto
-			//it = sceneObjects.erase(it); // Eliminar de la lista y avanzar el iterador
+	for (auto obj : sceneObjects)
+	{
+		if (obj != player && obj != tilemap)
+		{
+			delete obj;
 		}
 	}
 
+	// reinicia mapoffset y lista de objetos
 	nextObject = 0;
+	mapOffset = 0;
 
-	for (SceneObject* obj : objectQueue) {
-		sceneObjects.push_back(obj->clone());
-	}
+	// recarga nivel
+	loadLevel(level);
+
+	//for (SceneObject* obj : objectQueue) {
+	//	sceneObjects.push_back(obj->clone());
+	//}
 }
 
 
@@ -257,6 +269,11 @@ Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
 	}
 
 	return { collision.NONE, 0, 0 };
+}
+
+void Game::endGame()
+{
+	seguir = false;
 }
 
 

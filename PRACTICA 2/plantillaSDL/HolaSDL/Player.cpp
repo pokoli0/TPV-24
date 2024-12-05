@@ -113,6 +113,9 @@ void Player::update()
 			immune = false;
 		}
 	}
+
+	finishLevel();
+
 }
 
 Collision Player::hit(const SDL_Rect& region, Collision::Target target)
@@ -125,17 +128,15 @@ void Player::hit()
 	if (game->getMarioState() == 1 && !immune)
 	{
 		game->setMarioState(0);
-		immune = true;
 	}
 	else if (game->getMarioState() == 0 && !immune)
 	{
 		lives--;
-
-		immune = true;
-
 		_isAlive = false;
+
 		resetPlayer();
 	}
+	immune = true;
 }
 
 SceneObject* Player::clone() const
@@ -168,8 +169,29 @@ void Player::resetPlayer()
 
 	_isAlive = true;
 	game->setMarioState(0);
+}
 
-	cout << "Vidas: " << lives << endl;
+void Player::finishLevel()
+{
+	if (_position.getX() >= winPosition &&
+		game->getLevel() == 1)
+	{
+		_speed.setX(0);
+		cout << "FINAL" << endl;
+		game->setLevel(game->getLevel() + 1);
+
+		game->setGameWon(true);
+
+		if (game->getLevel() > game->getLastLevel())
+		{
+			game->endGame();
+
+		}
+		else
+		{
+			game->resetLevel();
+		}
+	}
 }
 
 void Player::updateAnim()

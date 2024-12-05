@@ -14,17 +14,9 @@ int main(int argc, char* argv[])
         Game game;
         game.run();
     }
-    catch (const FileNotFoundError& fileError)
+    catch (GameError& e)
     {
-        cerr << "File not found: " << fileError.what() << endl;
-    }
-    catch (const SDLError& sdlError)
-    {
-        cerr << "SDL error: " << sdlError.what() << endl;
-    }
-    catch (const FileFormatError& formatError)
-    {
-        cerr << "File format error: " << formatError.what() << endl;
+        cout << e.what() << endl;
     }
     catch (const exception& e)
     {
@@ -34,8 +26,10 @@ int main(int argc, char* argv[])
     {
         cerr << "Unexpected exception: " << error << endl;
     }
-
-    SDL_Quit();
+    catch (...)
+    {
+        cout << "An error occurred." << endl;
+    }
 
     return 0;
 }
