@@ -16,18 +16,14 @@ void Mushroom::render(SDL_Renderer* renderer)
 
 void Mushroom::update()
 {
-	checkAlive();
-
-	//if (_position.getX() - _texture->getFrameWidth() * (TILE_SIDE + 5) < game->getMapOffset()) {
-		//frozen = false;
-	//}
-
 	collision = tryToMove(_speed, Collision::PLAYER);
 
 	if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
 
 	if (collision.vertical) _speed.setY(0);
 	if (collision.horizontal) _speed.setX(-_speed.getX()); // cambio de direccion
+
+	checkAlive();
 }
 
 Collision Mushroom::hit(const SDL_Rect& region, Collision::Target target)

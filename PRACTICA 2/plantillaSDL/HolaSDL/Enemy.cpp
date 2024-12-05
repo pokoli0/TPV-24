@@ -14,8 +14,6 @@ Enemy::Enemy(Game* game, int x, int y, Texture* t)
 
 void Enemy::update()
 {
-	checkAlive();
-
 	collision = tryToMove(_speed, Collision::PLAYER);
 
 	if (_speed.getY() < SPEED_LIMIT) _speed += {0, GRAVITY};
@@ -25,6 +23,8 @@ void Enemy::update()
 
 	if (_speed.getX() > 0) _flip = SDL_FLIP_HORIZONTAL;
 	else if (_speed.getX() < 0) _flip = SDL_FLIP_NONE;
+
+	checkAlive();
 }
 
 
@@ -70,7 +70,7 @@ void Enemy::checkAlive()
 {
 	if (_position.getY() >= MAX_HEIGHT || _position.getX() <= 0 )
 	{
-		delete this; // PETA
+		delete this; // ya no peta, habia q hacerlo al final del update
 		cout << "Byebye" << endl;
 	}
 }
