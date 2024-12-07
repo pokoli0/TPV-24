@@ -27,6 +27,12 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 				{"coin.png", 4, 1},
 				{"lift.png", 1, 1},
 				{"numbers.png", 10, 1},
+				{"nivel1.png", 1, 1},
+				{"nivel2.png", 1, 1},
+				{"salir.png", 1, 1},
+				{"portada.png", 1, 1},
+				{"continuar.png", 1, 1},
+				{"volver.png", 1, 1},
 };
 
 Game::Game()
@@ -295,6 +301,12 @@ Collision Game::checkCollision(const SDL_Rect& rect, Collision::Target target)
 void Game::endGame()
 {
 	seguir = false;
+}
+
+void Game::Quit()
+{
+	//acabar todo
+	cout << " se ha cerrado todo";
 }
 
 

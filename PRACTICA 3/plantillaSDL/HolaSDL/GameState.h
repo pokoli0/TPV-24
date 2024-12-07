@@ -2,7 +2,7 @@
 #define GAMESTATE_H
 #include <list>
 #include <SDL_events.h>
-
+#include "Game.h"
 #include "EventHandler.h"
 #include "gameList.h"
 #include "SceneObject.h"

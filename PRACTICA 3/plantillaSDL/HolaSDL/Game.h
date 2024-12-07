@@ -84,6 +84,12 @@ public:
 		COIN,
 		LIFT,
 		NUMBERS,
+		LVL1,
+		LVL2,
+		EXIT,
+		BG,
+		RESUME,
+		BACK,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
@@ -168,7 +174,7 @@ public:
 	void resetLevel();
 
 	void endGame();
-
+	void Quit();
 	/// ===== Gestion del juego =====
 
 	// Lo llama cada objeto en su update y su caja de colision.

@@ -82,7 +82,9 @@
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="Lift.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Pickable.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneObject.cpp" />
@@ -109,7 +111,9 @@
     <ClInclude Include="InfoBar.h" />
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="Lift.h" />
+    <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="PauseState.h" />
     <ClInclude Include="Pickable.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneObject.h" />
