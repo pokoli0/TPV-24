@@ -37,6 +37,8 @@
 #include "FileNotFoundError.h"
 #include "FileFormatError.h"
 
+#include "GameStateMachine.h"
+
 using uint = unsigned int;
 using namespace std;
 
@@ -61,7 +63,7 @@ constexpr bool DEBUG = false;
 //
 // Clase que representa el juego y controla todos sus aspectos
 //
-class Game
+class Game : private GameStateMachine
 {
 public:
 
@@ -129,6 +131,10 @@ private:
 
 	// indice para indicar el siguiente objeto a instanciar
 	int nextObject; 
+
+
+	/// ===== Estados =====
+	GameStateMachine* gameStateMachine;
 
 
 	/// ===== Otros =====
@@ -199,6 +205,8 @@ public:
 	void setLevel(int n) { level = n; }
 
 	void setGameWon(bool w) { gameWon = w; }
+
+	GameStateMachine* getStateMachine() const { return gameStateMachine; }
 };
 
 inline Texture*

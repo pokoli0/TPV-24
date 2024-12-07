@@ -74,7 +74,6 @@ public:
 
 
     /// ===== Metodos de Mario =====
-    virtual void handleEvent(SDL_Event e) {};
     virtual void hit() {}
     virtual bool getImmunity() { return false; }
 

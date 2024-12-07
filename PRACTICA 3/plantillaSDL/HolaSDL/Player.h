@@ -2,8 +2,9 @@
 #include "checkML.h"
 
 #include "SceneObject.h"
+#include "EventHandler.h"
 
-class Player : public SceneObject
+class Player : public SceneObject, public EventHandler
 {
 public:
 	Player(Game* game, int x, int y);
@@ -30,7 +31,7 @@ public:
 
 	/// ===== Gestion de movimiento =====
 
-	void handleEvent(SDL_Event e) override;
+	void handleEvent(const SDL_Event& event) override;
 	void jump();
 	
 

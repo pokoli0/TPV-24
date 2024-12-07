@@ -48,7 +48,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -69,67 +68,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Block.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GameStateMachine.cpp" />
-    <ClCompile Include="Goomba.cpp" />
-    <ClCompile Include="InfoBar.cpp" />
-    <ClCompile Include="Koopa.cpp" />
-    <ClCompile Include="Lift.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mushroom.cpp" />
-    <ClCompile Include="Pickable.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SceneObject.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="bola.cpp" />
+    <ClCompile Include="button.cpp" />
+    <ClCompile Include="counter.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Block.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="checkML.h" />
-    <ClInclude Include="Coin.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="FileFormatError.h" />
-    <ClInclude Include="FileNotFoundError.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameError.h" />
-    <ClInclude Include="GameList.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="GameStateMachine.h" />
-    <ClInclude Include="Goomba.h" />
-    <ClInclude Include="InfoBar.h" />
-    <ClInclude Include="Koopa.h" />
-    <ClInclude Include="Lift.h" />
-    <ClInclude Include="Mushroom.h" />
-    <ClInclude Include="Pickable.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="SceneObject.h" />
-    <ClInclude Include="SDLError.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TileMap.h" />
-    <ClInclude Include="Vector2D.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\assets\maps\world1.csv" />
-    <None Include="..\assets\maps\world2.csv" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\assets\maps\world1.png" />
-    <Image Include="..\assets\maps\world2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\assets\maps\world1.txt" />
-    <Text Include="..\assets\maps\world2.txt" />
-    <Text Include="..\assets\maps\worldTest.txt" />
+    <ClInclude Include="bola.h" />
+    <ClInclude Include="button.h" />
+    <ClInclude Include="counter.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -240,11 +240,11 @@ void Player::jump()
 	}
 }
 
-void Player::handleEvent(SDL_Event e)
+void Player::handleEvent(const SDL_Event& event)
 {
-	if (e.type == SDL_KEYDOWN)
+	if (event.type == SDL_KEYDOWN)
 	{
-		switch (e.key.keysym.sym) {
+		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
 			_speed.setX(marioSpeed);
 			break;
@@ -265,9 +265,9 @@ void Player::handleEvent(SDL_Event e)
 			break;
 		}
 	}
-	else if (e.type == SDL_KEYUP) // soltar teclas
+	else if (event.type == SDL_KEYUP) // soltar teclas
 	{
-		switch (e.key.keysym.sym) {
+		switch (event.key.keysym.sym) {
 		case SDLK_RIGHT:
 			_speed.setX(0);
 			break;
