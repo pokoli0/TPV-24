@@ -31,14 +31,14 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 
 Game::Game()
 	: seguir(true), 
-	mapOffset(0), 
-	//mapOffset(5880), // para probar cambio de nivel
+	//mapOffset(0), 
+	mapOffset(5880), // para probar cambio de nivel
 	//mapOffset(4080), // para probar el lift en level 2
 	points(0),
 	nextObject(0),
 	marioState(0),
 	level(1),
-	lastLevel(2),
+	lastLevel(2), // numero de niveles que tiene el juego
 	gameWon(false)
 {
 	/// ===== Ventana de SDL =====
@@ -101,26 +101,24 @@ void Game::loadLevel(int l)
 	string root = "../assets/maps/world" + to_string(l) + ".csv";
 
 	tilemap = new TileMap(this, root);
+	objectQueue.push_back(tilemap);
 
 	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
 }
 
 void Game::loadObjectMap(const string& mapFile)
 {
-	// Carga el mapa
 	ifstream file(mapFile);
 
 	if (!file.is_open()) {
 		throw string("fichero de mapa worldX.txt no encontrado");
 	}
 
-	// Leemos el mapa l�nea a l�nea para evitar acarreo de errores
-	// y permitir extensiones del formato
 	string line;
 
 	getline(file, line); // lectura primera linea
 
-	// Usamos un stringstream para leer la l�nea como si fuera un flujo
+	// Usamos un stringstream para leer la linea como si fuera un flujo
 	stringstream lineStream(line);
 
 	lineStream >> r >> g >> b;
@@ -143,10 +141,14 @@ void Game::loadObjectMap(const string& mapFile)
 
 		switch (tipo) {
 		case 'M':
-			//player = new Player(this, 4366, 300); // para probar el lift
-			//player = new Player(this, 6166, 448); // para probar bandera
-			player = new Player(this, x, y);
-			sceneObjects.push_back(player);
+			if (player == nullptr) {
+				//player = new Player(this, x, y);
+				//player = new Player(this, 4366, 300); // para probar el lift
+				player = new Player(this, 6166, 448); // para probar bandera
+
+				objectQueue.push_back(player);
+			}
+			
 			break;
 		case 'B':
 			objectQueue.push_back(new Block(this, x, y, atrib, accion));
@@ -171,7 +173,24 @@ void Game::loadObjectMap(const string& mapFile)
 	if (gameWon)
 	{
 		mapOffset = 0;
-		nextObject = 0;
+		nextObject = 2;
+	}
+}
+
+void Game::addObject(SceneObject* o)
+{
+	if (nextObject == 1)
+	{
+		sceneObjects.push_front(o);
+	}
+	else if (nextObject == 2)
+	{
+		player = o;
+		sceneObjects.push_back(o);
+	}
+	else
+	{
+		sceneObjects.push_back(o);
 	}
 }
 
@@ -191,20 +210,16 @@ void Game::resetLevel()
 	{
 		if (obj != player && obj != tilemap)
 		{
-			delete obj;
+			delete obj; // POSIBLE FALLO -> NO SE BORRAN ENTIDADES ANTERIORES
 		}
 	}
 
 	// reinicia mapoffset y lista de objetos
-	nextObject = 0;
+	nextObject = 2;
 	mapOffset = 0;
 
 	// recarga nivel
-	loadLevel(level);
-
-	//for (SceneObject* obj : objectQueue) {
-	//	sceneObjects.push_back(obj->clone());
-	//}
+	loadLevel(level); // POSIBLE FALLO -> SE HACE LOAD DE ENTIDADES ANTERIORES + NUEVAS ??¿¿?
 }
 
 
@@ -284,7 +299,7 @@ Game::update()
 	while (nextObject < objectQueue.size() && 
 		objectQueue[nextObject]->getXPos() < mapOffset + WIN_WIDTH + TILE_SIDE)
 	{
-		sceneObjects.push_back(objectQueue[nextObject++]->clone());
+		addObject(objectQueue[nextObject++]->clone());
 	}
 
 	for (auto obj : sceneObjects) {

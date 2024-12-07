@@ -118,7 +118,7 @@ private:
 
 	/// --- SceneObjects ---
 
-	Player* player = nullptr;
+	SceneObject* player = nullptr;
 	SceneObject* tilemap = nullptr;
 
 	// Objetos del juego
@@ -156,6 +156,8 @@ public:
 	void loadLevel(int level); // Carga el nivel
 
 	void loadObjectMap(const string& mapFile); // Carga los objs del nivel
+
+	void addObject(SceneObject* o);
 
 	void resetLevel();
 

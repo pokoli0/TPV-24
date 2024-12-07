@@ -179,17 +179,17 @@ void Player::finishLevel()
 		_speed.setX(0);
 		cout << "FINAL" << endl;
 		game->setLevel(game->getLevel() + 1);
-
+		cout << "level" << game->getLevel() << endl;
 		game->setGameWon(true);
 
-		if (game->getLevel() > game->getLastLevel())
+		if (game->getLevel() < game->getLastLevel() + 1)
 		{
-			game->endGame();
+			game->resetLevel();
 
 		}
 		else
 		{
-			game->resetLevel();
+			game->endGame();			
 		}
 	}
 }

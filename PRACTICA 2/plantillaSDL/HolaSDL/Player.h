@@ -15,7 +15,7 @@ public:
 	SceneObject* clone() const override;
 
 	// resta vidas y cambia el estado de mario
-	void hit();
+	void hit() override;
 
 	// comprueba si se ha caido, resta vidas si es el caso
 	void checkAlive() override;
@@ -30,7 +30,7 @@ public:
 
 	/// ===== Gestion de movimiento =====
 
-	void handleEvent(SDL_Event e);
+	void handleEvent(SDL_Event e) override;
 	void jump();
 	
 

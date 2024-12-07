@@ -36,6 +36,7 @@ protected:
 public:
     SceneObject(Game* game, int x, int y, int width, int height, Texture* texture);
 
+    // Constructora por copia
     SceneObject(const SceneObject& other)
         : GameObject(other),
         _position(other._position),
@@ -64,16 +65,22 @@ public:
 
     //virtual void onLevelReload() = 0;
 
-    // igual este metodo aqui no tiene mucho sentido por el tilemap
     virtual void checkAlive() = 0;
-
     virtual void updateAnim() = 0;
 
     // devuelva una copia del objeto sobre el que 
     // se aplica (solo se aplicará sobre los objetos de objectQueue)
     virtual SceneObject* clone() const = 0;
 
-    // Getters virtuales
+
+    /// ===== Metodos de Mario =====
+    virtual void handleEvent(SDL_Event e) {};
+    virtual void hit() {}
+    virtual bool getImmunity() { return false; }
+
+
+    /// ===== Getters y setters =====
+
     virtual SDL_Rect getCollisionRect() const;
     virtual  bool getAlive() const;
     virtual SDL_Rect getRenderRect() const;
