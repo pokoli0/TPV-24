@@ -1,14 +1,17 @@
 #include "MainMenuState.h"
 #include <iostream>
+
+#include "Game.h"
+
 MainMenuState::MainMenuState(Game* g)
     : GameState(g)
 {
     setupMenu();
 }
-void MainMenuState::render() const
+void MainMenuState::render(SDL_Renderer* r)
 {
     getGame()->getTexture(Game::BG)->render();
-    GameState::render();
+    GameState::render(r);
 }
 
 void MainMenuState::update()

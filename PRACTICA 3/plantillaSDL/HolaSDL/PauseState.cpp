@@ -1,15 +1,17 @@
 #include "PauseState.h"
 #include <iostream>
 
+#include "Game.h"
+
 PauseState::PauseState(Game* g)
     : GameState(g)
 {
     setupMenu();
 }
 
-void PauseState::render() const
+void PauseState::render(SDL_Renderer* r)
 {
-    GameState::render();
+    GameState::render(r);
 }
 
 void PauseState::update()

@@ -6,7 +6,7 @@
 class Block : public SceneObject
 {
 public:
-	Block(Game* game, int x, int y, char v, char act);
+	Block(Game* game, PlayState* s, int x, int y, char v, char act);
 
 	void render(SDL_Renderer* renderer) override;
 	void update() override;

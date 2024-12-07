@@ -3,8 +3,10 @@
 #include "Block.h"
 #include "Game.h"
 
-Block::Block(Game* game, int x, int y, char v, char act)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BLOCKS)), 
+#include "PlayState.h"
+
+Block::Block(Game* game, PlayState* s, int x, int y, char v, char act)
+	: SceneObject(game, s, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BLOCKS)), 
 	variant(v), action(act)
 {
 	setScale(2);
@@ -41,7 +43,7 @@ void Block::render(SDL_Renderer* renderer)
 
 void Block::update()
 {
-	game->checkCollision(_rect, Collision::PLAYER);
+	_playState->checkCollision(_rect, Collision::PLAYER);
 }
 
 Collision Block::hit(const SDL_Rect& region, Collision::Target target)
@@ -62,11 +64,11 @@ Collision Block::hit(const SDL_Rect& region, Collision::Target target)
 			{
 				if (action == 'P') // Power Up
 				{
-					game->spawnMushroom(_position.getX(), _position.getY() - TILE_SIDE);
+					_playState->spawnMushroom(_position.getX(), _position.getY() - TILE_SIDE);
 				}
 				else // Coin 'C'
 				{
-					game->spawnCoin(_position.getX(), _position.getY() - TILE_SIDE);
+					_playState->spawnCoin(_position.getX(), _position.getY() - TILE_SIDE);
 				}
 
 				variant = 'N';

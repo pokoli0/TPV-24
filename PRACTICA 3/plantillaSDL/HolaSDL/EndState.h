@@ -8,7 +8,7 @@ public:
     EndState(Game* g);
     virtual ~EndState() = default;
 
-    void render() const override;
+    void render(SDL_Renderer* r) override;
     void update() override;
     void handleEvent(const SDL_Event& event) override;
 

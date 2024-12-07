@@ -2,9 +2,9 @@
 #define GAMESTATE_H
 #include <list>
 #include <SDL_events.h>
-#include "Game.h"
+
 #include "EventHandler.h"
-#include "gameList.h"
+#include "GameList.h"
 #include "SceneObject.h"
 
 // GameState es propietario de
@@ -17,12 +17,12 @@ class GameState
 {
 
 public:
-	GameState(Game* g);
+	GameState(Game* g) : game(g) {}
 
 	virtual ~GameState() = default;
 
-	virtual void render() const;
-	virtual void update();
+	virtual void render(SDL_Renderer* r) {};
+	virtual void update() {};
 
 	virtual void handleEvent(const SDL_Event& event);
 

@@ -6,7 +6,7 @@
 class Pickable : public SceneObject
 {
 public:
-	Pickable(Game* game, int x, int y, Texture* t);
+	Pickable(Game* game, PlayState* s, int x, int y, Texture* t);
 
 	void update() override;
 

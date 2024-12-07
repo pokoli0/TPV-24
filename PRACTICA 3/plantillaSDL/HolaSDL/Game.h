@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
+
 #include "checkML.h"
 
 // Biblioteca estándar de C++
@@ -63,7 +65,7 @@ constexpr bool DEBUG = false;
 //
 // Clase que representa el juego y controla todos sus aspectos
 //
-class Game : private GameStateMachine
+class Game : public GameStateMachine
 {
 public:
 
@@ -93,6 +95,9 @@ public:
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 
+	using GameStateMachine::pushState;
+	using GameStateMachine::replaceState;
+
 private:
 	/// ===== SDL =====
 
@@ -110,36 +115,9 @@ private:
 	// Array con todas las texturas del juego
 	std::array<Texture*, NUM_TEXTURES> textures;
 
-	// colores del fondo del nivel
-	int r, g, b;
-
-	// coordenada x del extremo izquierdo de la vista
-	int mapOffset;
-
-	// nivel actual del juego
-	int level;
-
-	// ultimo nivel
-	int lastLevel;
-
-	bool gameWon;
-
-	/// --- SceneObjects ---
-
-	SceneObject* player = nullptr;
-	SceneObject* tilemap = nullptr;
-
-	// Objetos del juego
-	GameList<SceneObject> sceneObjects;
-
-	// vamos extrayendo objetos de la cola segun vaya avanzando el nivel
-	std::vector<SceneObject*> objectQueue;
-
-	// indice para indicar el siguiente objeto a instanciar
-	int nextObject; 
-
 
 	/// ===== Estados =====
+
 	GameStateMachine* gameStateMachine;
 
 
@@ -164,36 +142,11 @@ public:
 
 
 	/// ===== Gestion del nivel =====
-
-	void loadLevel(int level); // Carga el nivel
-
-	void loadObjectMap(const string& mapFile); // Carga los objs del nivel
-
-	void addObject(SceneObject* o);
-
-	void resetLevel();
-
 	void endGame();
 	void Quit();
-	/// ===== Gestion del juego =====
-
-	// Lo llama cada objeto en su update y su caja de colision.
-	// Itera sobre los objetos del juego llamando a sus metodos hit.
-	// Si ha habido una colision(detectada por hit), interrumpe la busqueda y la devuelve.
-	Collision checkCollision(const SDL_Rect& rect, Collision::Target target);
-
-	// spawnea mushroom encima del bloque 
-	void spawnMushroom(int x, int y);
-	void spawnCoin(int x, int y);
-
-	// llama al hit del mario
-	void playerHit();
 
 
 	/// ===== Getters y Setters =====
-
-	int getMapOffset() const { return mapOffset; }
-	void setMapOffset(int m) { mapOffset = m; }
 
 	int getMarioState() const { return marioState; }
 	void setMarioState(int s) { marioState = s; }
@@ -201,16 +154,7 @@ public:
 	int getPoints() const { return points; }
 	void givePoints(int n) { points += n; }
 
-	bool getMarioImmunity();
-
 	SDL_Renderer* getRender() { return renderer; }
-
-	int getLastLevel() const { return lastLevel; }
-
-	int getLevel() { return level; }
-	void setLevel(int n) { level = n; }
-
-	void setGameWon(bool w) { gameWon = w; }
 
 	GameStateMachine* getStateMachine() const { return gameStateMachine; }
 };
@@ -221,3 +165,4 @@ Game::getTexture(TextureName name) const
 	return textures[name];
 }
 
+#endif // GAME_H 

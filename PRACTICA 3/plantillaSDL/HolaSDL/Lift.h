@@ -6,7 +6,7 @@
 class Lift : public SceneObject
 {
 public:
-	Lift(Game* game, int x, int y, int speed);
+	Lift(Game* game, PlayState* s, int x, int y, int speed);
 
 
 	void update() override;

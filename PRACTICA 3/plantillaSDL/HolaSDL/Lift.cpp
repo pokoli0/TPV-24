@@ -3,8 +3,8 @@
 #include "Lift.h"
 #include "Game.h"
 
-Lift::Lift(Game* game, int x, int y, int speed)
-	: SceneObject(game, x, y, game->getTexture(Game::LIFT)->getFrameWidth(), 
+Lift::Lift(Game* game, PlayState* s, int x, int y, int speed)
+	: SceneObject(game, s, x, y, game->getTexture(Game::LIFT)->getFrameWidth(), 
 		game->getTexture(Game::LIFT)->getFrameHeight(), game->getTexture(Game::LIFT))
 {
 	setScale(1);

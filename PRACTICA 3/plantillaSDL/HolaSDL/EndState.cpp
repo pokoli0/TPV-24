@@ -1,16 +1,18 @@
 #include "EndState.h"
 #include <iostream>
 
+#include "Game.h"
+
 EndState::EndState(Game* g)
     : GameState(g)
 {
     setupMenu();
 }
 
-void EndState::render() const
+void EndState::render(SDL_Renderer* r)
 {
     //poner si has ganado o no
-    GameState::render();
+    GameState::render(r);
 }
 
 void EndState::update()

@@ -7,7 +7,7 @@
 class Player : public SceneObject, public EventHandler
 {
 public:
-	Player(Game* game, int x, int y);
+	Player(Game* game, PlayState* state, int x, int y);
 
 	void render(SDL_Renderer* renderer) override;
 	void update() override;

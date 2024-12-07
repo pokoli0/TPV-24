@@ -3,8 +3,10 @@
 #include "TileMap.h"
 #include "Game.h"
 
-TileMap::TileMap(Game* game, const string& mapFile, int x, int y)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BACKGROUND))
+#include "PlayState.h"
+
+TileMap::TileMap(Game* game, PlayState* s, const string& mapFile, int x, int y)
+	: SceneObject(game, s, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BACKGROUND))
 {
 	loadTilemap(mapFile);
 }
@@ -56,7 +58,7 @@ void TileMap::loadTilemap(string fichero)
 
 void TileMap::render(SDL_Renderer* renderer)
 {
-	int offset = game->getMapOffset();  // atributo de Game
+	int offset = _playState->getMapOffset();  // atributo de Game
 
 	// Primera columna de la matriz del mapa visible en la ventana
 	int col0 = offset / TILE_SIDE;

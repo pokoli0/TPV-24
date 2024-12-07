@@ -1,9 +1,13 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player(Game* game, int x, int y)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::MARIO))
+#include "PlayState.h"	
+
+Player::Player(Game* game, PlayState* state, int x, int y)
+	: SceneObject(game, state, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::MARIO))
 {
+	_playState->addEventListener(this);
+
 	game->setMarioState(0);
 
 	initPos = Point2D<double>(x, y);
@@ -29,7 +33,7 @@ void Player::render(SDL_Renderer* renderer)
 {
 	_texture = game->getMarioState() == 0 ? game->getTexture(Game::MARIO) : game->getTexture(Game::SUPERMARIO);
 
-	_rect.x = _position.getX() - game->getMapOffset();
+	_rect.x = _position.getX() - _playState->getMapOffset();
 	
 	if (_texture == game->getTexture(Game::SUPERMARIO))
 	{
@@ -80,10 +84,10 @@ void Player::update()
 		_flip = SDL_FLIP_NONE;
 
 		// Limites
-		if (_position.getX() - game->getMapOffset() >= Game::WIN_WIDTH / 2 
-			&& game->getMapOffset() <= MAX_MAP_OFFSET)
+		if (_position.getX() - _playState->getMapOffset() >= Game::WIN_WIDTH / 2
+			&& _playState->getMapOffset() <= MAX_MAP_OFFSET)
 		{
-			game->setMapOffset(game->getMapOffset() + _speed.getX());
+			_playState->setMapOffset(_playState->getMapOffset() + _speed.getX());
 		}
 		canMove = true;
 	}
@@ -91,14 +95,14 @@ void Player::update()
 	{
 		_flip = SDL_FLIP_HORIZONTAL;
 
-		if (_position.getX() - game->getMapOffset() < TILE_SIDE) canMove = false;
+		if (_position.getX() - _playState->getMapOffset() < TILE_SIDE) canMove = false;
 	}
 
 	if (!onGround) 
 	{
 		SDL_Rect r = getCollisionRect();
 		r.y += 1;
-		if (game->checkCollision(r, Collision::ENEMIES).result == Collision::OBSTACLE) {
+		if (_playState->checkCollision(r, Collision::ENEMIES).result == Collision::OBSTACLE) {
 			_speed.setY(0);
 			onGround = true;
 		}
@@ -164,7 +168,7 @@ void Player::checkAlive()
 
 void Player::resetPlayer()
 {
-	game->setMapOffset(0);
+	_playState->setMapOffset(0);
 	_position = initPos;
 
 	_isAlive = true;
@@ -174,17 +178,17 @@ void Player::resetPlayer()
 void Player::finishLevel()
 {
 	if (_position.getX() >= winPosition &&
-		game->getLevel() == 1)
+		_playState->getLevel() == 1)
 	{
 		_speed.setX(0);
 		cout << "FINAL" << endl;
-		game->setLevel(game->getLevel() + 1);
-		cout << "level" << game->getLevel() << endl;
-		game->setGameWon(true);
+		_playState->setLevel(_playState->getLevel() + 1);
+		cout << "level" << _playState->getLevel() << endl;
+		_playState->setGameWon(true);
 
-		if (game->getLevel() < game->getLastLevel() + 1)
+		if (_playState->getLevel() < _playState->getLastLevel() + 1)
 		{
-			game->resetLevel();
+			_playState->resetLevel();
 
 		}
 		else
@@ -261,7 +265,7 @@ void Player::handleEvent(const SDL_Event& event)
 			break;
 		case SDLK_i:
 			cout << "MARIO POS (" << _position.getX() << ", " << _position.getY() << ")" << endl;
-			cout << "MAP OFFSET (" << game->getMapOffset() << ")" << endl;
+			cout << "MAP OFFSET (" << _playState->getMapOffset() << ")" << endl;
 			break;
 		}
 	}

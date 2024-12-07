@@ -60,11 +60,11 @@ GameStateMachine::update()
 }
 
 void
-GameStateMachine::render() const
+GameStateMachine::render(SDL_Renderer* r) const
 {
 	if (!gameStates.empty()) {
 		// Asumimos que render (const) no desapilará y destruirá el estado
-		gameStates.top()->render();
+		gameStates.top()->render(r);
 	}
 }
 

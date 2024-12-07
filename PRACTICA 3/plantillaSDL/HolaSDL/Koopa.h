@@ -6,7 +6,7 @@
 class Koopa : public Enemy
 {
 public:
-	Koopa(Game* game, int x, int y);
+	Koopa(Game* game, PlayState* s, int x, int y);
 
 	void render(SDL_Renderer* renderer) override;
 

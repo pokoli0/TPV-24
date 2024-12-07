@@ -48,7 +48,7 @@ public:
 	// Métodos que delegan en los métodos homónimos de GameState
 	// sobre el estado actual (no hacen nada si la pila es vacía)
 	void update();
-	void render() const;
+	void render(SDL_Renderer* r) const;
 	void handleEvent(const SDL_Event& event);
 };
 

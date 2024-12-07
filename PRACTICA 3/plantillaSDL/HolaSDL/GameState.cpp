@@ -1,6 +1,5 @@
 #include "GameState.h"
 
-
 void GameState::handleEvent(const SDL_Event& event)
 {
 	for (auto handler : eventHandlers) {

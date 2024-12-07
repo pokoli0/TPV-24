@@ -3,8 +3,8 @@
 #include "Pickable.h"
 #include "Game.h"
 
-Pickable::Pickable(Game* game, int x, int y, Texture* t)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, t)
+Pickable::Pickable(Game* game, PlayState* s, int x, int y, Texture* t)
+	: SceneObject(game, s, x, y, TILE_SIDE, TILE_SIDE, t)
 {
 	setScale(2);
 }

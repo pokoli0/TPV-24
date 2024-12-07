@@ -3,8 +3,8 @@
 #include "Goomba.h"
 #include "Game.h"
 
-Goomba::Goomba(Game* game, int x, int y)
-	: Enemy(game, x, y, game->getTexture(Game::GOOMBA))
+Goomba::Goomba(Game* game, PlayState* s, int x, int y)
+	: Enemy(game, s, x, y, game->getTexture(Game::GOOMBA))
 {
 	cout << "Goomba (" << x << ", " << y << ")" << endl;
 }

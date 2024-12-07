@@ -2,17 +2,18 @@
 
 #include "SceneObject.h"
 #include "Game.h"
+#include "PlayState.h"
 
-SceneObject::SceneObject(Game* game, int x, int y, int width, int height, Texture* texture)
+SceneObject::SceneObject(Game* game, PlayState* state, int x, int y, int width, int height, Texture* texture)
     : GameObject(game), _position(x, y), _width(width), _height(height), _scale(1),
     _speed(0, 0), _texture(texture), _isAlive(true), _rect(),
-    _frame(0), _frameCounter(0)
+    _frame(0), _frameCounter(0), _playState(state)
 {
 }
 
 void SceneObject::render(SDL_Renderer* renderer)
 {
-    _rect.x = _position.getX() - game->getMapOffset();
+    _rect.x = _position.getX() - _playState->getMapOffset();
     _rect.y = _position.getY() - _height;
     _rect.w = _texture->getFrameWidth() * _scale;
     _rect.h = _texture->getFrameHeight() * _scale;
@@ -44,7 +45,7 @@ bool SceneObject::getAlive() const
 SDL_Rect SceneObject::getRenderRect() const
 {
     return SDL_Rect{
-        (int)_position.getX() - game->getMapOffset(),
+        (int)_position.getX() - _playState->getMapOffset(),
         (int)_position.getY() - _height,
         _width,
         _height
@@ -60,7 +61,7 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
     // Movimiento vertical
     if (speed.getY() != 0) {
         rect.y += speed.getY();
-        collision = game->checkCollision(rect, target);
+        collision = _playState->checkCollision(rect, target);
         
         // Cantidad que se ha entrado en el obstáculo (lo que hay que deshacer)
         int fix = collision.vertical * (speed.getY() > 0 ? 1 : -1);
@@ -76,7 +77,7 @@ Collision SceneObject::tryToMove(const Vector2D<int>& speed, Collision::Target t
     if (speed.getX() != 0) {
         rect.x += speed.getX();
 
-        Collision partial = game->checkCollision(rect, target);
+        Collision partial = _playState->checkCollision(rect, target);
 
         // Copia la información de esta colisión a la que se devolverá
         collision.horizontal = partial.horizontal;

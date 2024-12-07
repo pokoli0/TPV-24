@@ -6,6 +6,8 @@
 #include "GameList.h"
 #include "Collision.h"
 
+class PlayState;
+
 class SceneObject : public GameObject
 {
 protected:
@@ -17,6 +19,8 @@ protected:
 
     Texture* _texture = nullptr;
     SDL_Rect _rect;
+
+    PlayState* _playState;
 
     bool _isAlive;
 
@@ -34,7 +38,7 @@ protected:
     SDL_RendererFlip _flip;
 
 public:
-    SceneObject(Game* game, int x, int y, int width, int height, Texture* texture);
+    SceneObject(Game* game, PlayState* state, int x, int y, int width, int height, Texture* texture);
 
     // Constructora por copia
     SceneObject(const SceneObject& other)
@@ -92,9 +96,6 @@ public:
     // automáticamente su eliminación de la lista
     void setListAnchor(GameList<SceneObject>::anchor&& anchor) {
         _anchor = std::move(anchor);
-    }
-    GameList<SceneObject>::anchor& getListAnchor() {
-        return _anchor;
     }
 
 protected:

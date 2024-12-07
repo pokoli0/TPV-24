@@ -6,7 +6,7 @@
 class Mushroom : public Pickable
 {
 public:
-	Mushroom(Game* game, int x, int y);
+	Mushroom(Game* game, PlayState* s, int x, int y);
 
 	void render(SDL_Renderer* renderer) override;
 	void update() override;

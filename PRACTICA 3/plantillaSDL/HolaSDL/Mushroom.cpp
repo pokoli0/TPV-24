@@ -3,8 +3,8 @@
 #include "Mushroom.h"
 #include "Game.h"
 
-Mushroom::Mushroom(Game* game, int x, int y)
-	: Pickable(game, x, y, game->getTexture(Game::MUSHROOM))
+Mushroom::Mushroom(Game* game, PlayState* s, int x, int y)
+	: Pickable(game, s, x, y, game->getTexture(Game::MUSHROOM))
 {
 	_speed.setX(3);
 }

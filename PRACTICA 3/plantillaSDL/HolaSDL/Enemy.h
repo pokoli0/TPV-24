@@ -6,7 +6,7 @@
 class Enemy : public SceneObject
 {
 public:
-	Enemy(Game* game, int x, int y, Texture* t);
+	Enemy(Game* game, PlayState* s, int x, int y, Texture* t);
 
 	//void render(SDL_Renderer* renderer) override {};
 	void update() override;

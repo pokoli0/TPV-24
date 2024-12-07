@@ -6,7 +6,7 @@
 class Goomba : public Enemy
 {
 public:
-	Goomba(Game* game, int x, int y);
+	Goomba(Game* game, PlayState* s, int x, int y);
 
 	void render(SDL_Renderer* renderer) override;
 

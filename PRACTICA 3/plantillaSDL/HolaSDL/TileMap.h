@@ -8,7 +8,7 @@ using namespace std;
 class TileMap : public SceneObject
 {
 public:
-	TileMap(Game* game, const string& mapFile, int x = 0, int y = 0);
+	TileMap(Game* game, PlayState* s, const string& mapFile, int x = 0, int y = 0);
 
 	void render(SDL_Renderer* renderer) override;
 	void update() override;

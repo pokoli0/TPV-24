@@ -3,8 +3,10 @@
 #include "Enemy.h"
 #include "Game.h"
 
-Enemy::Enemy(Game* game, int x, int y, Texture* t)
-	: SceneObject(game, x, y, TILE_SIDE, TILE_SIDE, t)
+#include "PlayState.h"
+
+Enemy::Enemy(Game* game, PlayState* s, int x, int y, Texture* t)
+	: SceneObject(game, s, x, y, TILE_SIDE, TILE_SIDE, t)
 {
 	setScale(2);
 
@@ -40,7 +42,7 @@ Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 		Collision collision{ Collision::DAMAGE, intersection.w, intersection.h };
 
 
-		if (target == Collision::ENEMIES && !game->getMarioImmunity()) // si mario no es inmune
+		if (target == Collision::ENEMIES && !_playState->getMarioImmunity()) // si mario no es inmune
 		{
 			if (intersection.y <= ownRect.y // desde arriba
 				&& intersection.w > TILE_SIDE / 4) // para que no detecte col desde el lado
@@ -50,8 +52,8 @@ Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 			else // no entra siempre
 			{
 				cout << "col player" << endl;
-				cout << game->getMarioImmunity() << endl;
-				game->playerHit();
+				cout << _playState->getMarioImmunity() << endl;
+				_playState->playerHit();
 			}
 
 			return collision;
