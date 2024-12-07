@@ -11,12 +11,15 @@ MainMenuState::MainMenuState(Game* g)
 void MainMenuState::render(SDL_Renderer* r)
 {
     getGame()->getTexture(Game::BG)->render();
-    GameState::render(r);
+
+    for (auto s : stateList) 
+        s->render(r);
 }
 
 void MainMenuState::update()
 {
-    GameState::update();
+    for (auto s : stateList)
+        s->update();
 }
 
 void MainMenuState::handleEvent(const SDL_Event& event)
