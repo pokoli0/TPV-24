@@ -2,6 +2,7 @@
 #define PLAYSTATE_H
 
 #include "GameState.h"
+#include "Game.h"
 
 class PlayState : public GameState
 {

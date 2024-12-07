@@ -42,7 +42,7 @@ public:
 
     // Constructora por copia
     SceneObject(const SceneObject& other)
-        : GameObject(other),
+        : GameObject(other.game),
         _position(other._position),
         _speed(other._speed),
         _width(other._width),
@@ -56,7 +56,8 @@ public:
         _frame(other._frame),
         _frameCounter(other._frameCounter),
         _flipSprite(other._flipSprite),
-        _flip(other._flip)
+        _flip(other._flip),
+        _playState(other._playState)
     {}
 
     virtual ~SceneObject() {}
