@@ -19,10 +19,7 @@ void PlayState::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
-	for (auto obj : stateList) obj->render(renderer);
-	
-	//for (auto obj : sceneObjects) obj->render(renderer);
-	//player->render(renderer);
+	for (auto obj : sceneObjects) obj->render(renderer);
 }
 
 void PlayState::update()
@@ -32,11 +29,10 @@ void PlayState::update()
 
 	while (nextObject < objectQueue.size() && objectQueue[nextObject]->getXPos() < rightThreshold)
 	{
-		addObject(objectQueue[nextObject++]->clone());
+		addObject(objectQueue[nextObject++]->clone()); // se hace a partir del 2
 	}
 
-	for (auto obj : stateList) obj->update();
-	//for (auto obj : sceneObjects) obj->update(); // Para que funcionen las colisiones
+	for (auto obj : sceneObjects) obj->update(); // Para que funcionen las colisiones
 }
 
 void PlayState::loadLevel(int l)
@@ -46,9 +42,8 @@ void PlayState::loadLevel(int l)
 	tilemap = new TileMap(game, this, root);
 
 	objectQueue.push_back(tilemap);
-	addObject(tilemap);
+	addObject(objectQueue[nextObject++]); // tilemap = 1
 
-	sceneObjects.push_back(tilemap);
 	//cout << "Tile:" << nextObject << endl;
 
 	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
@@ -99,11 +94,9 @@ void PlayState::loadObjectMap(const string& mapFile)
 				//player = new Player(this, 6166, 448); // para probar bandera
 
 				objectQueue.push_back(player);
-				addObject(player);
-				nextObject++; // sera 1
+				addObject(objectQueue[nextObject++]); // player = 2
 
-				//sceneObjects.push_back(player); // se encarga de las colisones
-				addEventListener(player);		// se encarga del input
+				addEventListener(player); // se encarga del input
 
 				//cout << "Mario:" << nextObject << endl;
 			}
@@ -133,7 +126,6 @@ void PlayState::loadObjectMap(const string& mapFile)
 
 		if (tipo != 'M') {
 			objectQueue.push_back(obj);
-			sceneObjects.push_back(obj); // se encarga de las colisones
 		}
 	}
 
@@ -150,16 +142,18 @@ void PlayState::addObject(SceneObject* o)
 {
 	if (nextObject == 1)
 	{
+		sceneObjects.push_front(o);
 		stateList.push_front(o);
 	}
 	else if (nextObject == 2)
 	{
-		//player = o;
-		stateList.push_back(player); /// esto puede estar mal al hacer el cambio de nivel 1!!!1
+		sceneObjects.push_back(player); /// esto puede estar mal al hacer el cambio de nivel 1!!!1
+		stateList.push_back(player);
 	}
 	else
 	{
-		stateList.push_back(o);
+		sceneObjects.push_back(o);
+		stateList.push_back(player);
 	}
 }
 

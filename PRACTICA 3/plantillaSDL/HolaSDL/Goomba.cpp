@@ -4,7 +4,7 @@
 #include "Game.h"
 
 Goomba::Goomba(Game* game, PlayState* s, int x, int y)
-	: Enemy(game, s, x, y, game->getTexture(Game::GOOMBA))
+	: Enemy(game, s, x, y, game->getTexture(Game::GOOMBA)), goombaFrame(0)
 {
 	cout << "Goomba (" << x << ", " << y << ")" << endl;
 }

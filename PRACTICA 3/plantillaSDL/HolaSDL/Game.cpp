@@ -4,8 +4,6 @@
 
 #include "MainMenuState.h"
 
-using namespace std;
-
 // Formato de la especificación de una textura
 struct TextureSpec
 {
@@ -144,7 +142,6 @@ Game::handleEvents()
 		}
 		else {
 			gameStateMachine->handleEvent(evento);
-			//player->handleEvent(evento); // ESTO ASI NO PERO SE INVESTIGA JEJE
 		}
 	}
 }

@@ -21,8 +21,8 @@ protected:
 
 
 public:
-    GameObject(Game* game) : game(game) {}
-    GameObject(GameState* s) : state(s) {}
+    GameObject(Game* game) : game(game), state() {}
+    GameObject(GameState* s) : state(s), game() {}
     GameObject(Game* g, GameState* s) : game(g), state(s) {}
 
     virtual ~GameObject() {};
