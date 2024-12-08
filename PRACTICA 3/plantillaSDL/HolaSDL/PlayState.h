@@ -17,6 +17,7 @@ public:
 
     void loadObjectMap(const string& mapFile); // Carga los objs del nivel
 
+    // add object to stateList
     void addObject(SceneObject* o);
 
     void resetLevel();

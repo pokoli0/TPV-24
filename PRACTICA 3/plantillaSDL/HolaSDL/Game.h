@@ -21,8 +21,6 @@
 #include "GameList.h"
 #include "SceneObject.h"
 
-#include "InfoBar.h"
-
 #include "TileMap.h"
 #include "Player.h"
 
@@ -59,13 +57,13 @@ constexpr int OBSTACLE_THRESHOLD = 4;
 constexpr int GRAVITY = 3;
 constexpr int SPEED_LIMIT = 10;
 
-constexpr bool DEBUG = false;
+constexpr bool DEBUG = true;
 
 
 //
 // Clase que representa el juego y controla todos sus aspectos
 //
-class Game : public GameStateMachine
+class Game : private GameStateMachine
 {
 public:
 

@@ -15,7 +15,7 @@ class GameState;
 class GameObject {
 protected:
     Game* game; // Puntero al juego
-    GameState* state; // Estado del juego
+    GameState* state; // Puntero al estado del juego
 
     GameList<GameObject>::anchor _anchor;
 

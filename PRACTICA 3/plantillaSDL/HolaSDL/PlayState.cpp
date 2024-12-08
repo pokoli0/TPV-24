@@ -20,7 +20,9 @@ void PlayState::render(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
 	for (auto obj : stateList) obj->render(renderer);
-	//for (auto obj : sceneObjects) obj->render(r);
+	
+	//for (auto obj : sceneObjects) obj->render(renderer);
+	//player->render(renderer);
 }
 
 void PlayState::update()
@@ -34,8 +36,7 @@ void PlayState::update()
 	}
 
 	for (auto obj : stateList) obj->update();
-	//for (auto obj : sceneObjects) obj->update();
-
+	//for (auto obj : sceneObjects) obj->update(); // Para que funcionen las colisiones
 }
 
 void PlayState::loadLevel(int l)
@@ -46,6 +47,8 @@ void PlayState::loadLevel(int l)
 
 	objectQueue.push_back(tilemap);
 	addObject(tilemap);
+
+	sceneObjects.push_back(tilemap);
 	//cout << "Tile:" << nextObject << endl;
 
 	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
@@ -84,6 +87,8 @@ void PlayState::loadObjectMap(const string& mapFile)
 		x = x * TILE_SIDE;
 		y = y * TILE_SIDE;
 
+		SceneObject* obj;
+
 		switch (tipo) {
 		case 'M':
 			/// ===== CREACION DE MARIO =====
@@ -93,13 +98,13 @@ void PlayState::loadObjectMap(const string& mapFile)
 				//player = new Player(this, 4366, 300); // para probar el lift
 				//player = new Player(this, 6166, 448); // para probar bandera
 
-
-
 				objectQueue.push_back(player);
 				addObject(player);
-				nextObject++;
+				nextObject++; // sera 1
 
-				addEventListener(player);
+				//sceneObjects.push_back(player); // se encarga de las colisones
+				addEventListener(player);		// se encarga del input
+
 				//cout << "Mario:" << nextObject << endl;
 			}
 			else
@@ -110,20 +115,25 @@ void PlayState::loadObjectMap(const string& mapFile)
 
 			break;
 		case 'B':
-			objectQueue.push_back(new Block(game, this, x, y, atrib, accion));
+			obj = new Block(game, this, x, y, atrib, accion);
 			break;
 		case 'G':
-			objectQueue.push_back(new Goomba(game, this, x, y));
+			obj = new Goomba(game, this, x, y);
 			break;
 		case 'K':
-			objectQueue.push_back(new Koopa(game, this, x, y));
+			obj = new Koopa(game, this, x, y);
 			break;
 		case 'L':
-			objectQueue.push_back(new Lift(game, this, x, y, sp));
+			obj = new Lift(game, this, x, y, sp);
 			break;
 		case 'C':
-			objectQueue.push_back(new Coin(game, this, x, y));
+			obj = new Coin(game, this, x, y);
 			break;
+		}
+
+		if (tipo != 'M') {
+			objectQueue.push_back(obj);
+			sceneObjects.push_back(obj); // se encarga de las colisones
 		}
 	}
 
@@ -199,14 +209,14 @@ void PlayState::spawnMushroom(int x, int y)
 {
 	SceneObject* m = new Mushroom(game, this, x, y);
 	sceneObjects.push_back(m);
-	stateList.push_back(m);
+	addObject(m);
 }
 
 void PlayState::spawnCoin(int x, int y)
 {
 	SceneObject* m = new Coin(game, this, x, y);
 	sceneObjects.push_back(m);
-	stateList.push_back(m);
+	addObject(m);
 }
 
 

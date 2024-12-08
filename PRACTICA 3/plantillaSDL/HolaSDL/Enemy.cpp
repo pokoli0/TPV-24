@@ -41,7 +41,6 @@ Collision Enemy::hit(const SDL_Rect& region, Collision::Target target)
 	{
 		Collision collision{ Collision::DAMAGE, intersection.w, intersection.h };
 
-
 		if (target == Collision::ENEMIES && !_playState->getMarioImmunity()) // si mario no es inmune
 		{
 			if (intersection.y <= ownRect.y // desde arriba

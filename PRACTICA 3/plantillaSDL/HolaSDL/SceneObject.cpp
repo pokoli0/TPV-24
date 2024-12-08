@@ -20,9 +20,10 @@ void SceneObject::render(SDL_Renderer* renderer)
 
     _texture->renderFrame(_rect, 0, _frame, 0, nullptr, _flip);
 
+    SDL_Rect r = getCollisionRect();
     if (DEBUG) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128);
-        SDL_RenderDrawRect(renderer, &_rect);
+        SDL_RenderDrawRect(renderer, &r);
         SDL_SetRenderDrawColor(renderer, 138, 132, 255, 255);
     }
 }
