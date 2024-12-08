@@ -65,7 +65,7 @@ Game::Game()
 			textureSpec[i].numRows,
 			textureSpec[i].numColumns);
 
-	// Estados
+	// Estado inicial
 	GameState* mainMenu = new MainMenuState(this);
 	gameStateMachine->pushState(mainMenu);
 

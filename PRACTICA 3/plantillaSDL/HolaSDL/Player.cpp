@@ -177,14 +177,14 @@ void Player::resetPlayer()
 
 void Player::finishLevel()
 {
-	if (_position.getX() >= winPosition &&
-		_playState->getLevel() == 1)
+	// suponiendo q solo hay dos niveles
+	double winPos = _playState->getLevel() == 1 ? WIN_POSITION_1 : WIN_POSITION_2;
+
+	if (_position.getX() >= winPos)
 	{
 		_speed.setX(0);
-		cout << "FINAL" << endl;
-		_playState->setLevel(_playState->getLevel() + 1);
-		cout << "level" << _playState->getLevel() << endl;
-		_playState->setGameWon(true);
+
+		_playState->setLevel(_playState->getLevel() + 1); // siguiente nivel
 
 		if (_playState->getLevel() < _playState->getLastLevel() + 1)
 		{
@@ -193,7 +193,9 @@ void Player::finishLevel()
 		}
 		else
 		{
-			game->endGame();			
+			game->endGame();
+			// @marcos aqui deberia llamar a metodo para pasar al endstate!!	
+			// _playState->goToEndState(); // por ej
 		}
 	}
 }

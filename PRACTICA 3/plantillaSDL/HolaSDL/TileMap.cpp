@@ -104,7 +104,6 @@ void TileMap::render(SDL_Renderer* renderer)
 
 void TileMap::update()
 {
-	//game->checkCollision(rect, false);
 }
 
 Collision TileMap::hit(const SDL_Rect& region, Collision::Target target)

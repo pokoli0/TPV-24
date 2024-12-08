@@ -1,14 +1,16 @@
 #include "PlayState.h"
 #include <iostream>
 
-PlayState::PlayState(Game* g, int level)
+PlayState::PlayState(Game* g, int l)
 	: GameState(g)
 {
-	cout << "Play State " << level << endl;
+	cout << "Play State " << l << endl;
 
 	mapOffset = 0;
 	//mapOffset = 5880; // para probar cambio de nivel
-	//mapOffset = 4080; // para probar el lift en level 2
+
+	level = l;
+	lastLevel = 2; // nuestro juego tiene 2 niveles
 
 	gameWon = false;
 
@@ -32,7 +34,6 @@ void PlayState::update()
 
 	while (nextObject < objectQueue.size() && objectQueue[nextObject]->getXPos() < rightThreshold)
 	{
-		cout << "clone" << endl;
 		addObject(objectQueue[nextObject++]->clone()); // se hace a partir del 2
 	}
 
@@ -93,22 +94,19 @@ void PlayState::loadObjectMap(const string& mapFile)
 			if (player == nullptr) 
 			{
 				player = new Player(game, this, x, y);
-				//player = new Player(this, 4366, 300); // para probar el lift
 				//player = new Player(game, this, 6166, 448); // para probar bandera
 
 				objectQueue.push_back(player);
 				addObject(objectQueue[nextObject++]); // player = 2
 
 				addEventListener(player); // se encarga del input
-
-				//cout << "Mario:" << nextObject << endl;
 			}
 			else
 			{
-				cout << "No se crea nuevo Mario. " << endl;
-				// Reposicionar?¿
+				// reposicionar en el siguiente nivel
+				player->setInitPos(x, y);
+				player->resetPlayer();
 			}
-
 			break;
 		case 'B':
 			obj = new Block(game, this, x, y, atrib, accion);
@@ -133,12 +131,6 @@ void PlayState::loadObjectMap(const string& mapFile)
 	}
 
 	file.close();
-
-	if (gameWon)
-	{
-		mapOffset = 0;
-		nextObject = 2;
-	}
 }
 
 void PlayState::addObject(SceneObject* o)
@@ -162,20 +154,20 @@ void PlayState::addObject(SceneObject* o)
 
 void PlayState::resetLevel()
 {
-	for (auto obj : stateList)
+	for (auto obj : sceneObjects)
 	{
-		if (obj != player && obj != tilemap)
+		if (obj != player)
 		{
-			delete obj; // POSIBLE FALLO -> NO SE BORRAN ENTIDADES ANTERIORES
+			delete obj;
 		}
 	}
 
-	// reinicia mapoffset y lista de objetos
-	nextObject = 2;
+	objectQueue.clear();
+	nextObject = 0;
 	mapOffset = 0;
 
 	// recarga nivel
-	loadLevel(level); // POSIBLE FALLO -> SE HACE LOAD DE ENTIDADES ANTERIORES + NUEVAS ??¿¿?
+	loadLevel(level);
 }
 
 Collision PlayState::checkCollision(const SDL_Rect& rect, Collision::Target target)

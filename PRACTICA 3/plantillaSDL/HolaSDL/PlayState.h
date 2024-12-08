@@ -7,7 +7,7 @@
 class PlayState : public GameState
 {
 public:
-    PlayState(Game* g, int level);
+    PlayState(Game* g, int l);
     virtual ~PlayState() = default;
 
     void render(SDL_Renderer* renderer) override;
@@ -39,6 +39,7 @@ public:
 
     void setGameWon(bool w) { gameWon = w; }
 
+    // devuelve el numero total de niveles (o el numero del nivel final)
     int getLastLevel() const { return lastLevel; }
 
     int getLevel() { return level; }

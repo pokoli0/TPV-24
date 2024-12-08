@@ -4,6 +4,9 @@
 #include "SceneObject.h"
 #include "EventHandler.h"
 
+constexpr double WIN_POSITION_1 = 6306;
+constexpr double WIN_POSITION_2 = 6302;
+
 class Player : public SceneObject, public EventHandler
 {
 public:
@@ -29,6 +32,7 @@ public:
 	// comprueba si se ha llegado a la posicion de la bandera
 	void finishLevel();
 
+
 	/// ===== Gestion de movimiento =====
 
 	void handleEvent(const SDL_Event& event) override;
@@ -42,6 +46,7 @@ public:
 
 	bool getImmunity() const { return immune; }
 
+	void setInitPos(double x, double y) { initPos = Point2D<double>(x, y); }
 
 private:
 	int lives;
@@ -56,8 +61,5 @@ private:
 	int walkFrame;
 
 	Point2D<double> initPos;
-
-	// posicion de la bandera (peruvian)
-	double winPosition = 6306;
 };
 
