@@ -3,12 +3,10 @@
 
 #include "SceneObject.h"
 
-using namespace std;
-
 class TileMap : public SceneObject
 {
 public:
-	TileMap(Game* game, PlayState* s, const string& mapFile, int x = 0, int y = 0);
+	TileMap(Game* game, PlayState* s, const std::string& mapFile, int x = 0, int y = 0);
 
 	void render(SDL_Renderer* renderer) override;
 	void update() override;
@@ -21,10 +19,10 @@ public:
 	void checkAlive() override {};
 	void updateAnim() override {};
 
-	void loadTilemap(string fichero);
+	void loadTilemap(std::string fichero);
 	
 private:
-	vector<vector<int>> matrix;
+	std::vector<std::vector<int>> matrix;
 
 };
 

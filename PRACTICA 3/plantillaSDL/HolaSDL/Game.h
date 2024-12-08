@@ -151,7 +151,7 @@ public:
 	int getPoints() const { return points; }
 	void givePoints(int n) { points += n; }
 
-	SDL_Renderer* getRender() { return renderer; }
+	SDL_Renderer* getRender() const { return renderer; }
 
 	GameStateMachine* getStateMachine() const { return gameStateMachine; }
 };

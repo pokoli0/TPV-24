@@ -37,10 +37,10 @@ public:
 
 	/// ===== Getters y Setters =====
 
-	int getLives() { return lives; }
+	int getLives() const { return lives; }
 	void setLives(int n) { lives = n; }
 
-	bool getImmunity() { return immune; }
+	bool getImmunity() const { return immune; }
 
 
 private:

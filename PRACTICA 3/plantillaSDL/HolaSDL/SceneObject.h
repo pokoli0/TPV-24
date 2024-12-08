@@ -80,7 +80,7 @@ public:
 
     /// ===== Metodos de Mario =====
     virtual void hit() {}
-    virtual bool getImmunity() { return false; }
+    virtual bool getImmunity() const { return false; }
 
 
     /// ===== Getters y setters =====

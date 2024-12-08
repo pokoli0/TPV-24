@@ -5,6 +5,8 @@
 
 #include "PlayState.h"
 
+using namespace std;
+
 TileMap::TileMap(Game* game, PlayState* s, const string& mapFile, int x, int y)
 	: SceneObject(game, s, x, y, TILE_SIDE, TILE_SIDE, game->getTexture(Game::BACKGROUND))
 {
