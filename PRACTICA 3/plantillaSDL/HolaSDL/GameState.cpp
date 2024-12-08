@@ -1,5 +1,5 @@
 #include "GameState.h"
-
+#include "Game.h"
 void GameState::handleEvent(const SDL_Event& event)
 {
 	for (auto handler : eventHandlers) {
@@ -14,5 +14,6 @@ void GameState::addEventListener(EventHandler* l)
 
 void GameState::addObject(GameObject* o)
 {
+	// if current es play -> copiar el addobj del play, y si no:
 	stateList.push_back(o);
 }

@@ -10,7 +10,7 @@ public:
     PlayState(Game* g, int level);
     virtual ~PlayState() = default;
 
-    void render(SDL_Renderer* r) override;
+    void render(SDL_Renderer* renderer) override;
     void update() override;
     void handleEvent(const SDL_Event& event) override;
 
@@ -66,7 +66,7 @@ private:
 
     /// --- SceneObjects ---
 
-    SceneObject* player = nullptr;
+    Player* player = nullptr;
     SceneObject* tilemap = nullptr;
 
     // Objetos del juego

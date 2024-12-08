@@ -6,6 +6,7 @@
 EndState::EndState(Game* g)
     : GameState(g)
 {
+    cout << "End State" << endl;
     setupMenu();
 }
 

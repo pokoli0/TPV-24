@@ -6,6 +6,7 @@
 PauseState::PauseState(Game* g)
     : GameState(g)
 {
+    cout << "Pause State" << endl;
     setupMenu();
 }
 

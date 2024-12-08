@@ -4,7 +4,7 @@
 PlayState::PlayState(Game* g, int level)
 	: GameState(g)
 {
-	cout << "Play State" << endl;
+	cout << "Play State " << level << endl;
 
 	mapOffset = 0;
 	//mapOffset = 5880; // para probar cambio de nivel
@@ -15,21 +15,26 @@ PlayState::PlayState(Game* g, int level)
 	loadLevel(level);
 }
 
-void PlayState::render(SDL_Renderer* r)
+void PlayState::render(SDL_Renderer* renderer)
 {
-	for (auto obj : stateList) obj->render(r);
+	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+
+	for (auto obj : stateList) obj->render(renderer);
+	//for (auto obj : sceneObjects) obj->render(r);
 }
 
 void PlayState::update()
 {
-	// Instancia objetos segun su posicion en X
-	while (nextObject < objectQueue.size() &&
-		objectQueue[nextObject]->getXPos() < mapOffset + Game::WIN_WIDTH + TILE_SIDE)
+	// Borde derecho del mapa (+ una casilla)
+	const int rightThreshold = mapOffset + Game::WIN_WIDTH + TILE_SIDE;
+
+	while (nextObject < objectQueue.size() && objectQueue[nextObject]->getXPos() < rightThreshold)
 	{
 		addObject(objectQueue[nextObject++]->clone());
 	}
 
 	for (auto obj : stateList) obj->update();
+	//for (auto obj : sceneObjects) obj->update();
 
 }
 
@@ -39,12 +44,13 @@ void PlayState::handleEvent(const SDL_Event& event)
 
 void PlayState::loadLevel(int l)
 {
-	cout << "Load level " << l << endl;
-
 	string root = "../assets/maps/world" + to_string(l) + ".csv";
 
 	tilemap = new TileMap(game, this, root);
+
 	objectQueue.push_back(tilemap);
+	addObject(tilemap);
+	//cout << "Tile:" << nextObject << endl;
 
 	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
 }
@@ -84,18 +90,24 @@ void PlayState::loadObjectMap(const string& mapFile)
 
 		switch (tipo) {
 		case 'M':
-			if (player == nullptr) {
+			/// ===== CREACION DE MARIO =====
+			if (player == nullptr) 
+			{
 				player = new Player(game, this, x, y);
 				//player = new Player(this, 4366, 300); // para probar el lift
 				//player = new Player(this, 6166, 448); // para probar bandera
 
+				addEventListener(player);
+
 				objectQueue.push_back(player);
+				addObject(player);
+				nextObject++;
+				//cout << "Mario:" << nextObject << endl;
 			}
 			else
-			{ // si el player no es null entonces reposicionamos donde diga
-				//player.onlevelreload?¿?
-				// usar x e y nuevas
+			{
 				cout << "No se crea nuevo Mario. " << endl;
+				// Reposicionar?¿
 			}
 
 			break;
@@ -130,16 +142,16 @@ void PlayState::addObject(SceneObject* o)
 {
 	if (nextObject == 1)
 	{
-		sceneObjects.push_front(o);
+		stateList.push_front(o);
 	}
 	else if (nextObject == 2)
 	{
-		player = o;
-		sceneObjects.push_back(o);
+		//player = o;
+		stateList.push_back(player);
 	}
 	else
 	{
-		sceneObjects.push_back(o);
+		stateList.push_back(o);
 	}
 }
 
