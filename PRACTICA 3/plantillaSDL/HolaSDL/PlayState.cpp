@@ -38,10 +38,6 @@ void PlayState::update()
 
 }
 
-void PlayState::handleEvent(const SDL_Event& event)
-{
-}
-
 void PlayState::loadLevel(int l)
 {
 	string root = "../assets/maps/world" + to_string(l) + ".csv";
@@ -97,11 +93,13 @@ void PlayState::loadObjectMap(const string& mapFile)
 				//player = new Player(this, 4366, 300); // para probar el lift
 				//player = new Player(this, 6166, 448); // para probar bandera
 
-				addEventListener(player);
+
 
 				objectQueue.push_back(player);
 				addObject(player);
 				nextObject++;
+
+				addEventListener(player);
 				//cout << "Mario:" << nextObject << endl;
 			}
 			else
@@ -147,7 +145,7 @@ void PlayState::addObject(SceneObject* o)
 	else if (nextObject == 2)
 	{
 		//player = o;
-		stateList.push_back(player);
+		stateList.push_back(player); /// esto puede estar mal al hacer el cambio de nivel 1!!!1
 	}
 	else
 	{

@@ -12,7 +12,6 @@ public:
 
     void render(SDL_Renderer* renderer) override;
     void update() override;
-    void handleEvent(const SDL_Event& event) override;
 
     void loadLevel(int l); // Carga el nivel
 
