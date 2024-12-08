@@ -124,13 +124,6 @@ void Game::endGame()
 	seguir = false;
 }
 
-void Game::Quit()
-{
-	//acabar todo
-	cout << " se ha cerrado todo";
-}
-
-
 void
 Game::update()
 {

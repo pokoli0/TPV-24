@@ -37,7 +37,7 @@ void PauseState::setupMenu()
         });
     Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), { 100, 300 });
     exitButton->connect([this]() {
-        getGame()->Quit();
+        getGame()->endGame();
         });
 
     // Añadir botones al vector y a las listas del estado

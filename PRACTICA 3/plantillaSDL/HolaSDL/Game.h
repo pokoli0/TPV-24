@@ -143,7 +143,6 @@ public:
 
 	/// ===== Gestion del nivel =====
 	void endGame();
-	void Quit();
 
 
 	/// ===== Getters y Setters =====

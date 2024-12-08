@@ -35,7 +35,7 @@ void MainMenuState::setupMenu()
 
     Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), { 100, 400 });
     exitButton->connect([this]() {
-        getGame()->Quit();
+        getGame()->endGame();
         });
 
     // Añadir botones al vector y a las listas del estado
@@ -51,5 +51,5 @@ void MainMenuState::setupMenu()
 
 void MainMenuState::loadLevel()
 {
-    cout << "click  level" << endl;
+    cout << "click level" << endl;
 }
