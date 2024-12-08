@@ -55,6 +55,7 @@ void Button::handleEvent(const SDL_Event& event)
 		// si el punto esta en el rect del boton
 		if (SDL_PointInRect(&point, &rect))
 		{
+			std::cout << "clicked" << std::endl;
 			currentFrame = CLICK;
 			emit();
 		}

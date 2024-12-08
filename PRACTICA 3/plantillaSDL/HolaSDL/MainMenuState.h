@@ -10,11 +10,14 @@ public:
 
 	void render(SDL_Renderer* r) override;
 	void update() override;
-	void handleEvent(const SDL_Event& event) override;
 
 private:
-
 	void setupMenu();
+
+	// callbacks
+	void loadLevel();
+	void exit();
+
 	std::vector<Button*> buttons;
 };
 

@@ -22,17 +22,11 @@ void MainMenuState::update()
         s->update();
 }
 
-void MainMenuState::handleEvent(const SDL_Event& event)
-{
-    GameState::handleEvent(event);
-}
 void MainMenuState::setupMenu()
 {
     // Crear y configurar botones
     Button* startLevel1 = new Button(this,getGame()->getTexture(Game::LVL1), {100, 200});
-    startLevel1->connect([this]() {
-        //getGame()->getgsMachine()->pushState(new PlayState(game, file, "../assets/maps/world"));
-        });
+    startLevel1->connect([this]() { loadLevel(); });
 
     Button* startLevel2 = new Button(this, getGame()->getTexture(Game::LVL2), { 100, 300 });
     startLevel2->connect([this]() {
@@ -53,4 +47,9 @@ void MainMenuState::setupMenu()
         addObject(button);
         addEventListener(button);
     }
+}
+
+void MainMenuState::loadLevel()
+{
+    cout << "click  level" << endl;
 }
