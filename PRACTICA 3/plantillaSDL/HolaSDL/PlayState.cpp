@@ -23,8 +23,7 @@ void PlayState::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
-	//for (auto obj : stateList) obj->render(renderer); // se supone q hay q hacer esto pero no va
-	for (auto obj : sceneObjects) obj->render(renderer);
+	for (auto obj : stateList) obj->render(renderer);
 }
 
 void PlayState::update()
@@ -37,8 +36,8 @@ void PlayState::update()
 		addObject(objectQueue[nextObject++]->clone()); // se hace a partir del 2
 	}
 
-	//for (auto obj : stateList) obj->update(); // se supone q hay q hacer esto pero no va
-	for (auto obj : sceneObjects) obj->update();
+	for (auto obj : stateList) obj->update();
+	//for (auto obj : sceneObjects) obj->update();
 }
 
 void PlayState::loadLevel(int l)
@@ -47,8 +46,7 @@ void PlayState::loadLevel(int l)
 
 	/// ===== CREACION DEL TILEMAP =====
 	tilemap = new TileMap(game, this, root);
-	objectQueue.push_back(tilemap);
-	addObject(objectQueue[nextObject++]); // tilemap = 1
+	addObject(tilemap);
 
 	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
 }
@@ -96,8 +94,7 @@ void PlayState::loadObjectMap(const string& mapFile)
 				player = new Player(game, this, x, y);
 				//player = new Player(game, this, 6166, 448); // para probar bandera
 
-				objectQueue.push_back(player);
-				addObject(objectQueue[nextObject++]); // player = 2
+				addObject(player);
 
 				addEventListener(player); // se encarga del input
 			}
@@ -135,21 +132,8 @@ void PlayState::loadObjectMap(const string& mapFile)
 
 void PlayState::addObject(SceneObject* o)
 {
-	if (nextObject == 1)
-	{
-		sceneObjects.push_front(o);
-		stateList.push_front(o);
-	}
-	else if (nextObject == 2)
-	{
-		sceneObjects.push_back(player);
-		stateList.push_back(player);
-	}
-	else
-	{
-		sceneObjects.push_back(o);
-		stateList.push_back(player);
-	}
+	sceneObjects.push_back(o);
+	stateList.push_back(o);
 }
 
 void PlayState::resetLevel()
