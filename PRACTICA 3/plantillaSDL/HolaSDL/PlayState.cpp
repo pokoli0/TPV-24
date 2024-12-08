@@ -1,16 +1,18 @@
 #include "PlayState.h"
 #include <iostream>
 
-PlayState::PlayState(Game* g)
+PlayState::PlayState(Game* g, int level)
 	: GameState(g)
 {
+	cout << "Play State" << endl;
+
 	mapOffset = 0;
 	//mapOffset = 5880; // para probar cambio de nivel
 	//mapOffset = 4080; // para probar el lift en level 2
 
 	nextObject = 0;
 
-	loadLevel(1);
+	loadLevel(level);
 }
 
 void PlayState::render(SDL_Renderer* r)

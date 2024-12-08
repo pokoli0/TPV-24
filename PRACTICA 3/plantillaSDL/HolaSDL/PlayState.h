@@ -7,7 +7,7 @@
 class PlayState : public GameState
 {
 public:
-    PlayState(Game* g);
+    PlayState(Game* g, int level);
     virtual ~PlayState() = default;
 
     void render(SDL_Renderer* r) override;

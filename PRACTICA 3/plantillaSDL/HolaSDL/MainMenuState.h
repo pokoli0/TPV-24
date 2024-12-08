@@ -15,8 +15,7 @@ private:
 	void setupMenu();
 
 	// callbacks
-	void loadLevel();
-	void exit();
+	void loadLevel(int n);
 
 	std::vector<Button*> buttons;
 };

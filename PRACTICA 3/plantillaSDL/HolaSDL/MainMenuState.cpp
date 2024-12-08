@@ -2,10 +2,13 @@
 #include <iostream>
 
 #include "Game.h"
+#include "PlayState.h"
 
 MainMenuState::MainMenuState(Game* g)
     : GameState(g)
 {
+    cout << "MainMenu State" << endl;
+
     setupMenu();
 }
 void MainMenuState::render(SDL_Renderer* r)
@@ -25,18 +28,13 @@ void MainMenuState::update()
 void MainMenuState::setupMenu()
 {
     // Crear y configurar botones
-    Button* startLevel1 = new Button(this,getGame()->getTexture(Game::LVL1), {100, 200});
-    startLevel1->connect([this]() { loadLevel(); });
+    Button* startLevel1 = new Button(this, game->getTexture(Game::LVL1), {100, 200});
+    Button* startLevel2 = new Button(this, game->getTexture(Game::LVL2), { 100, 300 });
+    Button* exitButton = new Button(this, game->getTexture(Game::EXIT), { 100, 400 });
 
-    Button* startLevel2 = new Button(this, getGame()->getTexture(Game::LVL2), { 100, 300 });
-    startLevel2->connect([this]() {
-        //getGame()->getgsMachine()->pushState(new PlayState(game, file, "../assets/maps/world2"));
-        });
-
-    Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), { 100, 400 });
-    exitButton->connect([this]() {
-        getGame()->endGame();
-        });
+    startLevel1->connect([this]() { loadLevel(1); });
+    startLevel2->connect([this]() { loadLevel(2); });
+    exitButton->connect([this]() { game->endGame(); });
 
     // Añadir botones al vector y a las listas del estado
     buttons.push_back(startLevel1);
@@ -49,7 +47,9 @@ void MainMenuState::setupMenu()
     }
 }
 
-void MainMenuState::loadLevel()
+void MainMenuState::loadLevel(int n)
 {
-    cout << "click level" << endl;
+    GameState* playS = new PlayState(game, n);
+
+    game->getStateMachine()->pushState(playS);
 }
