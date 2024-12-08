@@ -10,6 +10,8 @@ PlayState::PlayState(Game* g, int level)
 	//mapOffset = 5880; // para probar cambio de nivel
 	//mapOffset = 4080; // para probar el lift en level 2
 
+	gameWon = false;
+
 	nextObject = 0;
 
 	loadLevel(level);
@@ -19,6 +21,7 @@ void PlayState::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
+	//for (auto obj : stateList) obj->render(renderer);
 	for (auto obj : sceneObjects) obj->render(renderer);
 }
 
@@ -32,7 +35,8 @@ void PlayState::update()
 		addObject(objectQueue[nextObject++]->clone()); // se hace a partir del 2
 	}
 
-	for (auto obj : sceneObjects) obj->update(); // Para que funcionen las colisiones
+	//for (auto obj : stateList) obj->update();
+	for (auto obj : sceneObjects) obj->update();
 }
 
 void PlayState::loadLevel(int l)
@@ -91,7 +95,7 @@ void PlayState::loadObjectMap(const string& mapFile)
 			{
 				player = new Player(game, this, x, y);
 				//player = new Player(this, 4366, 300); // para probar el lift
-				//player = new Player(this, 6166, 448); // para probar bandera
+				//player = new Player(game, this, 6166, 448); // para probar bandera
 
 				objectQueue.push_back(player);
 				addObject(objectQueue[nextObject++]); // player = 2
@@ -202,14 +206,12 @@ Collision PlayState::checkCollision(const SDL_Rect& rect, Collision::Target targ
 void PlayState::spawnMushroom(int x, int y)
 {
 	SceneObject* m = new Mushroom(game, this, x, y);
-	sceneObjects.push_back(m);
 	addObject(m);
 }
 
 void PlayState::spawnCoin(int x, int y)
 {
 	SceneObject* m = new Coin(game, this, x, y);
-	sceneObjects.push_back(m);
 	addObject(m);
 }
 
