@@ -21,7 +21,7 @@ void PlayState::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
-	//for (auto obj : stateList) obj->render(renderer);
+	//for (auto obj : stateList) obj->render(renderer); // se supone q hay q hacer esto pero no va
 	for (auto obj : sceneObjects) obj->render(renderer);
 }
 
@@ -32,10 +32,11 @@ void PlayState::update()
 
 	while (nextObject < objectQueue.size() && objectQueue[nextObject]->getXPos() < rightThreshold)
 	{
+		cout << "clone" << endl;
 		addObject(objectQueue[nextObject++]->clone()); // se hace a partir del 2
 	}
 
-	//for (auto obj : stateList) obj->update();
+	//for (auto obj : stateList) obj->update(); // se supone q hay q hacer esto pero no va
 	for (auto obj : sceneObjects) obj->update();
 }
 
@@ -43,12 +44,10 @@ void PlayState::loadLevel(int l)
 {
 	string root = "../assets/maps/world" + to_string(l) + ".csv";
 
+	/// ===== CREACION DEL TILEMAP =====
 	tilemap = new TileMap(game, this, root);
-
 	objectQueue.push_back(tilemap);
 	addObject(objectQueue[nextObject++]); // tilemap = 1
-
-	//cout << "Tile:" << nextObject << endl;
 
 	loadObjectMap("../assets/maps/world" + to_string(l) + ".txt");
 }
@@ -151,7 +150,7 @@ void PlayState::addObject(SceneObject* o)
 	}
 	else if (nextObject == 2)
 	{
-		sceneObjects.push_back(player); /// esto puede estar mal al hacer el cambio de nivel 1!!!1
+		sceneObjects.push_back(player);
 		stateList.push_back(player);
 	}
 	else

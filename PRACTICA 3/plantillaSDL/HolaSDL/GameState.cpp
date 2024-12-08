@@ -14,6 +14,5 @@ void GameState::addEventListener(EventHandler* l)
 
 void GameState::addObject(GameObject* o)
 {
-	// if current es play -> copiar el addobj del play, y si no:
 	stateList.push_back(o);
 }
