@@ -1,2 +1,4 @@
 Marcos Pantoja Rafael de la Cruz
 Paula Sierra Luque
+Practica 3:
+Se ha implementado todo lo pedido por la practica a excepción de la animación de Mario al morir, estando el AnimationState comentado para no dar problemas de ejecución.
