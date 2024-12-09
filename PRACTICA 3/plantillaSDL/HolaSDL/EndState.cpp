@@ -39,13 +39,13 @@ void EndState::handleEvent(const SDL_Event& event)
 void EndState::setupMenu()
 {
     // Crear y configurar botones
-    Button* volverButton = new Button(this, getGame()->getTexture(Game::BACK), { 100, 200 });
+    Button* volverButton = new Button(this, getGame()->getTexture(Game::BACK), game->getTexture(Game::MUSHROOM), { 100, 200 });
     volverButton->connect([this]() {
         GameState* mainMenu = new MainMenuState(game);
         game->getStateMachine()->pushState(mainMenu);
         });
 
-    Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), { 100, 300 });
+    Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), game->getTexture(Game::MUSHROOM), { 100, 300 });
     exitButton->connect([this]() {
         getGame()->endGame();
         });

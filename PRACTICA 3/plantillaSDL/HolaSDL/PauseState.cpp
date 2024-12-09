@@ -30,16 +30,16 @@ void PauseState::handleEvent(const SDL_Event& event)
 void PauseState::setupMenu()
 {
     // Crear y configurar botones
-    Button* resumeButton = new Button(this, getGame()->getTexture(Game::RESUME), { 100, 100 });
+    Button* resumeButton = new Button(this, getGame()->getTexture(Game::RESUME), game->getTexture(Game::MUSHROOM), { 100, 100 });
     resumeButton->connect([this]() {
         game->getStateMachine()->popState();
         });
-    Button*MenuButton = new Button(this, getGame()->getTexture(Game::BACK), { 100, 200 });
+    Button*MenuButton = new Button(this, getGame()->getTexture(Game::BACK), game->getTexture(Game::MUSHROOM), { 100, 200 });
     MenuButton->connect([this]() {
         GameState* mainMenu = new MainMenuState(game);
         game->getStateMachine()->pushState(mainMenu);
         });
-    Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), { 100, 300 });
+    Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), game->getTexture(Game::MUSHROOM), { 100, 300 });
     exitButton->connect([this]() {
         getGame()->endGame();
         });

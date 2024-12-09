@@ -1,8 +1,8 @@
 #include "checkML.h"
 #include "Button.h"
 
-Button::Button(GameState* gameState, Texture* texture, Point2D<double> pos)
-	: GameObject(gameState), texture(texture), position(pos)
+Button::Button(GameState* gameState, Texture* texture, Texture* texture2, Point2D<double> pos)
+	: GameObject(gameState), texture(texture), mushroomTexture(texture2), position(pos)
 {
 	currentFrame = DEFAULT;
 
@@ -25,10 +25,15 @@ void Button::render(SDL_Renderer* renderer)
 	rect.w = texture->getFrameWidth();
 	rect.h = texture->getFrameHeight();
 
+	mushRect.x = (int)position.getX() - 50;
+	mushRect.y = (int)position.getY() - 5;
+	mushRect.w = mushroomTexture->getFrameWidth() * 2;
+	mushRect.h = mushroomTexture->getFrameHeight() * 2;
+
 	if (currentFrame == OVER)
 	{
 		texture->render(rect, SDL_Color{ 0, 255, 0, 255 }); // cambia color
-
+		mushroomTexture->render(mushRect);
 		// cambia pos del mushroomtexture aqui
 	}
 	else texture->render(rect);

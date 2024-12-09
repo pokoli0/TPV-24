@@ -14,7 +14,7 @@ using Callback = std::function<void(void)>;
 class Button : public GameObject, public EventHandler
 {
 public:
-	Button(GameState* gameState, Texture* texture, Point2D<double> pos);
+	Button(GameState* gameState, Texture* texture, Texture* texture2, Point2D<double> pos);
 
 	// Metodos de GameObject
 	void render(SDL_Renderer* renderer) override;
@@ -29,7 +29,7 @@ public:
 private:
 	Texture* texture;
 	Texture* mushroomTexture;
-
+	SDL_Rect mushRect;
 	Point2D<double> position;
 
 	// estados del boton para render y animacion
