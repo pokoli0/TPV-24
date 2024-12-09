@@ -3,7 +3,7 @@
 
 #include "GameState.h"
 #include "Game.h"
-
+#include "EndState.h"
 class PlayState : public GameState
 {
 public:
@@ -28,7 +28,7 @@ public:
 
     void spawnMushroom(int x, int y);
     void spawnCoin(int x, int y);
-
+    void goEndState(int aux);
     void playerHit();
     bool getMarioImmunity();
 

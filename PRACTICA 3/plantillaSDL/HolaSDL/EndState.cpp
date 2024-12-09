@@ -3,22 +3,32 @@
 
 #include "Game.h"
 
-EndState::EndState(Game* g)
-    : GameState(g)
+EndState::EndState(Game* g, int aux)
+    : GameState(g), _aux(aux)
 {
     cout << "End State" << endl;
+    cout << _aux << endl;
     setupMenu();
 }
 
 void EndState::render(SDL_Renderer* r)
 {
-    //poner si has ganado o no
-    GameState::render(r);
+    if (_aux == 0)
+    {
+        getGame()->getTexture(Game::LOOSE)->render({ 200, 50, 200, 100 });
+    }
+    else {
+        getGame()->getTexture(Game::WIN)->render({ 200, 50, 200, 100 });
+    }
+
+    for (auto s : stateList)
+        s->render(r);
 }
 
 void EndState::update()
 {
-    GameState::update();
+    for (auto s : stateList)
+        s->update();
 }
 
 void EndState::handleEvent(const SDL_Event& event)
@@ -31,7 +41,8 @@ void EndState::setupMenu()
     // Crear y configurar botones
     Button* volverButton = new Button(this, getGame()->getTexture(Game::BACK), { 100, 200 });
     volverButton->connect([this]() {
-        //getGame()->getgsMachine()->changeState(new MainMenuState(getGame())); // Cambia al menú principal
+        GameState* mainMenu = new MainMenuState(game);
+        game->getStateMachine()->pushState(mainMenu);
         });
 
     Button* exitButton = new Button(this, getGame()->getTexture(Game::EXIT), { 100, 300 });

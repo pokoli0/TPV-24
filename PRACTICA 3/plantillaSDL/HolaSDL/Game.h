@@ -90,6 +90,8 @@ public:
 		BG,
 		RESUME,
 		BACK,
+		LOOSE,
+		WIN,
 		NUM_TEXTURES,  // Truco C++: número de texturas definidas
 	};
 

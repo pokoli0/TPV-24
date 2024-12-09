@@ -34,6 +34,8 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec
 				{"portada.png", 1, 1},
 				{"continuar.png", 1, 1},
 				{"volver.png", 1, 1},
+				{"gameOver.png", 1, 1},
+				{"hasGanado.png", 1, 1},
 };
 
 Game::Game()

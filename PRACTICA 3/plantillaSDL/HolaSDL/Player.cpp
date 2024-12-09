@@ -159,10 +159,11 @@ void Player::checkAlive()
 	if (lives == 0) {
 		cout << "Game Lost" << endl;
 		_isAlive = false;
-		lives = 3;
+		_playState->goEndState(0);
+
 	}
 
-	if (!_isAlive) resetPlayer();
+	else if (!_isAlive) resetPlayer();
 }
 
 
@@ -193,9 +194,9 @@ void Player::finishLevel()
 		}
 		else
 		{
-			game->endGame();
-			// @marcos aqui deberia llamar a metodo para pasar al endstate!!	
-			// _playState->goToEndState(); // por ej
+			//game->endGame();
+			 //@marcos aqui deberia llamar a metodo para pasar al endstate!!	
+			_playState->goEndState(1); // por ej
 		}
 	}
 }

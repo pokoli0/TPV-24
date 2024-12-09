@@ -6,8 +6,8 @@ PlayState::PlayState(Game* g, int l)
 {
 	cout << "Play State " << l << endl;
 
-	mapOffset = 0;
-	//mapOffset = 5880; // para probar cambio de nivel
+	//mapOffset = 0;
+	mapOffset = 5880; // para probar cambio de nivel
 
 	level = l;
 	lastLevel = 2; // nuestro juego tiene 2 niveles
@@ -91,8 +91,8 @@ void PlayState::loadObjectMap(const string& mapFile)
 			/// ===== CREACION DE MARIO =====
 			if (player == nullptr) 
 			{
-				player = new Player(game, this, x, y);
-				//player = new Player(game, this, 6166, 448); // para probar bandera
+				//player = new Player(game, this, x, y);
+				player = new Player(game, this, 6166, 448); // para probar bandera
 
 				addObject(player);
 
@@ -188,6 +188,12 @@ void PlayState::spawnCoin(int x, int y)
 {
 	SceneObject* m = new Coin(game, this, x, y);
 	addObject(m);
+}
+
+void PlayState::goEndState(int aux)
+{
+		GameState* end = new EndState(game, aux);
+		game->getStateMachine()->replaceState(end);
 }
 
 
