@@ -210,7 +210,8 @@ bool PlayState::getMarioImmunity()
 
 void PlayState::handleEvent(const SDL_Event& event)
 {
-	if (event.type == SDL_KEYDOWN && SDLK_p)
+	GameState::handleEvent(event);
+	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_p)
 	{
 		cout << "se llama a pause" << endl;
 		GameState* pause = new PauseState(game);
