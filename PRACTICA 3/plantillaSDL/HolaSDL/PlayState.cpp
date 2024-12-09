@@ -1,6 +1,7 @@
 #include "PlayState.h"
 #include <iostream>
-
+#include "EndState.h"
+#include "PauseState.h"
 PlayState::PlayState(Game* g, int l)
 	: GameState(g)
 {
@@ -205,4 +206,14 @@ void PlayState::playerHit()
 bool PlayState::getMarioImmunity()
 {
 	return player->getImmunity();
+}
+
+void PlayState::handleEvent(const SDL_Event& event)
+{
+	if (event.type == SDL_KEYDOWN && SDLK_p)
+	{
+		cout << "se llama a pause" << endl;
+		GameState* pause = new PauseState(game);
+		game->getStateMachine()->pushState(pause);
+	}
 }

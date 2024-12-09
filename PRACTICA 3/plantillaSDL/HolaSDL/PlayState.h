@@ -3,7 +3,7 @@
 
 #include "GameState.h"
 #include "Game.h"
-#include "EndState.h"
+
 class PlayState : public GameState
 {
 public:
@@ -31,7 +31,7 @@ public:
     void goEndState(int aux);
     void playerHit();
     bool getMarioImmunity();
-
+    void handleEvent(const SDL_Event& event) override;
     /// ===== Getters y setters =====
 
     int getMapOffset() const { return mapOffset; }
