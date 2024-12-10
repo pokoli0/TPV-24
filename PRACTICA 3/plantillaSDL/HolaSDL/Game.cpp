@@ -69,7 +69,7 @@ Game::Game()
 
 	// Estado inicial
 	GameState* mainMenu = new MainMenuState(this);
-	gameStateMachine->pushState(mainMenu);
+	this->pushState(mainMenu); // this por herencia privada
 
 }
 
