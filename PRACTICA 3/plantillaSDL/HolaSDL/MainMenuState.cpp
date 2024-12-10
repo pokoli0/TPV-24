@@ -28,9 +28,9 @@ void MainMenuState::update()
 void MainMenuState::setupMenu()
 {
     // Crear y configurar botones
-    Button* startLevel1 = new Button(this, game->getTexture(Game::LVL1), game->getTexture(Game::MUSHROOM), {100, 200});
-    Button* startLevel2 = new Button(this, game->getTexture(Game::LVL2), game->getTexture(Game::MUSHROOM), { 100, 300 });
-    Button* exitButton = new Button(this, game->getTexture(Game::EXIT), game->getTexture(Game::MUSHROOM), { 100, 400 });
+    Button* startLevel1 = new Button(this, game->getTexture(Game::LVL1), game->getTexture(Game::MUSHROOM), { 150, 250});
+    Button* startLevel2 = new Button(this, game->getTexture(Game::LVL2), game->getTexture(Game::MUSHROOM), { 150, 300 });
+    Button* exitButton = new Button(this, game->getTexture(Game::EXIT), game->getTexture(Game::MUSHROOM), { 150, 400 });
 
     startLevel1->connect([this]() { loadLevel(1); });
     startLevel2->connect([this]() { loadLevel(2); });
